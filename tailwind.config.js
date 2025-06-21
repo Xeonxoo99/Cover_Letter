@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html", 
+    "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
       fontFamily: {
         aeonik: ['Aeonik', 'sans-serif'],
+        noto: ['"Noto Sans KR"', 'sans-serif'],
       },
     },
   },

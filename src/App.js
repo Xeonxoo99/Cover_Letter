@@ -1,8 +1,8 @@
 import Header from './components/header'
 import Intro from './components/Intro'
-import Section1 from './components/Section1'
-import Section2 from './components/Section2'
-import Section3 from './components/Section3'
+import Introduction from './components/Introduction'
+import Count from './components/Count'
+import Portfolio from './components/Portfolio'
 import Section4 from './components/Section4'
 import Section5 from './components/Section5'
 
@@ -11,9 +11,9 @@ function App() {
     <>
       <Header/>
       <Intro/>
-      <Section1/>
-      <Section2/>
-      <Section3/>
+      <Introduction/>
+      <Count/>
+      <Portfolio/>
       <Section4/>
       <Section5/>
     </>
