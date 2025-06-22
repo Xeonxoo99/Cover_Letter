@@ -4,6 +4,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
+*{
+  box-sizing:border-box;
+  border-width:0;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,6 +21,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #b8b8b8;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+
 }
 
 code {
@@ -19,9 +34,7 @@ code {
     monospace;
 }
 
-section {
-
-}
+section {}
 
 @font-face {
   font-family: 'MyCustomFont';

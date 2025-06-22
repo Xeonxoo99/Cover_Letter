@@ -18,12 +18,11 @@ const images = [
 
 function Introduction() {
   return (
-    <section className='relative w-full pt-[6vw] pr-[3vw] pb-[8vw] font-aeonik'>
-
+    <section className='relative w-full pt-[6vw] px-[3.125vw] pb-[8vw] font-aeonik'>
       {/* 간략한 소개 문구 */}
-      <div className='relative inline-block w-[1400px] p-10'>
+      <div className='relative inline-block w-[1400px] pt-10'>
         <span>
-          <p className='absolute text-[16px] font-bold top-6 left-14'>프론트엔드 개발자, 항상 발전 중인 사람.</p>
+          <p className='absolute text-[16px] font-bold top-6 left-5'>프론트엔드 개발자, 항상 발전 중인 사람.</p>
           <h1 className='p-0 m-0 text-[200px]'
             style={{ lineHeight: '0.8em' }}
           >
@@ -49,19 +48,19 @@ function Introduction() {
 
       {/* 중간 문구 */}
       <div className='relative w-full pb-24 flex flex-col items-center text-center text-[2vw] uppercase'>
-          <span className='inline-block'>
-            <h2 className='leading-[38.4px]'>Junior</h2>
-            <h2 className='leading-[38.4px]'>Frontend</h2>
-            <h2 className='leading-[38.4px]'>Developer</h2>
-          </span>
-          <div className='w-full flex justify-around'>
-            <span className='w-[50%] text-center'>since</span>
-            <span className='w-[50%] text-center'>2023:</span>
-          </div>
+        <span className='inline-block'>
+          <h2 className='leading-[38.4px]'>Junior</h2>
+          <h2 className='leading-[38.4px]'>Frontend</h2>
+          <h2 className='leading-[38.4px]'>Developer</h2>
+        </span>
+        <div className='w-full flex justify-around'>
+          <span className='w-[50%] text-center'>since</span>
+          <span className='w-[50%] text-center'>2023:</span>
+        </div>
       </div>
 
       {/* 자기소개 및 자격증/졸업 등*/}
-      <div className='relative w-full flex justify-between pl-10'>
+      <div className='relative w-full flex justify-between'>
         {/* 자기 소개 */}
         <div className='w-[45vw]'>
           <div className='text-lg leading-[1em] text-left'>
@@ -76,7 +75,7 @@ function Introduction() {
             </div>
 
             <span className='w-[25vw] mt-1 ml-3 text-lg font-noto font-medium text-center'>
-              저는 문제 상황이 발생했을 때 침착하게 분석하고, 그 과정을 통해 실수를 배우는 기회로 삼아 문제를 해결하는 데 집중합니다. <br/> 실패를 두려워하지 않고 오히려 성장의 발판으로 받아들이며, <br/> 자신감을 쌓기 위해 작은 목표부터 차근차근 설정하고 꾸준히 나아가는 태도를 중요하게 생각합니다.
+              저는 문제 상황이 발생했을 때 침착하게 분석하고, 그 과정을 통해 실수를 배우는 기회로 삼아 문제를 해결하는 데 집중합니다. <br /> 실패를 두려워하지 않고 오히려 성장의 발판으로 받아들이며, <br /> 자신감을 쌓기 위해 작은 목표부터 차근차근 설정하고 꾸준히 나아가는 태도를 중요하게 생각합니다.
             </span>
           </div>
         </div>
@@ -113,6 +112,26 @@ function Introduction() {
         </div>
       </div>
 
+      <div className='relative block h-[200vh] -mb-[115vh] uppercase font-aeonik font-semibold'>
+        <div className='sticky top-0 mt-[3vw] flex w-full h-[100vh] items-center justify-between'>
+          {/* finished */}
+          <div className='flex flex-col w-[50%] justify-start'>
+            <span className='relative text-xl '>finished</span>
+            <span className='relative text-xl '>finished</span>
+            <span className='relative text-xl '>finished</span>
+            <span className='relative text-xl '>finished</span>
+          </div>
+          {/* count 숫자 */}
+          <span className='text-[42vw] text-center w-[50%]'>0</span>
+          {/* projects */}
+          <div className='flex flex-col w-[50%] justify-end text-right'>
+            <span className='relative text-xl'>projects</span>
+            <span className='relative text-xl'>projects</span>
+            <span className='relative text-xl'>projects</span>
+            <span className='relative text-xl'>projects</span>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

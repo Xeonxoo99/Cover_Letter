@@ -28,3 +28,6 @@ github , 이메일, 전화번호, ....
 
 회색 으로 덮이면서
 감사합니다!
+
+[출처]
+라이엇 : https://www.riotgames.com/ko
