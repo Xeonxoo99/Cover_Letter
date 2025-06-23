@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Section4() {
+function Imformation() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function Section4() {
   )
 }
 
-export default Section4
+export default Imformation
