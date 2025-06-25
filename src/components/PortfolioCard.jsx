@@ -1,14 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useScrollProgress } from '../contexts/ScrollProgressContext';
 
 function PortfolioCard({ item }) {
 
     const ref = useRef(null);
 
+    // useScrollProgress 훅을 사용하여 Context에서 updateScrollProgress 함수를 가져옵니다.
+    const { updateScrollProgress } = useScrollProgress();
+
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ['start start', 'end start'],
     });
+
+   // scrollYProgress 값이 변할 때마다 Context를 업데이트합니다.
+    useEffect(() => {
+      // scrollYProgress의 변화를 감지하고, 해당 카드 ID와 함께 Context에 업데이트합니다.
+      // item.id를 사용하여 각 카드를 고유하게 식별합니다.
+      const unsubscribe = scrollYProgress.onChange((latestProgress) => {
+        updateScrollProgress(item.id, latestProgress);
+      console.log(`[PortfolioCard - ID: ${item.id}] Latest Scroll Progress: ${latestProgress}`);
+
+      });
+      return () => unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
+    }, [scrollYProgress, item.id, updateScrollProgress]);
+
 
     const y = useTransform(scrollYProgress, [0, 1], [0, -70]);
     const rotate = useTransform(scrollYProgress, [0, 1], [0, 8]);

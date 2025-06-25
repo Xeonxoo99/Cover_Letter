@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react'; 
 import PortfolioCard from './PortfolioCard';
 
 import riot from '../images/portfolio/riot.avif';
@@ -49,16 +49,16 @@ const portfolioData = [
   },
 ];
 
-// React Hook이 map() 같은 콜백 내부에서 사용되어 오류 발생
-// 모든 React Hook (useRef, useScroll, useTransform)은 컴포넌트의 최상위에서만 호출되어야 하여 별도 컴포넌트 생성
-function Portfolio() {
+// forwardRef로 감싸기
+const Portfolio = forwardRef((props, ref) => {
+
   return (
-    <section className="relative block w-full mb-[20vh] font-aeonik">
+    <section ref={ref} className="relative block w-full mb-[20vh] font-aeonik">
       {portfolioData.map((item) => (
         <PortfolioCard key={item.id} item={item} />
       ))}
     </section>
   );
-}
+});
 
 export default Portfolio;
