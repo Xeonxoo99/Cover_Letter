@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       fontFamily: {
         aeonik: ['Aeonik', 'sans-serif'],
-        noto: ['"Noto Sans KR"', 'sans-serif'],
+        noto: ['Noto Sans KR', 'sans-serif'],
+        pretendard :['Pretendard-Regular']
       },
     },
   },

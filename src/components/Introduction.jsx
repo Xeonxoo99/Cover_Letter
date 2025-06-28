@@ -1,24 +1,29 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { CountUp } from 'countup.js';
 
 import html5 from '../images/introduction/HTML5.svg'
 import css3 from '../images/introduction/CSS3.svg'
 import js from '../images/introduction/JS.svg'
 import react from '../images/introduction/React.svg'
-import tailwindcss from '../images/introduction/Tailwind.svg'
-import gsap from '../images/introduction/GSAP.svg'
+import nextjs from '../images/introduction/nextjs.svg'
 
 const images = [
   { src: html5, alt: 'HTML5' },
   { src: css3, alt: 'CSS3' },
   { src: js, alt: 'JavaScript' },
   { src: react, alt: 'React' },
-  { src: tailwindcss, alt: 'Tailwind CSS' },
-  { src: gsap, alt: 'GSAP' },
+  // { src: tailwindcss, alt: 'Tailwind CSS' },
+  // { src: gsap, alt: 'GSAP' },
+  // { src: git, alt: 'git' },
+  { src: nextjs, alt: 'nextjs'}
 ]
 
 function Introduction() {
   const ref = useRef(null);
+  const [num, setNum] = useState(0);
+  const countUpRef = useRef(null);
+  const finalNumber = 3;
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -27,13 +32,40 @@ function Introduction() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.99, 1], [1, 1, 0]);
 
+
+  useEffect(() => {
+    // CountUp 초기화
+    const countUp = new CountUp(countUpRef.current, finalNumber, {
+      duration: 3, // 애니메이션 시간
+      useEasing: true,
+      useGrouping: true,
+    });
+
+    // 스크롤 이벤트로 시작
+    const handleScroll = () => {
+      if (countUpRef.current.getBoundingClientRect().top * 2.5 <= window.innerHeight) {
+        countUp.start(() => setNum(finalNumber));
+        window.removeEventListener('scroll', handleScroll);
+
+      }
+    };
+    console.log(countUpRef.current.getBoundingClientRect().bottom)
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+
+  }, []);
+
   return (
     <section ref={ref} className='relative w-full pt-[6vw] px-[3.125vw] pb-[8vw] font-aeonik'>
       {/* 간략한 소개 문구 */}
-      <motion.div style={{opacity}}>
+      <motion.div style={{ opacity }}>
         <div className='relative inline-block w-[1400px] pt-10 -ml-[1vw]'>
           <span className=''>
-            <p className='absolute text-[16px] font-bold top-6 left-5'>프론트엔드 개발자, 항상 발전 중인 사람.</p>
+            <p className='absolute text-[16px] font-bold top-6 left-5 font-pretendard'>프론트엔드 개발자, 항상 발전 중인 사람.</p>
             <h1 className='p-0 m-0 text-[200px]'
               style={{ lineHeight: '0.8em' }}
             >
@@ -85,7 +117,7 @@ function Introduction() {
               <div className='w-[300px] h-[400px] bg-[#4e4d4d] mt-3'>
               </div>
 
-              <span className='w-[25vw] mt-1 ml-3 text-lg font-noto font-medium text-center'>
+              <span className='w-[25vw] mt-1 ml-3 text-lg font-pretendard text-center'>
                 저는 문제 상황이 발생했을 때 침착하게 분석하고, 그 과정을 통해 실수를 배우는 기회로 삼아 문제를 해결하는 데 집중합니다. <br /> 실패를 두려워하지 않고 오히려 성장의 발판으로 받아들이며, <br /> 자신감을 쌓기 위해 작은 목표부터 차근차근 설정하고 꾸준히 나아가는 태도를 중요하게 생각합니다.
               </span>
             </div>
@@ -127,19 +159,59 @@ function Introduction() {
           <div className='sticky top-0 mt-[3vw] flex w-full h-[100vh] items-center justify-between'>
             {/* finished */}
             <div className='flex flex-col w-[50%] justify-start'>
-              <span className='relative text-xl'>finished</span>
-              <span className='relative text-xl'>finished</span>
-              <span className='relative text-xl'>finished</span>
-              <span className='relative text-xl'>finished</span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 0.5 }}
+              >
+                finished
+              </motion.span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 1 }}
+              >
+                finished
+              </motion.span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 1.5 }}
+              >
+                finished
+              </motion.span>
             </div>
             {/* count 숫자 */}
-            <span className='text-[42vw] text-center w-[50%]'>0</span>
+            <span ref={countUpRef} className='text-[42vw] text-center w-[50%]'>{num.toLocaleString()}</span>
             {/* projects */}
             <div className='flex flex-col w-[50%] justify-end text-right'>
-              <span className='relative text-xl'>projects</span>
-              <span className='relative text-xl'>projects</span>
-              <span className='relative text-xl'>projects</span>
-              <span className='relative text-xl'>projects</span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 0.5 }}
+              >
+                projects
+              </motion.span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 1 }}
+              >
+                projects
+              </motion.span>
+              <motion.span
+                className='relative text-xl'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.1, delay: 1.5 }}
+              >
+                projects
+              </motion.span>
             </div>
           </div>
         </div>

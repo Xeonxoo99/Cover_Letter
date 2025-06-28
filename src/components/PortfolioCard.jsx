@@ -20,7 +20,7 @@ function PortfolioCard({ item }) {
       // item.id를 사용하여 각 카드를 고유하게 식별합니다.
       const unsubscribe = scrollYProgress.onChange((latestProgress) => {
         updateScrollProgress(item.id, latestProgress);
-      console.log(`[PortfolioCard - ID: ${item.id}] Latest Scroll Progress: ${latestProgress}`);
+    //   console.log(`[PortfolioCard - ID: ${item.id}] Latest Scroll Progress: ${latestProgress}`);
 
       });
       return () => unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
