@@ -10,15 +10,15 @@ import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
 
 const carouselItems = [
+  { type: 'text', content: 'EFFORT' }, // EFFORT 텍스트 아이템 추가
   { type: 'image', src: tailwindcss, alt: 'Tailwind CSS', text: 'TAILWIND CSS' },
   { type: 'image', src: gsap, alt: 'GSAP', text: 'GSAP' },
   { type: 'image', src: git, alt: 'git', text: 'GIT' },
   { type: 'image', src: threejs, alt: 'threejs', text: 'THREE.JS' },
-  { type: 'text', content: 'EFFORT' } // EFFORT 텍스트 아이템 추가
 ];
 
+//  검정색 박스 나타나는 순서
 const fixedRevealOrder = [
-  // 여기에 제가 새로 만들어 드린 긴 배열을 붙여넣으세요
   175, 23, 179, 137, 185, 110, 169, 149, 115, 184, 186, 17, 159, 183, 192, 117, 98, 102, 33, 27,
   194, 91, 74, 96, 157, 43, 132, 195, 109, 105, 68, 14, 13, 197, 104, 82, 199, 108, 18, 113,
   128, 12, 165, 15, 164, 163, 172, 136, 19, 148, 120, 188, 103, 151, 141, 140, 135, 176, 170, 71,
@@ -70,54 +70,70 @@ function Imformation() {
 
   }, [cardScrollProgress, totalBoxes]);
 
-  const AniRef = useRef(null)
+  const sectionRef = useRef(null);
+  const ani2Ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
-    target: AniRef,
-    offset: ['start end', 'end end'],
-  })
+    target: sectionRef,
+    offset: ["start end", "end start"], // 부모 section 전체 스크롤
+  });
 
-  const iconOpacity = useTransform(scrollYProgress, [0, 0.5], [1,0])
+  const { scrollYProgress: ani2scrollYProgress } = useScroll({
+    target: ani2Ref,
+    offset: ["start end", "end start"], // 부모 section 전체 스크롤
+  });
+
+  // const centericonOpacity = useTransform(scrollYProgress, [0, 0.3, 0.31, 0.5 , 1], [0, 1, 0, 0, 0]);
+  const iconOpacity = useTransform(scrollYProgress, [0, 0.3, 0.31, 0.5, 1], [0, 1, 1, 0, 0]);
+  // const section1_2 = useTransform(scrollYProgress, [0.2, 0.21, 0.31, 1], [0, 1, 1, 0]);
+  const imageOpacity = useTransform(ani2scrollYProgress, [0.6, 0.61, 0.71, 0.72], [0, 0, 1, 1]);
+  const logoScale = useTransform(scrollYProgress, [0.2, 0.21, 0.31, 1], [1, 1.5, 2, 3]);
+
+  // transform: translateX(0) → translateX(49.3vw)
+  const x = useTransform(ani2scrollYProgress, [0.3, 1], ['0vw', '49.3vw']);
+
+  // height, width: 초기 18vw → 5500vw
+  const size = useTransform(ani2scrollYProgress, [0.3, 1], ['18vw', '8800vw']);
+
+  const greyOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
   useEffect(() => {
     const unsubscribe = iconOpacity.onChange((latest) => {
-      if (latest > 0.5) {
+      if (latest > 0) {
         const interval = setInterval(() => {
           // carouselItems 배열의 길이를 기준으로 인덱스를 순환합니다.
           setCurrentItemIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-        }, 1000); // n초마다 아이템 변경
+        }, 1500); // n초마다 아이템 변경
 
         return () => clearInterval(interval);
       } else {
-        setCurrentItemIndex(0); // 아이콘 영역이 보이지 않게 되면 첫 번째 아이템으로 초기화
+        setCurrentItemIndex(0);
       }
     });
 
     return () => unsubscribe();
-  }, [iconOpacity, carouselItems.length]); // carouselItems.length도 의존성 배열에 추가
+  }, [carouselItems.length]);
 
   // 아이템 애니메이션을 위한 variants
   const itemVariants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
+    animate: { visibility: 'visible' },
+    exit: { visibility: 'hidden' },
   };
 
 
 
   return (
-    <section ref={AniRef} className="relative block">
-
+    <section ref={sectionRef} className="relative block">
       {/* 애니메이션 */}
-      <div className="relative flex w-full items-center flex-wrap pointer-events-none text-[16px]">
+      <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
         {/* 1번 애니메이션 */}
         <div className="fixed flex top-0 left-0 w-full h-screen flex-wrap">
           {boxes.map((boxIndex) => (
             <motion.div
               key={boxIndex}
-              className="w-[5vw] h-[10vh] bg-[#000000]"
+              className="w-[5vw] h-[10vh] flex-grow-1 bg-[#000000]"
               initial={{ opacity: 0 }}
               animate={{ opacity: fixedRevealOrder.indexOf(boxIndex) < revealedBoxCount ? 1 : 0 }}
             />
@@ -125,368 +141,379 @@ function Imformation() {
         </div>
 
         {/* 2번 애니메이션 */}
-        <div className=' block w-screen h-[400vh]'>
+        <motion.div ref={ani2Ref} className='relative block w-screen h-[400vh] bg-black'
+          style={{ opacity: 1, mixBlendMode: 'difference' }}>
           <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center'>
             <div className='absolute flex w-screen h-screen items-center justify-center'>
+
               {/* 이미지 박스 */}
-              <div className='absolute w-screen h-[150vh]'
-                style={{ opacity: 0 }}
+              {/* <motion.div className='absolute top-10 w-screen h-[150vh]'
+                style={{ opacity: imageOpacity }}
               >
                 <img src={me} alt="me" className='w-screen h-screen object-cover' />
-              </div>
+              </motion.div> */}
+
               {/* 로고 박스 */}
-              <div className='absolute flex w-screen h-full items-center justify-center'
-                style={{ opacity: 0 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306.113 29.355" className="w-[18vw] h-[18vw]">
-                  <text
-                    x="0"
-                    y="24"
-                    fontFamily="aeonik, sans-serif"
-                    fontSize="32"
-                    fontWeight="bold"
-                    fill="#ffffff"
-                  >
-                    REACT
-                  </text>
-                </svg>
-              </div>
+              <motion.div className='absolute flex w-screen h-full items-center justify-center'>
+                <motion.svg
+                  id="b"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  viewBox="0 0 886.2 1106.5"
+                  className="absolute flex-shrink-1"
+                  style={{
+                    translate: 'none',
+                    rotate: 'none',
+                    scale: 'none',
+                    opacity: greyOpacity,
+                    transform: `translate(${x}vw, 0px)`,
+                    height: size,
+                    width: size,
+                  }}
+                >
+                  <motion.path
+                    id="about-logo_grey"
+                    data-name="about-logo grey"
+                    d="M87.1 193.2h712v720h-712z"
+                    style={{ fill: 'rgb(184, 184, 184)', strokeWidth: 0, opacity: 1 }}
+                  />
+                  <path
+                    d="M473 579.7c0 5.7 4.6 9.3 11.9 9.3 11.6 0 18.7-7.2 18.8-18.2v-1.6h-16.2c-9.3 0-14.6 3.8-14.6 10.5Z"
+                    className="cls-1"
+                  />
+                  <path
+                    d="M-1-.3v1106.7h887.3V-.3H-1Zm276.1 605.2c-22.5 0-37.7-10.5-38.6-27.8h21c.8 7.1 6.9 11.9 17.7 11.9s14.9-3 14.9-8.6-5.5-7.1-18.5-8.8c-18.8-2.2-33.5-6.4-33.5-23.1s14-26.5 34.7-26.4c21.7 0 36.6 9.6 37.7 26.1h-21.2c-.6-6.4-6.8-10.4-15.7-10.4s-14.3 3.1-14.3 8.3 6.9 6.8 18.5 8.2c18.5 1.9 33.9 6.1 33.9 24.3s-15.1 26.2-36.7 26.2Zm169.8-.9h-22.1v-45.1c0-12.1-4.4-18.4-14-18.4s-16 7.1-16 19.3v44.1h-22.1v-45.1c0-12.1-4.4-18.4-14.1-18.4s-15.9 7.4-15.9 19.5v44h-22.1v-80.7h19.3l2 10.1c4.9-6.3 11.9-10.8 23.7-11 9.9-.2 19.2 3.5 24.2 13.7 5.7-8.6 15.1-13.7 27.3-13.7s29.8 9.4 29.8 35.3v46.3Zm88.4 0H522c-11.5 0-15.1-5.5-14.9-13.2-5.7 9-13.8 14.1-26.4 14.1s-30-8.3-30-23.7 12.9-26.9 37.1-26.9h16v-3.9c0-7.2-5.2-11.9-14.4-11.9s-14.4 3.9-15.4 9.9h-21.4c1.6-15.7 16-26.1 37.4-26.1s35.7 10.1 35.7 29.4v28.6c0 4.2 1.7 5 5.2 5h2.5V604Zm52.8-60.6h-8.8c-13.2 0-18.2 8.8-18.2 21V604H537v-80.7h20.1l2 12.1c4.4-7.2 10.7-12.1 23.2-12.1h3.8v20.1Zm58.3 60.6h-18.1c-15.4 0-23.1-7.7-23.1-23.1V542h-13.3v-18.7h13.3v-22.6h22.1v22.6h18.5V542h-18.5v35.3c0 5.7 2.2 8 8 8h11V604Z"
+                    className="cls-1"
+                  />
+                </motion.svg>
+              </motion.div>
             </div>
-          </div>
 
-          {/* 아이콘들 영역 */}
-          <div className='sticky top-0 py-[10vh] px-[5.2vw] w-screen h-screen flex flex-wrap items-center justify-center'
-            style={{ opacity: iconOpacity }}
-          >
-            {/* 각 아이콘을 담을 컨테이너 */}
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            {/* 가운데 */}
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-            <div className='relative flex w-[33%] h-[20%] items-center justify-center'>
-              {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-              <AnimatePresence mode='wait'>
-                {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                {currentItemIndex !== null && (
-                  // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                  carouselItems[currentItemIndex].type === 'image' ? (
-                    // 이미지 타입일 경우
-                    <motion.img
-                      key={currentItemIndex + "-img"} // 고유 key
-                      src={carouselItems[currentItemIndex].src}
-                      alt={carouselItems[currentItemIndex].alt}
-                      className={`absolute w-40 h-40 object-contain ${currentItemIndex === 3 ? 'top-2 right-48' : ''}`}
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    />
-                  ) : (
-                    // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                    <motion.div
-                      key={currentItemIndex + "-text"} // 고유 key
-                      className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                      variants={itemVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={{ duration: 0.3, ease: "linear" }}
-                    >
-                      <span>{carouselItems[currentItemIndex].content}</span>
-                    </motion.div>
-                  )
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
 
+            {/* 아이콘들 영역 */}
+            <motion.div className='relative top-0 py-[10vh] px-[5.2vw] w-screen h-screen flex flex-wrap items-center justify-center'
+              style={{ opacity: iconOpacity }}
+            >
+              {/* 각 아이콘을 담을 컨테이너 */}
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              {/* 가운데 */}
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: 0 }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
+                style={{ opacity: iconOpacity }}>
+                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
+                <AnimatePresence mode='wait'>
+                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
+                  {currentItemIndex !== null && (
+                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
+                    carouselItems[currentItemIndex].type === 'image' ? (
+                      // 이미지 타입일 경우
+                      <motion.img
+                        key={currentItemIndex + "-img"} // 고유 key
+                        src={carouselItems[currentItemIndex].src}
+                        alt={carouselItems[currentItemIndex].alt}
+                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      />
+                    ) : (
+                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
+                      <motion.div
+                        key={currentItemIndex + "-text"} // 고유 key
+                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                        variants={itemVariants}
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.3, ease: "linear" }}
+                      >
+                        <span>{carouselItems[currentItemIndex].content}</span>
+                      </motion.div>
+                    )
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
       {/* 소개 부분 */}
       <div>
