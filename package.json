@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "countup.js": "^2.9.0",
     "framer-motion": "^12.18.1",
+    "gsap": "^3.13.0",
     "install": "^0.13.0",
     "npm": "^11.4.2",
     "react": "^19.1.0",

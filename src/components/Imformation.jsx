@@ -9,8 +9,16 @@ import gsap from '../images/introduction/GSAP.svg'
 import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
 
+const images = [
+  {
+    src: 'https://img2.storyblok.com/700x0/filters:quality(85):format(webp)/f/160527/6720x4480/4e09ba972d/0p0a5742-edit.jpg',
+    alt: 'Smart Device Tec + Bugatti',
+    tag: 'Bugatti Carbone Limited Edition',
+  },
+];
+
 const carouselItems = [
-  { type: 'text', content: 'EFFORT' }, // EFFORT 텍스트 아이템 추가
+  { type: 'text', content: 'EFFORT' },
   { type: 'image', src: tailwindcss, alt: 'Tailwind CSS', text: 'TAILWIND CSS' },
   { type: 'image', src: gsap, alt: 'GSAP', text: 'GSAP' },
   { type: 'image', src: git, alt: 'git', text: 'GIT' },
@@ -32,6 +40,7 @@ const fixedRevealOrder = [
 ];
 
 function Imformation() {
+  // 검정색 박스 애니메이션
   const { cardScrollProgress } = useScrollProgress();
   const totalBoxes = 200;
   const boxes = Array.from({ length: totalBoxes }, (_, index) => index);
@@ -70,8 +79,9 @@ function Imformation() {
 
   }, [cardScrollProgress, totalBoxes]);
 
-  const sectionRef = useRef(null);
-  const ani2Ref = useRef(null);
+  // svg로고 및 이미지 박스 애니메이션
+  const sectionRef = useRef(null); // 전체 섹션 ref
+  const ani2Ref = useRef(null); // 2번째 애니메이션 div ref
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -80,22 +90,11 @@ function Imformation() {
 
   const { scrollYProgress: ani2scrollYProgress } = useScroll({
     target: ani2Ref,
-    offset: ["start end", "end start"], // 부모 section 전체 스크롤
+    offset: ["start end", "end start"], // 2번째 애니메이션 div ref 전체 스크롤
   });
 
-  // const centericonOpacity = useTransform(scrollYProgress, [0, 0.3, 0.31, 0.5 , 1], [0, 1, 0, 0, 0]);
+  // 8개 아이콘
   const iconOpacity = useTransform(scrollYProgress, [0, 0.3, 0.31, 0.5, 1], [0, 1, 1, 0, 0]);
-  // const section1_2 = useTransform(scrollYProgress, [0.2, 0.21, 0.31, 1], [0, 1, 1, 0]);
-  const imageOpacity = useTransform(ani2scrollYProgress, [0.6, 0.61, 0.71, 0.72], [0, 0, 1, 1]);
-  const logoScale = useTransform(scrollYProgress, [0.2, 0.21, 0.31, 1], [1, 1.5, 2, 3]);
-
-  // transform: translateX(0) → translateX(49.3vw)
-  const x = useTransform(ani2scrollYProgress, [0.3, 1], ['0vw', '49.3vw']);
-
-  // height, width: 초기 18vw → 5500vw
-  const size = useTransform(ani2scrollYProgress, [0.3, 1], ['18vw', '8800vw']);
-
-  const greyOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
@@ -114,7 +113,7 @@ function Imformation() {
     });
 
     return () => unsubscribe();
-  }, [carouselItems.length]);
+  }, [iconOpacity]);
 
   // 아이템 애니메이션을 위한 variants
   const itemVariants = {
@@ -122,7 +121,21 @@ function Imformation() {
     exit: { visibility: 'hidden' },
   };
 
+  // svg 로고 및 이미지 박스
 
+  const x = useTransform(ani2scrollYProgress, [0, 0.7], ['0vw', '56vw']); // transform: translateX(0) → translateX(49.3vw)
+
+  const size = useTransform(ani2scrollYProgress, [0, 0.7], ['18vw', '5800vw']); // height, width: 초기 18vw → 5500vw
+  const greyOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  const horizontalRef = useRef(null);
+
+  const { scrollYProgress : horizontalScrollYProgress } = useScroll({
+    target: horizontalRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const horizontal = useTransform(horizontalScrollYProgress, [0, 1], ['0px', '4384px']);
 
   return (
     <section ref={sectionRef} className="relative block">
@@ -141,10 +154,10 @@ function Imformation() {
         </div>
 
         {/* 2번 애니메이션 */}
-        <motion.div ref={ani2Ref} className='relative block w-screen h-[400vh] bg-black'
+        <motion.div ref={ani2Ref} className='relative block w-full h-[400vh] bg-black'
           style={{ opacity: 1, mixBlendMode: 'difference' }}>
-          <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center'>
-            <div className='absolute flex w-screen h-screen items-center justify-center'>
+          <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center overflow-hidden'>
+            <div className='absolute flex w-screen h-full items-center justify-center'>
 
               {/* 이미지 박스 */}
               {/* <motion.div className='absolute top-10 w-screen h-[150vh]'
@@ -160,7 +173,7 @@ function Imformation() {
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   viewBox="0 0 886.2 1106.5"
-                  className="absolute flex-shrink-1"
+                  className="absolute"
                   style={{
                     translate: 'none',
                     rotate: 'none',
@@ -169,6 +182,9 @@ function Imformation() {
                     transform: `translate(${x}vw, 0px)`,
                     height: size,
                     width: size,
+                    overflow: 'hidden',
+                    fill: '#000000',
+                    flexShrink: 1,
                   }}
                 >
                   <motion.path
@@ -194,329 +210,132 @@ function Imformation() {
             <motion.div className='relative top-0 py-[10vh] px-[5.2vw] w-screen h-screen flex flex-wrap items-center justify-center'
               style={{ opacity: iconOpacity }}
             >
-              {/* 각 아이콘을 담을 컨테이너 */}
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              {/* 가운데 */}
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: 0 }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              <motion.div className='relative flex w-[33%] h-[20%] items-center justify-center'
-                style={{ opacity: iconOpacity }}>
-                {/* AnimatePresence로 이미지 교체 애니메이션 활성화 */}
-                <AnimatePresence mode='wait'>
-                  {/* 현재 currentItemIndex에 해당하는 아이템만 렌더링합니다. */}
-                  {currentItemIndex !== null && (
-                    // 현재 아이템의 타입에 따라 다른 컴포넌트를 렌더링합니다.
-                    carouselItems[currentItemIndex].type === 'image' ? (
-                      // 이미지 타입일 경우
-                      <motion.img
-                        key={currentItemIndex + "-img"} // 고유 key
-                        src={carouselItems[currentItemIndex].src}
-                        alt={carouselItems[currentItemIndex].alt}
-                        className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      />
-                    ) : (
-                      // 텍스트 타입일 경우 ('EFFORT' 텍스트)
-                      <motion.div
-                        key={currentItemIndex + "-text"} // 고유 key
-                        className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
-                        variants={itemVariants}
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.3, ease: "linear" }}
-                      >
-                        <span>{carouselItems[currentItemIndex].content}</span>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
-              </motion.div>
+              {Array.from({ length: 9 }).map((_, index) => (
+                <motion.div
+                  key={index}
+                  className="relative flex w-[33%] h-[20%] items-center justify-center"
+                  style={{ opacity: index === 4 ? 0 : iconOpacity }}
+                >
+                  <AnimatePresence mode='wait'>
+                    {currentItemIndex !== null && (
+                      carouselItems[currentItemIndex].type === 'image' ? (
+                        <motion.img
+                          key={currentItemIndex + "-img"}
+                          src={carouselItems[currentItemIndex].src}
+                          alt={carouselItems[currentItemIndex].alt}
+                          className={`absolute w-40 h-40 object-contain ${currentItemIndex === 4 ? 'top-2 right-[10vw]' : ''}`}
+                          variants={itemVariants}
+                          animate="animate"
+                          exit="exit"
+                          transition={{ duration: 0.3, ease: "linear" }}
+                        />
+                      ) : (
+                        <motion.div
+                          key={currentItemIndex + "-text"}
+                          className='absolute flex text-center items-center justify-center text-white text-4xl font-bold'
+                          variants={itemVariants}
+                          animate="animate"
+                          exit="exit"
+                          transition={{ duration: 0.3, ease: "linear" }}
+                        >
+                          <span>{carouselItems[currentItemIndex].content}</span>
+                        </motion.div>
+                      )
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.div>
       </div>
+
       {/* 소개 부분 */}
-      <div>
+      <div className='relative w-full -mt-[100vh] z-[999] font-aeonik font-normal bg-[tomato] text-white'>
+        {/* 문구 */}
+        <span className="block text-[5.2083333333vw] leading-[1em] [mix-blend-mode:difference] px-[3.125vw] relative text-justify [text-align-last:justify] [-moz-text-align-last:justify] [text-indent:46.66667vw]">
+          <h1>
+            Hard-Working Dev {/* 근면 성실한 사람 */}
+            <br />
+            is a front-end developer crafting modern web interfaces for innovative brands like
+          </h1>
+        </span>
+
+        {/*  */}
+        <div>
+          <div className='h-[1487.5px]'></div>
+          <div className='h-[1120px]'></div>
+          <div className='h-[928.2px]'></div>
+        </div>
+
+        {/* 가로 스크롤 */}
+        <div ref={horizontalRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-[962px] p-0 bg-[green]">
+          <div className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
+            <motion.div  className={`relative flex w-fit h-full`}
+            style={{ x: horizontal }}
+            >
+              {/* Developer */}
+              <div className='relative flex flex-col -ml-[30vw] overflow-hidden'>
+                <span className='text-[70vh]'>
+                  <span className="flex items-center text-[var(--bg-color)] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
+                    <span>
+                      <span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>D</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>v</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>l</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>o</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>p</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'></span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span className='text-[70vh]'>
+                  <span className="flex items-center text-[var(--bg-color)] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
+                    <span>
+                      <span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>D</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>v</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>l</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>o</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>p</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>e</span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'></span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </div>
+              {/* 이미지 */}
+              <div className="translate-none rotate-0 scale-100 [transform:translate3d(-0.0vw,0px,0px)] counter-reset-[grid-counter] grid [grid-template-columns:repeat(100,1fr)] [grid-template-rows:repeat(100,1fr)] h-screen -mr-[20vw] min-w-[1600px] pointer-events-none relative w-[120vw]">
+                {images.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`relative`}
+                    style={{ transform: 'translate(0px, 0px)' }}
+                  >
+                    <div className="overflow-hidden">
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        width={700}
+                        height="auto"
+                        draggable={false}
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                    <div className="mt-2 text-sm text-gray-700">{item.tag}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
 
       </div>
     </section>
