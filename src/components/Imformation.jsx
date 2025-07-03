@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useScrollProgress } from '../contexts/ScrollProgressContext';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import me from '../images/imformation/me.jpg'
 
 import tailwindcss from '../images/introduction/Tailwind.svg'
-import gsap from '../images/introduction/GSAP.svg'
+import gsapimg from '../images/introduction/GSAP.svg'
 import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
+
+gsap.registerPlugin(ScrollTrigger);
+
+
 
 const images = [
   {
@@ -20,7 +26,7 @@ const images = [
 const carouselItems = [
   { type: 'text', content: 'EFFORT' },
   { type: 'image', src: tailwindcss, alt: 'Tailwind CSS', text: 'TAILWIND CSS' },
-  { type: 'image', src: gsap, alt: 'GSAP', text: 'GSAP' },
+  { type: 'image', src: gsapimg, alt: 'GSAPImg', text: 'GSAPImg' },
   { type: 'image', src: git, alt: 'git', text: 'GIT' },
   { type: 'image', src: threejs, alt: 'threejs', text: 'THREE.JS' },
 ];
@@ -123,22 +129,73 @@ function Imformation() {
 
   // svg 로고 및 이미지 박스
 
-  const x = useTransform(ani2scrollYProgress, [0, 0.7], ['0vw', '56vw']); // transform: translateX(0) → translateX(49.3vw)
+  const x = useTransform(ani2scrollYProgress, [0.3, 0.7], ['0vw', '56vw']); // transform: translateX(0) → translateX(49.3vw)
 
-  const size = useTransform(ani2scrollYProgress, [0, 0.7], ['18vw', '5800vw']); // height, width: 초기 18vw → 5500vw
+  const size = useTransform(ani2scrollYProgress, [0.3, 0.7], ['18vw', '5800vw']); // height, width: 초기 18vw → 5500vw
   const greyOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const horizontalRef = useRef(null);
+  // 가로 스크롤
 
-  const { scrollYProgress : horizontalScrollYProgress } = useScroll({
-    target: horizontalRef,
-    offset: ['start start', 'end end'],
-  });
+  const wrapperRef = useRef(null);
+  const innerRef = useRef(null);
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const inner = innerRef.current;
 
-  const horizontal = useTransform(horizontalScrollYProgress, [0, 1], ['0px', '4384px']);
+    if (!wrapper || !inner) return;
+
+    const scrollWidth = inner.scrollWidth;
+    const viewportWidth = window.innerWidth;
+
+    const tl = gsap.to(inner, {
+      x: () => -(scrollWidth - viewportWidth),
+      ease: "none",
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top top",
+        end: () => `+=${4384}px`,
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+  // developer ani
+  const developerRef = useRef(null);
+
+  useEffect(() => {
+    if (!developerRef.current) return;
+
+    const letters = developerRef.current.querySelectorAll(".developer-letter");
+
+    gsap.fromTo(
+      letters,
+      {
+        y: "0%",
+        opacity: 1,
+      },
+      {
+        y: "-120%",
+        opacity: 0,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: developerRef.current,
+          start: "top center", // 시작 시점
+          end: "bottom center", // 끝 시점
+          scrub: true, // 스크롤 연동
+        },
+      }
+    );
+  }, []);
 
   return (
-    <section ref={sectionRef} className="relative block">
+    <section ref={sectionRef} className="relative block overflow-x-clip">
       {/* 애니메이션 */}
       <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
         {/* 1번 애니메이션 */}
@@ -208,7 +265,7 @@ function Imformation() {
 
             {/* 아이콘들 영역 */}
             <motion.div className='relative top-0 py-[10vh] px-[5.2vw] w-screen h-screen flex flex-wrap items-center justify-center'
-              style={{ opacity: iconOpacity }}
+              style={{ opacity: iconOpacity, willChange: 'transform' }}
             >
               {Array.from({ length: 9 }).map((_, index) => (
                 <motion.div
@@ -269,32 +326,26 @@ function Imformation() {
         </div>
 
         {/* 가로 스크롤 */}
-        <div ref={horizontalRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-[962px] p-0 bg-[green]">
-          <div className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
-            <motion.div  className={`relative flex w-fit h-full`}
-            style={{ x: horizontal }}
-            >
+        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0 bg-[green]">
+          <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
+            <motion.div className={`relative flex w-fit h-full`}>
               {/* Developer */}
-              <div className='relative flex flex-col -ml-[30vw] overflow-hidden'>
+              <div ref={developerRef} className='relative flex flex-col -ml-[30vw] overflow-hidden'>
                 <span className='text-[70vh]'>
-                  <span className="flex items-center text-[var(--bg-color)] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
+                  <span className="flex items-center text-[#b8b8b8] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>D</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>v</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>l</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>o</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>p</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'>e</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,-120%)]'></span>
+                        {"Developer".split("").map((char, index) => (
+                          <span key={index} className='developer-letter inline-block'>
+                            {char}
+                          </span>
+                        ))}
                       </span>
                     </span>
                   </span>
                 </span>
                 <span className='text-[70vh]'>
-                  <span className="flex items-center text-[var(--bg-color)] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
+                  <span className="flex items-center text-[#b8b8b8] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
                         <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>D</span>
@@ -305,7 +356,7 @@ function Imformation() {
                         <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>o</span>
                         <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>p</span>
                         <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>e</span>
-                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'></span>
+                        <span className='inline-block translate-none rotate-0 scale-100 [transform:translate(0px,0px)]'>r</span>
                       </span>
                     </span>
                   </span>
