@@ -415,15 +415,91 @@ import tailwindcss from '../images/introduction/Tailwind.svg'
 import gsapimg from '../images/introduction/GSAP.svg'
 import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
+import html5 from '../images/introduction/HTML5.svg'
+import css3 from '../images/introduction/CSS3.svg'
+import js from '../images/introduction/JS.svg'
+import react from '../images/introduction/React.svg'
+import nextjs from '../images/introduction/nextjs.svg'
+import framerMotion from '../images/introduction/framer.svg'
+
+import demonSlayer from '../images/portfolio/demon_slayer.webp'
+import riot from '../images/portfolio/riot.jpeg'
 
 gsap.registerPlugin(ScrollTrigger);
 
 const images = [
   {
-    src: tailwindcss,
-    alt: 'Tailwind CSS',
-    tag: 'Tailwind CSS',
+    src: html5,
+    alt: 'HTML5',
+    tag: 'HTML5',
+    style: 'top-[50%] left-[-7%]'
   },
+  {
+    src: demonSlayer,
+    alt: 'demonSlayer',
+    tag: 'DemonSlayer',
+    style: 'top-[0%] left-[-7%]'
+  },
+  {
+    src: css3,
+    alt: 'CSS3',
+    tag: 'CSS3',
+    style: 'top-[30%] left-[12%]'
+  },
+  {
+    src: git,
+    alt: 'Git',
+    tag: 'Git',
+    style: 'top-[80%] left-[7%]'
+  },
+  {
+    src: riot,
+    alt: 'riot',
+    tag: 'Riot',
+    style: 'top-[50%] left-[20%]'
+  },
+  // {
+  //   src: js,
+  //   alt: 'JS',
+  //   tag: 'JS',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: react,
+  //   alt: 'React',
+  //   tag: 'React',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: tailwindcss,
+  //   alt: 'Tailwind CSS',
+  //   tag: 'Tailwind CSS',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: gsapimg,
+  //   alt: 'GSAP',
+  //   tag: 'GSAP',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: framerMotion,
+  //   alt: 'Motion',
+  //   tag: 'Motion',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: threejs,
+  //   alt: 'Three Js',
+  //   tag: 'Three Js',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
+  // {
+  //   src: nextjs,
+  //   alt: 'Next Js',
+  //   tag: 'Next Js',
+  //   style: 'top-[-5%] left-[12%]'
+  // },
 ];
 
 const carouselItems = [
@@ -838,17 +914,17 @@ function Imformation() {
           <div className='h-[1120px]'></div>
           <div className='h-[928.2px]'></div> */}
         </div>
-        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
+        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0 bg-[#111111]">
           <div>
             {/* <div className='h-[1487.5px]'></div>
             <div className='h-[1120px]'></div>
             <div className='h-[928.2px]'></div> */}
           </div>
           <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
-            <div className={`relative flex w-fit h-full`}>
+            <div className={`relative flex w-fit h-full ]`}>
               <div  className='relative flex flex-col -ml-[30vw] overflow-hidden'>
-                <span ref={developerRef} className='text-[70vh]'>
-                  <span className="flex items-center text-[#000000] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
+                <span ref={developerRef} className='text-[80vh]'>
+                  <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
                         {"Developer".split("").map((char, index) => (
@@ -858,8 +934,8 @@ function Imformation() {
                     </span>
                   </span>
                 </span>
-                <span ref={developer2Ref} className='absolute text-[70vh] ml-[34rem]'>
-                  <span className="flex items-center text-[#000000] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
+                <span ref={developer2Ref} className='absolute text-[80vh] ml-[34rem]'>
+                  <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
                         {"Developer".split("").map((char, index) => (
@@ -870,13 +946,13 @@ function Imformation() {
                   </span>
                 </span>
               </div>
-              <div className="translate-none rotate-0 scale-100 [transform:translate3d(-0.0vw,0px,0px)] counter-reset-[grid-counter] grid [grid-template-columns:repeat(100,1fr)] [grid-template-rows:repeat(100,1fr)] h-screen -mr-[20vw] min-w-[1600px] pointer-events-none relative w-[120vw]">
+              <div className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[1600px] pointer-events-none relative w-[120vw]">
                 {images.map((item, index) => (
-                  <div key={index} className={`relative`} style={{}}>
-                    <div className="overflow-hidden">
-                      <img src={item.src} alt={item.alt} width={700} height="auto" draggable={false} className="w-full h-auto object-cover"/>
+                  <div key={index} className={`absolute ${item.style}`} style={{}}>
+                    <div className="w-full h-full relative flex justify-center overflow-hidden">
+                      <img src={item.src} alt={item.alt} draggable={false} className="w-[55%] h-[55%] object-cover"/>
                     </div>
-                    <div className="mt-2 text-sm text-gray-700">{item.tag}</div>
+                    <div className="text-sm text-gray-700 text-center"><span className=''>{item.tag}</span></div>
                   </div>
                 ))}
               </div>

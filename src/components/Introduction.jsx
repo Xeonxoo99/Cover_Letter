@@ -13,9 +13,6 @@ const images = [
   { src: css3, alt: 'CSS3' },
   { src: js, alt: 'JavaScript' },
   { src: react, alt: 'React' },
-  // { src: tailwindcss, alt: 'Tailwind CSS' },
-  // { src: gsap, alt: 'GSAP' },
-  // { src: git, alt: 'git' },
   { src: nextjs, alt: 'nextjs'}
 ]
 
