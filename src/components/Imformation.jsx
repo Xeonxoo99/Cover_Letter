@@ -688,7 +688,7 @@ function Imformation() {
         scrollTrigger: {
           trigger: developerRef.current,
           start: "top top",
-          end: "bottom center",
+          end: "bottom top",
           scrub: true,
           markers:true
         },
@@ -711,7 +711,7 @@ function Imformation() {
         scrollTrigger: {
           trigger: developer2Ref.current,
           start: "top top",
-          end: "bottom center",
+          end: "bottom top",
           scrub: true,
           markers:true
         },
@@ -874,7 +874,7 @@ function Imformation() {
                 {images.map((item, index) => (
                   <div key={index} className={`relative`} style={{}}>
                     <div className="overflow-hidden">
-                      <img src={item.src} alt={item.alt} width={700} height="auto" draggable={false} className="w-full h-auto object-cover" />
+                      <img src={item.src} alt={item.alt} width={700} height="auto" draggable={false} className="w-full h-auto object-cover"/>
                     </div>
                     <div className="mt-2 text-sm text-gray-700">{item.tag}</div>
                   </div>
