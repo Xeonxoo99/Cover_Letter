@@ -420,9 +420,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const images = [
   {
-    src: 'https://img2.storyblok.com/700x0/filters:quality(85):format(webp)/f/160527/6720x4480/4e09ba972d/0p0a5742-edit.jpg',
-    alt: 'Smart Device Tec + Bugatti',
-    tag: 'Bugatti Carbone Limited Edition',
+    src: tailwindcss,
+    alt: 'Tailwind CSS',
+    tag: 'Tailwind CSS',
   },
 ];
 
@@ -872,7 +872,7 @@ function Imformation() {
               </div>
               <div className="translate-none rotate-0 scale-100 [transform:translate3d(-0.0vw,0px,0px)] counter-reset-[grid-counter] grid [grid-template-columns:repeat(100,1fr)] [grid-template-rows:repeat(100,1fr)] h-screen -mr-[20vw] min-w-[1600px] pointer-events-none relative w-[120vw]">
                 {images.map((item, index) => (
-                  <div key={index} className={`relative`} style={{ transform: 'translate(0px, 0px)' }}>
+                  <div key={index} className={`relative`} style={{}}>
                     <div className="overflow-hidden">
                       <img src={item.src} alt={item.alt} width={700} height="auto" draggable={false} className="w-full h-auto object-cover" />
                     </div>
