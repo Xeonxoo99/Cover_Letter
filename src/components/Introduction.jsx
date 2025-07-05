@@ -63,20 +63,22 @@ function Introduction() {
     <section ref={ref} className='relative w-full pt-[6vw] px-[3.125vw] pb-[8vw] font-aeonik'>
       {/* 간략한 소개 문구 */}
       <motion.div style={{ opacity }}>
-        <div className='relative inline-block w-[1400px] pt-10 -ml-[1vw]'>
-          <span className=''>
-            <p className='absolute text-[16px] font-bold top-6 left-5 font-pretendard'>프론트엔드 개발자, 항상 발전 중인 사람.</p>
-            <h1 className='p-0 m-0 text-[200px]'
-              style={{ lineHeight: '0.8em' }}
+        <div className=' inline-block w-1/2 lg:w-[1400px] pt-10 -ml-[1vw]'>
+          <div className=''>
+            <p className='relative left-2 lg:left-4 font-pretendard'>
+              안녕하세요. 항상 발전 중인 프론트엔드 개발자, 김연수 입니다.
+              </p>
+            <h1 className='p-0 m-0 text-6xl lg:text-[160px] uppercase leading-none'
+          
             >
-              Frontend Developer, Always in Progress.
+              Front-End Developer, Always in Progress.
             </h1>
-          </span>
+          </div>
         </div>
 
-        {/* 아이콘들 */}
+        {/* 아이콘들 Marquee */}
         <div className='relative w-full'>
-          <div className='relative py-52 left-1/2 transform -translate-x-1/2 w-[93vw] h-16 flex items-center justify-around'>
+          <div className='relative py-52 left-1/2 transform -translate-x-1/2 w-screen h-16 flex items-center justify-around'>
             {images.map(({ src, alt }, index) => (
               <img
                 key={index}
@@ -90,7 +92,7 @@ function Introduction() {
         </div>
 
         {/* 중간 문구 */}
-        <div className='relative w-full pb-24 flex flex-col items-center text-center text-[2vw] uppercase'>
+        {/* <div className='relative w-full pb-24 flex flex-col items-center text-center text-[2vw] uppercase'>
           <span className='inline-block'>
             <h2 className='leading-[38.4px]'>Junior</h2>
             <h2 className='leading-[38.4px]'>Frontend</h2>
@@ -100,7 +102,7 @@ function Introduction() {
             <span className='w-[50%] text-center'>since</span>
             <span className='w-[50%] text-center'>2023:</span>
           </div>
-        </div>
+        </div> */}
 
         {/* 자기소개 및 자격증/졸업 등*/}
         <div className='relative w-full flex justify-between'>
@@ -117,7 +119,7 @@ function Introduction() {
               <div className='w-[300px] h-[400px] bg-[#4e4d4d] mt-3'>
               </div>
 
-              <span className='w-[25vw] mt-1 ml-3 text-lg font-pretendard text-center'>
+              <span className='w-[25vw] mt-2 ml-3 text-lg font-pretendard text-left'>
                 저는 문제 상황이 발생했을 때 침착하게 분석하고, 그 과정을 통해 실수를 배우는 기회로 삼아 문제를 해결하는 데 집중합니다. <br /> 실패를 두려워하지 않고 오히려 성장의 발판으로 받아들이며, <br /> 자신감을 쌓기 위해 작은 목표부터 차근차근 설정하고 꾸준히 나아가는 태도를 중요하게 생각합니다.
               </span>
             </div>

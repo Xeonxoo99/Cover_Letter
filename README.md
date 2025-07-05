@@ -1,3 +1,13 @@
+# 250705
+
+[섹션1]
+1. 아이콘들 Marquee기능
+
+
+
+---
+
+
 [섹션1]
 The health, soft- & hardware company.
 본인의 소개, 
@@ -20,6 +30,13 @@ I focus on problem-solving by calmly analyzing issues and learning from mistakes
 
 아이콘
 html5 css3 react nextjs
+
+MINIPROJECT
+
+[[[ CSS애니메이션 2개 + 미니프로젝트 2~3개 ]]]
+hover 시에 동영상?
+
+
 
 [섹션5]
 Profile

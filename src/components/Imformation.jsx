@@ -799,7 +799,7 @@ function Imformation() {
                           key={`${gridIndex}-${itemIndex}-img`}
                           src={item.src}
                           alt={item.alt}
-                          className={`${itemClasses} w-40 h-40 object-contain`}
+                          className={`${itemClasses} w-20 h-20 object-contain`}
                           // Ref를 addIndividualCarouselRef로 전달합니다.
                           ref={el => addIndividualCarouselRef(el, gridIndex, itemIndex)}
                           style={{ opacity: itemIndex === 0 ? 1 : 0 }} // 초기 첫 아이템만 보이게

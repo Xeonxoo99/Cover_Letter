@@ -15,7 +15,7 @@ function Header() {
           fontFamily="aeonik, sans-serif"
           fontSize="32"
           fontWeight="bold"
-          fill="#b8b8b8"
+          fill="#fff"
         >
           Kim Yeon Soo
         </text>
