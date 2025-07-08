@@ -17,84 +17,59 @@ import react from '../images/introduction/React.svg'
 import nextjs from '../images/introduction/nextjs.svg'
 import framerMotion from '../images/introduction/framer.svg'
 
-import demonSlayer from '../images/portfolio/demon_slayer.webp'
-import riot from '../images/portfolio/riot.jpeg'
+import baseball_game from '../images/imformation/baseball_game.png'
+import jquery from '../images/imformation/jquery.png'
+import login from '../images/imformation/login.mp4'
+import mini_project from '../images/imformation/mini_project2.gif'
+import mini_project2 from '../images/imformation/mini_project.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
 
-const images = [
+const projects = [
   {
-    src: html5,
-    alt: 'HTML5',
-    tag: 'HTML5',
+    src: baseball_game,
+    alt: 'baseball_game',
+    tag: 'JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.',
     style: 'top-[50%] left-[-7%]'
   },
   {
-    src: demonSlayer,
-    alt: 'demonSlayer',
-    tag: 'DemonSlayer',
-    style: 'top-[0%] left-[-7%]'
+    src: jquery,
+    alt: 'jquery',
+    tag: 'jquery로 만든 영화 기록 블로그입니다.',
+    style: 'top-[0%] left-[5%]'
   },
   {
-    src: css3,
-    alt: 'CSS3',
-    tag: 'CSS3',
-    style: 'top-[30%] left-[12%]'
+    src: login,
+    alt: 'login',
+    tag: 'js로 만든 블로그 사이트입니다.',
+    style: 'top-[60%] left-[15%]'
   },
   {
-    src: git,
-    alt: 'Git',
-    tag: 'Git',
-    style: 'top-[80%] left-[7%]'
+    src: mini_project,
+    alt: 'mini_project',
+    tag: (
+      <>
+        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
+        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
+        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+      </>
+    ),
+    style: 'top-[0%] left-[25%]'
   },
   {
-    src: riot,
-    alt: 'riot',
-    tag: 'Riot',
-    style: 'top-[50%] left-[20%]'
+    src: mini_project2,
+    alt: 'mini_project2',
+        tag: (
+      <>
+        부트캠프에서의 마지막 프로젝트입니다.<br />
+        백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
+        Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
+        회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
+        2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
+      </>
+    ),
+    style: 'top-[35%] left-[43%]'
   },
-  // {
-  //   src: js,
-  //   alt: 'JS',
-  //   tag: 'JS',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: react,
-  //   alt: 'React',
-  //   tag: 'React',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: tailwindcss,
-  //   alt: 'Tailwind CSS',
-  //   tag: 'Tailwind CSS',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: gsapimg,
-  //   alt: 'GSAP',
-  //   tag: 'GSAP',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: framerMotion,
-  //   alt: 'Motion',
-  //   tag: 'Motion',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: threejs,
-  //   alt: 'Three Js',
-  //   tag: 'Three Js',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
-  // {
-  //   src: nextjs,
-  //   alt: 'Next Js',
-  //   tag: 'Next Js',
-  //   style: 'top-[-5%] left-[12%]'
-  // },
 ];
 
 const carouselItems = [
@@ -154,7 +129,8 @@ function Imformation() {
   const iconRef = useRef(null); // 9칸 그리드 전체를 감싸는 ref
   const svgLogoRef = useRef(null); // 중앙에 고정될 SVG 로고 ref
   const imgRef = useRef(null);
-  const displayRef = useRef(null)
+  const displayRef = useRef(null);
+  const pathRef = useRef(null);
 
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
@@ -172,15 +148,15 @@ function Imformation() {
       // grid display none으로 변경
       const divNone = gsap.timeline({
         scrollTrigger: {
-          trigger: ani2Ref.current,
-          start: "bottom bottom-=1000",
+          trigger: displayRef.current,
+          start: "bottom top-=5000",
           end: "70% top",
           scrub: 1,
           // markers:true
         }
       });
       divNone.to(displayRef.current, {
-        display: 'none'
+        backgroundColor: 'black'
       })
 
       // aniRef div opacity 조절
@@ -210,8 +186,33 @@ function Imformation() {
         x: '56vw',
         width: '5800vw',
         height: '5800vw',
-        opacity: 1,
         ease: 'none'
+      });
+
+      const svgOpacityTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ani2Ref.current,
+          start: "30% top",
+          end: "top top",
+          scrub: 1,
+        }
+      });
+      svgOpacityTl.to(svgLogoRef.current, {
+        opacity: 1
+      });
+
+
+      // 로고 내부 path opacity 조절
+      const pathTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ani2Ref.current,
+          start: "10% top",
+          end: "70% top",
+          scrub: 1,
+        }
+      });
+      pathTl.to(pathRef.current, {
+        opacity: 0,
       });
 
       // meImg opacity 조절
@@ -226,6 +227,20 @@ function Imformation() {
       });
       imgOpacity.to(imgRef.current, {
         opacity: 1
+      })
+
+      // meImg opacity 다시 0으로
+      const imgOpacity2 = gsap.timeline({
+        scrollTrigger: {
+          trigger: ani2Ref.current,
+          start: "70% top",
+          end: "bottom bottom-=2500",
+          scrub: 1,
+          // markers:true
+        }
+      });
+      imgOpacity2.to(imgRef.current, {
+        opacity: 0
       })
 
 
@@ -305,7 +320,7 @@ function Imformation() {
   }, [carouselItems.length]);
 
   // 클리핑 마스크 효과
-  
+
 
   // 가로 스크롤 (기존 로직 유지)
   const wrapperRef = useRef(null);
@@ -350,9 +365,9 @@ function Imformation() {
         scrollTrigger: {
           trigger: developerRef.current,
           start: "top top",
-          end: "bottom top-=200",
+          end: "bottom top-=500",
           scrub: true,
-          markers:true
+          // markers:true
         },
       }
     );
@@ -373,9 +388,9 @@ function Imformation() {
         scrollTrigger: {
           trigger: developer2Ref.current,
           start: "top top",
-          end: "bottom top",
+          end: "bottom top-=500",
           scrub: true,
-          markers:true
+          // markers:true
         },
       }
     );
@@ -386,7 +401,7 @@ function Imformation() {
       <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
         {/* 1번 애니메이션 */}
         <div ref={displayRef} className="fixed flex top-0 left-0 w-full h-screen flex-wrap"
-        // style={{display:'flex'}}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
         >
           {boxes.map((boxIndex) => (
             <motion.div
@@ -400,16 +415,15 @@ function Imformation() {
 
         {/* 2번 애니메이션 */}
         <div ref={ani2Ref} className='relative block w-full h-[400vh] '
-          style={{  opacity: 0 }}>
-            {/* mixBlendMode: 'difference', */}
+          style={{ opacity: 0 }}>
+          {/* mixBlendMode: 'difference', */}
           <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center overflow-hidden'>
 
             <div className='absolute flex w-screen h-full items-center justify-center'>
               <div ref={imgRef} className='absolute top-10 w-screen h-[150vh]'
-                
+                style={{ opacity: 0, willChange: 'clip-path, opacity' }}
               >
-                <img src={me} alt="me" className='w-screen h-screen object-cover'
-                style={{ opacity: 0,willChange: 'clip-path, opacity' }} />
+                <img src={me} alt="me" className='w-screen h-screen object-cover' />
               </div>
               {/* 로고 박스 (애니메이션이 적용된 중앙 SVG) */}
               <div className='absolute flex w-screen h-full items-center justify-center'>
@@ -430,6 +444,7 @@ function Imformation() {
                   }}
                 >
                   <path
+                    ref={pathRef}
                     id="about-logo_grey"
                     data-name="about-logo grey"
                     d="M87.1 193.2h712v720h-712z"
@@ -488,28 +503,25 @@ function Imformation() {
       </div>
       <div>
         <div className='h-[1487.5px]'></div>
-        <div className='h-[1120px]'></div>
-        {/* <div className='h-[928.2px]'></div> */}
+        {/* <div className='h-[1120px]'></div>
+        <div className='h-[928.2px]'></div> */}
       </div>
-      {/* 소개 부분 */}
-      <div className='relative w-full -mt-[100vh] z-[999] font-aeonik font-normal text-white'>
-        <span className="block text-[5.2083333333vw] leading-[1em] [mix-blend-mode:difference] px-[3.125vw] relative text-justify [text-align-last:justify] [-moz-text-align-last:justify] [text-indent:46.66667vw]">
+      <div className='relative w-full -mt-[100vh] z-[999] font-aeonik font-normal' style={{ mixBlendMode: 'difference' }}>
+        <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
+          >
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span>
-        <div>
-          {/* <div className='h-[1487.5px]'></div>
-          <div className='h-[1120px]'></div>
-          <div className='h-[928.2px]'></div> */}
-        </div>
-        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0 bg-[#111111]">
-          <div>
-            {/* <div className='h-[1487.5px]'></div>
-            <div className='h-[1120px]'></div>
-            <div className='h-[928.2px]'></div> */}
-          </div>
+      </div>
+      {/* 소개 부분 */}
+      <div className='relative w-full z-[9999] font-aeonik font-normal' >
+        {/* <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
+          style={{ mixBlendMode: 'difference' }}>
+          <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
+        </span> */}
+        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
           <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
             <div className={`relative flex w-fit h-full ]`}>
-              <div  className='relative flex flex-col -ml-[30vw] overflow-hidden'>
+              <div className='relative flex flex-col -ml-[30vw] overflow-hidden'>
                 <span ref={developerRef} className='text-[80vh]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
@@ -526,23 +538,47 @@ function Imformation() {
                     <span>
                       <span>
                         {"Mini Project".split("").map((char, index) => (
-                            <span key={index} className='developer-letter2 inline-block'>{char}</span>
-                          ))}
+                          <span key={index} className='developer-letter2 inline-block'>{char}</span>
+                        ))}
                       </span>
                     </span>
                   </span>
                 </span>
               </div>
-              <div className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[1600px] pointer-events-none relative w-[120vw]">
-                {images.map((item, index) => (
-                  <div key={index} className={`absolute ${item.style}`} style={{}}>
-                    <div className="w-full h-full relative flex justify-center overflow-hidden">
-                      <img src={item.src} alt={item.alt} draggable={false} className="w-[55%] h-[55%] object-cover"/>
+              <div className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[200vw]" style={{ mixBlendMode: 'difference' }}>
+                {projects.map((item, index) => {
+                  const isVideo = item.src.endsWith('.mp4'); // 파일 확장자 체크
+                  return (
+                    <div key={index} className={`absolute ${item.style}`}>
+                      <div className="w-full h-full relative flex justify-center overflow-hidden" style={{}}>
+                        {isVideo ? (
+                          <video
+                            src={item.src}
+                            className="w-[33%] h-[33%] object-cover"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                          />
+                        ) : (
+                          <img
+                            src={item.src}
+                            alt={item.alt}
+                            draggable={false}
+                            className="w-[55%] h-[45%] object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="text-sm text-[#ffffff] text-center">
+                        <span>{item.tag}</span>
+                      </div>
                     </div>
-                    <div className="text-sm text-gray-700 text-center"><span className=''>{item.tag}</span></div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
+                    <div className='relative w-screen h-screen bg-[green]'>
+            
+      </div>
             </div>
           </div>
         </div>

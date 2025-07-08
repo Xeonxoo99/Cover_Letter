@@ -17,7 +17,7 @@ const portfolioData = [
   {
     id: 1,
     year: '2025',
-    count: '1 / 5',
+    count: '1 / 3',
     logo: riotLogo,
     center: riotCenter,
     img: riot,
@@ -28,7 +28,7 @@ const portfolioData = [
   {
     id: 2,
     year: '2025',
-    count: '2 / 5',
+    count: '2 / 3',
     logo: subwayLogo,
     center: subwayCenter,
     img: null,
@@ -39,7 +39,7 @@ const portfolioData = [
   {
     id: 3,
     year: '2025',
-    count: '3 / 5',
+    count: '3 / 3',
     logo: demonLogo,
     center: demonCenter,
     img: null,
