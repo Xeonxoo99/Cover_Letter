@@ -21,7 +21,7 @@ import baseball_game from '../images/imformation/baseball_game.png'
 import jquery from '../images/imformation/jquery.png'
 import login from '../images/imformation/login.mp4'
 import mini_project from '../images/imformation/mini_project2.gif'
-import mini_project2 from '../images/imformation/mini_project.mp4'
+// import mini_project2 from '../images/imformation/mini_project.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,20 +56,20 @@ const projects = [
     ),
     style: 'top-[0%] left-[25%]'
   },
-  {
-    src: mini_project2,
-    alt: 'mini_project2',
-        tag: (
-      <>
-        부트캠프에서의 마지막 프로젝트입니다.<br />
-        백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
-        Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
-        회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
-        2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
-      </>
-    ),
-    style: 'top-[35%] left-[43%]'
-  },
+  // {
+  //   src: mini_project2,
+  //   alt: 'mini_project2',
+  //       tag: (
+  //     <>
+  //       부트캠프에서의 마지막 프로젝트입니다.<br />
+  //       백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
+  //       Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
+  //       회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
+  //       2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
+  //     </>
+  //   ),
+  //   style: 'top-[35%] left-[43%]'
+  // },
 ];
 
 const carouselItems = [
