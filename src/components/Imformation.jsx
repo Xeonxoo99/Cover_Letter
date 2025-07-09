@@ -21,7 +21,7 @@ import baseball_game from '../images/imformation/baseball_game.png'
 import jquery from '../images/imformation/jquery.png'
 import login from '../images/imformation/login.mp4'
 import mini_project from '../images/imformation/mini_project2.gif'
-// import mini_project2 from '../images/imformation/mini_project.mp4'
+import mini_project2 from '../images/imformation/mini_project.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,20 +56,20 @@ const projects = [
     ),
     style: 'top-[0%] left-[25%]'
   },
-  // {
-  //   src: mini_project2,
-  //   alt: 'mini_project2',
-  //       tag: (
-  //     <>
-  //       부트캠프에서의 마지막 프로젝트입니다.<br />
-  //       백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
-  //       Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
-  //       회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
-  //       2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
-  //     </>
-  //   ),
-  //   style: 'top-[35%] left-[43%]'
-  // },
+  {
+    src: mini_project2,
+    alt: 'mini_project2',
+    tag: (
+      <>
+        부트캠프에서의 마지막 프로젝트입니다.<br />
+        백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
+        Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
+        회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
+        2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
+      </>
+    ),
+    style: 'top-[35%] left-[40%]'
+  },
 ];
 
 const carouselItems = [
@@ -319,8 +319,6 @@ function Imformation() {
     return () => ctx.revert();
   }, [carouselItems.length]);
 
-  // 클리핑 마스크 효과
-
 
   // 가로 스크롤 (기존 로직 유지)
   const wrapperRef = useRef(null);
@@ -396,6 +394,82 @@ function Imformation() {
     );
   }, []);
 
+  // hover 시 동영상 재생
+  const handleMouseEnter = (e) => {
+    const video = e.currentTarget.querySelector('video');
+    if (video) {
+      video.play();
+    }
+  };
+
+  const handleMouseLeave = (e) => {
+    const video = e.currentTarget.querySelector('video');
+    if (video) {
+      video.pause();
+    }
+  };
+
+  // 이미지, 비디오 보이게 하는 애니메이션
+  useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+
+    projects.forEach((project, index) => {
+  const el = document.querySelector(`#project-${index}`);
+
+  let directionProp, fromValue, toValue;
+
+  switch(index) {
+    case 0:
+      directionProp = "width";
+      fromValue = "0%";
+      toValue = "33%";
+      break;
+    case 1:
+      directionProp = "height";
+      fromValue = "0%";
+      toValue = "45%";
+      break;
+    case 2:
+      directionProp = "height";
+      fromValue = "0%";
+      toValue = "45%";
+      break;
+    case 3:
+      directionProp = "width";
+      fromValue = "0%";
+      toValue = "33%";
+      break;
+    case 4:
+      directionProp = "height";
+      fromValue = "0%";
+      toValue = "45%";
+      break;
+    default:
+      break;
+  }
+
+  gsap.fromTo(el,
+    { [directionProp]: fromValue },
+    {
+      [directionProp]: toValue,
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: `bottom top+=${index * 100 + 2000}`, // 인덱스별로 100px씩 시작 지연
+        end: "bottom center",
+        scrub: true,
+        markers: true
+      }
+    }
+  )
+});
+
+
+  }, sectionRef);
+
+  return () => ctx.revert();
+}, []);
+
   return (
     <section ref={sectionRef} className="relative block overflow-x-clip">
       <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
@@ -406,7 +480,7 @@ function Imformation() {
           {boxes.map((boxIndex) => (
             <motion.div
               key={boxIndex}
-              className="w-[5vw] h-[10vh] flex-grow-1 bg-[#000000]"
+              className="w-[5vw] h-[10vh] flex-grow-1 bg-[#302e2e]"
               initial={{ opacity: 0 }}
               animate={{ opacity: fixedRevealOrder.indexOf(boxIndex) < revealedBoxCount ? 1 : 0 }}
             />
@@ -508,17 +582,17 @@ function Imformation() {
       </div>
       <div className='relative w-full -mt-[100vh] z-[999] font-aeonik font-normal' style={{ mixBlendMode: 'difference' }}>
         <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
-          >
+        >
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span>
       </div>
       {/* 소개 부분 */}
-      <div className='relative w-full z-[9999] font-aeonik font-normal' >
+      <div className='relative w-full z-[999] font-aeonik font-normal' >
         {/* <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
           style={{ mixBlendMode: 'difference' }}>
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span> */}
-        <div ref={wrapperRef} className="block z-[9999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
+        <div ref={wrapperRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
           <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
             <div className={`relative flex w-fit h-full ]`}>
               <div className='relative flex flex-col -ml-[30vw] overflow-hidden'>
@@ -546,39 +620,29 @@ function Imformation() {
                 </span>
               </div>
               <div className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[200vw]" style={{ mixBlendMode: 'difference' }}>
-                {projects.map((item, index) => {
-                  const isVideo = item.src.endsWith('.mp4'); // 파일 확장자 체크
-                  return (
-                    <div key={index} className={`absolute ${item.style}`}>
-                      <div className="w-full h-full relative flex justify-center overflow-hidden" style={{}}>
-                        {isVideo ? (
-                          <video
-                            src={item.src}
-                            className="w-[33%] h-[33%] object-cover"
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                          />
-                        ) : (
-                          <img
-                            src={item.src}
-                            alt={item.alt}
-                            draggable={false}
-                            className="w-[55%] h-[45%] object-cover"
-                          />
-                        )}
-                      </div>
-                      <div className="text-sm text-[#ffffff] text-center">
-                        <span>{item.tag}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                {projects.map((project, index) => (
+  <div
+    key={index}
+    id={`project-${index}`}
+    className={`absolute ${project.style}`}
+
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  >
+    {project.alt === 'login' || project.alt === 'mini_project2' ? (
+      <video src={project.src} alt={project.alt} muted loop playsInline className="object-cover w-full h-full"    style={{
+      width: project.alt === 'login' || project.alt === 'mini_project2' ? '0%' : '0%',
+      height: project.alt === 'login' || project.alt === 'mini_project2' ? '0%' : '0%',
+    }} />
+    ) : (
+      <img src={project.src} alt={project.alt} className="object-cover w-full h-full" />
+    )}
+  </div>
+))}
               </div>
-                    <div className='relative w-screen h-screen bg-[green]'>
-            
-      </div>
+              <div className='relative w-screen h-screen bg-[green]'>
+
+              </div>
             </div>
           </div>
         </div>
