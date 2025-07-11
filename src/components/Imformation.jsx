@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useScrollProgress } from '../contexts/ScrollProgressContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -29,20 +29,32 @@ const projects = [
   {
     src: baseball_game,
     alt: 'baseball_game',
-    tag: 'JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.',
-    style: 'top-[50%] left-[-7%]'
+    tag: (
+      <>
+        JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.
+      </>
+    ),
+    style: 'top-[35%] left-[-7%]'
   },
   {
     src: jquery,
     alt: 'jquery',
-    tag: 'jquery로 만든 영화 기록 블로그입니다.',
-    style: 'top-[0%] left-[5%]'
+    tag: (
+      <>
+        jquery로 만든 영화 기록 블로그입니다.
+      </>
+    ),
+    style: 'top-[0%] left-[3%]'
   },
   {
     src: login,
     alt: 'login',
-    tag: 'js로 만든 블로그 사이트입니다.',
-    style: 'top-[60%] left-[15%]'
+    tag: (
+      <>
+        js로 만든 블로그 사이트입니다.
+      </>
+    ),
+    style: 'top-[50%] left-[15%]'
   },
   {
     src: mini_project,
@@ -54,7 +66,7 @@ const projects = [
         저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
       </>
     ),
-    style: 'top-[0%] left-[25%]'
+    style: 'top-[0%] left-[27%]'
   },
   {
     src: mini_project2,
@@ -68,7 +80,7 @@ const projects = [
         2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
       </>
     ),
-    style: 'top-[35%] left-[40%]'
+    style: 'top-[30%] left-[43%]'
   },
 ];
 
@@ -131,6 +143,7 @@ function Imformation() {
   const imgRef = useRef(null);
   const displayRef = useRef(null);
   const pathRef = useRef(null);
+  const projectRef = useRef(null);
 
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
@@ -410,65 +423,39 @@ function Imformation() {
   };
 
   // 이미지, 비디오 보이게 하는 애니메이션
-  useLayoutEffect(() => {
-  const ctx = gsap.context(() => {
+  const mediaRefs = useRef([]);
 
-    projects.forEach((project, index) => {
-  const el = document.querySelector(`#project-${index}`);
+  useEffect(() => {
+    mediaRefs.current.forEach((el, index) => {
+      if (!el) return;
 
-  let directionProp, fromValue, toValue;
+      // console.log(projects[index].src) 로 확인 후 아래 조건 수정
+      const isVideo = typeof projects[index].src === 'string' && projects[index].src.includes('.mp4');
 
-  switch(index) {
-    case 0:
-      directionProp = "width";
-      fromValue = "0%";
-      toValue = "33%";
-      break;
-    case 1:
-      directionProp = "height";
-      fromValue = "0%";
-      toValue = "45%";
-      break;
-    case 2:
-      directionProp = "height";
-      fromValue = "0%";
-      toValue = "45%";
-      break;
-    case 3:
-      directionProp = "width";
-      fromValue = "0%";
-      toValue = "33%";
-      break;
-    case 4:
-      directionProp = "height";
-      fromValue = "0%";
-      toValue = "45%";
-      break;
-    default:
-      break;
-  }
+      gsap.set(el, { width: 0, height: 0 });
 
-  gsap.fromTo(el,
-    { [directionProp]: fromValue },
-    {
-      [directionProp]: toValue,
-      ease: "none",
-      scrollTrigger: {
-        trigger: el,
-        start: `bottom top+=${index * 100 + 2000}`, // 인덱스별로 100px씩 시작 지연
-        end: "bottom center",
-        scrub: true,
-        markers: true
-      }
-    }
-  )
-});
+      // 개선된 animateProps
+      let animateProps = {
+        width: isVideo ? '45%' : '45%',
+        height: isVideo ? '45%' : '45%',
+      };
+
+      gsap.to(el, {
+        ...animateProps,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom-=2500', // 더 안정적인 trigger 조건
+          end: 'bottom bottom-=2500',
+          toggleActions: 'play none none none',
+          markers: true
+        },
+      });
+    });
+  }, [projects]);
 
 
-  }, sectionRef);
-
-  return () => ctx.revert();
-}, []);
 
   return (
     <section ref={sectionRef} className="relative block overflow-x-clip">
@@ -480,7 +467,7 @@ function Imformation() {
           {boxes.map((boxIndex) => (
             <motion.div
               key={boxIndex}
-              className="w-[5vw] h-[10vh] flex-grow-1 bg-[#302e2e]"
+              className="w-[5vw] h-[10vh] flex-grow-1 bg-[#000000]" //bg-[#302e2e]
               initial={{ opacity: 0 }}
               animate={{ opacity: fixedRevealOrder.indexOf(boxIndex) < revealedBoxCount ? 1 : 0 }}
             />
@@ -619,33 +606,51 @@ function Imformation() {
                   </span>
                 </span>
               </div>
-              <div className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[200vw]" style={{ mixBlendMode: 'difference' }}>
-                {projects.map((project, index) => (
-  <div
-    key={index}
-    id={`project-${index}`}
-    className={`absolute ${project.style}`}
+              <div ref={projectRef} className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[200vw]" style={{ mixBlendMode: 'difference' }}>
+                {projects.map((item, index) => {
+                  const isVideo = item.src.endsWith('.mp4');
+                  return (
+                    <div
+                      key={index}
+                      className={`absolute ${item.style}`}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="relative flex justify-center overflow-hidden">
+                        {isVideo ? (
+                          <video
+                            ref={(el) => (mediaRefs.current[index] = el)}
+                            src={item.src}
+                            className="object-cover"
 
-    onMouseEnter={handleMouseEnter}
-    onMouseLeave={handleMouseLeave}
-  >
-    {project.alt === 'login' || project.alt === 'mini_project2' ? (
-      <video src={project.src} alt={project.alt} muted loop playsInline className="object-cover w-full h-full"    style={{
-      width: project.alt === 'login' || project.alt === 'mini_project2' ? '0%' : '0%',
-      height: project.alt === 'login' || project.alt === 'mini_project2' ? '0%' : '0%',
-    }} />
-    ) : (
-      <img src={project.src} alt={project.alt} className="object-cover w-full h-full" />
-    )}
-  </div>
-))}
+                            muted
+                            playsInline
+                          />
+                        ) : (
+                          <img
+                            ref={(el) => (mediaRefs.current[index] = el)}
+                            src={item.src}
+                            alt={item.alt}
+                            draggable={false}
+                            className="object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="text-sm text-[#ffffff] text-center">
+                        <span>{item.tag}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <div className='relative w-screen h-screen bg-[green]'>
-
               </div>
             </div>
           </div>
         </div>
+      </div>
+      {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
+      <div>
       </div>
     </section>
   );
