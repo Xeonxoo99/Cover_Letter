@@ -144,6 +144,11 @@ function Imformation() {
   const displayRef = useRef(null);
   const pathRef = useRef(null);
   const projectRef = useRef(null);
+  const lastRef = useRef(null);
+  const boxOpacityRef = useRef(null);
+  const boxScaleRef = useRef(null);
+  const boxScaleRefs = useRef([]);
+  const boxOpacityRefs = useRef([]);
 
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
@@ -202,6 +207,7 @@ function Imformation() {
         ease: 'none'
       });
 
+      // svg 배경 opacity
       const svgOpacityTl = gsap.timeline({
         scrollTrigger: {
           trigger: ani2Ref.current,
@@ -213,7 +219,6 @@ function Imformation() {
       svgOpacityTl.to(svgLogoRef.current, {
         opacity: 1
       });
-
 
       // 로고 내부 path opacity 조절
       const pathTl = gsap.timeline({
@@ -255,7 +260,6 @@ function Imformation() {
       imgOpacity2.to(imgRef.current, {
         opacity: 0
       })
-
 
       // 전체 아이콘 영역(iconRef)의 등장 및 사라짐 애니메이션
       const iconOpacityTl = gsap.timeline({
@@ -328,6 +332,63 @@ function Imformation() {
         }
       });
     }, sectionRef);
+
+    // 마지막 opacity, scale 애니메이션
+    const totalBoxes = 10;
+    const boxScaleTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: lastRef.current,
+        start: "bottom bottom-=5000",
+        end: "bottom bottom",
+        scrub: 1,
+        markers: true
+      }
+    });
+
+    const boxOpacityTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: lastRef.current,
+        start: "bottom bottom-=5000",
+        end: "bottom bottom",
+        scrub: 1,
+        markers: true
+      }
+    });
+
+    // 순차적 애니메이션 적용
+    for (let i = 0; i < totalBoxes; i++) {
+      const box = boxScaleRefs.current[i];
+      if (box) {
+        boxScaleTimeline.to(box, {
+          height: '100%',
+          duration: 1, // 각 박스 애니메이션 duration
+          ease: "power1.out"
+        }, i * 5); // 순차 offset
+      }
+    }
+
+    for (let i = 0; i < totalBoxes; i++) {
+      const box = boxOpacityRefs.current[i];
+      if (box) {
+        boxOpacityTimeline.to(box, {
+          opacity: 1,
+          duration: 1, // 각 박스 애니메이션 duration
+          ease: "power1.out"
+        }, i * 2); // 순차 offset
+      }
+    }
+
+    // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
+    ScrollTrigger.create({
+      trigger: lastRef.current,
+      start: "bottom bottom-=5000",
+      end: "bottom bottom",
+      scrub: 1,
+      onLeaveBack: () => {
+        boxScaleTimeline.progress(0);
+        boxOpacityTimeline.progress(0);
+      },
+    });
 
     return () => ctx.revert();
   }, [carouselItems.length]);
@@ -449,7 +510,7 @@ function Imformation() {
           start: 'top bottom-=2500', // 더 안정적인 trigger 조건
           end: 'bottom bottom-=2500',
           toggleActions: 'play none none none',
-          markers: true
+          // markers: true
         },
       });
     });
@@ -478,7 +539,7 @@ function Imformation() {
         <div ref={ani2Ref} className='relative block w-full h-[400vh] '
           style={{ opacity: 0 }}>
           {/* mixBlendMode: 'difference', */}
-          <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center overflow-hidden'>
+          <div className='fixed flex flex-wrap top-0 left-0 w-screen h-screen items-center justify-center overflow-x-clip'>
 
             <div className='absolute flex w-screen h-full items-center justify-center'>
               <div ref={imgRef} className='absolute top-10 w-screen h-[150vh]'
@@ -568,8 +629,7 @@ function Imformation() {
         <div className='h-[928.2px]'></div> */}
       </div>
       <div className='relative w-full -mt-[100vh] z-[999] font-aeonik font-normal' style={{ mixBlendMode: 'difference' }}>
-        <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
-        >
+        <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]">
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span>
       </div>
@@ -582,7 +642,7 @@ function Imformation() {
         <div ref={wrapperRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
           <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
             <div className={`relative flex w-fit h-full ]`}>
-              <div className='relative flex flex-col -ml-[30vw] overflow-hidden'>
+              <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
                 <span ref={developerRef} className='text-[80vh]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
@@ -616,7 +676,7 @@ function Imformation() {
                       onMouseEnter={handleMouseEnter}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="relative flex justify-center overflow-hidden">
+                      <div className="relative flex justify-center overflow-x-clip">
                         {isVideo ? (
                           <video
                             ref={(el) => (mediaRefs.current[index] = el)}
@@ -643,14 +703,34 @@ function Imformation() {
                   );
                 })}
               </div>
-              <div className='relative w-screen h-screen bg-[green]'>
-              </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-      <div>
+      <div ref={lastRef} className='relative overflow-x-clip'>
+
+        {/* trigger */}
+        <div className='absolute top-0 h-screen z-[99999]'></div>
+
+        {/* w-full box */}
+        <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
+          {Array(10).fill(0).map((_, index) => (
+            <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
+              <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
+              <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em]  mix-blend-difference text-justify w-[93.75vw]">
+            <h2>
+              Our 10 years of experience in collecting and evaluating health data has resulted in more than
+            </h2>
+          </span>
+        </div>
       </div>
     </section>
   );

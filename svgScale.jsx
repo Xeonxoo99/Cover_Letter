@@ -80,7 +80,6 @@ const Section01 = () => {
               />
             </video>
           </motion.div>
-          
         </div>
       </div>
     </section>
