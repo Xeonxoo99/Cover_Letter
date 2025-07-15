@@ -4,38 +4,39 @@ import { useScrollProgress } from '../contexts/ScrollProgressContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// 배경 이미지
 import me from '../images/imformation/me.jpg'
 
+// 점멸하는 아이콘
 import tailwindcss from '../images/introduction/Tailwind.svg'
 import gsapimg from '../images/introduction/GSAP.svg'
 import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
-import html5 from '../images/introduction/HTML5.svg'
-import css3 from '../images/introduction/CSS3.svg'
-import js from '../images/introduction/JS.svg'
-import react from '../images/introduction/React.svg'
-import nextjs from '../images/introduction/nextjs.svg'
-import framerMotion from '../images/introduction/framer.svg'
 
-import baseball_game from '../images/imformation/baseball_game.png'
+// 프로젝트들
+// import baseball_game from '../images/imformation/baseball_game.png'
 import jquery from '../images/imformation/jquery.png'
 import login from '../images/imformation/login.mp4'
-import mini_project from '../images/imformation/mini_project2.gif'
-import mini_project2 from '../images/imformation/mini_project.mp4'
+import mini_game_login from '../images/imformation/mini_game_login.mp4'
+import mini_game_broken from '../images/imformation/mini_game_broken.mp4'
+import mini_game_dino from '../images/imformation/mini_game_dino.mp4'
+import mini_game_typing from '../images/imformation/mini_game_typing.mp4'
+import mini_game_mypage from '../images/imformation/mini_game_mypage.mp4'
+import mini_project from '../images/imformation/mini_project.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  {
-    src: baseball_game,
-    alt: 'baseball_game',
-    tag: (
-      <>
-        JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.
-      </>
-    ),
-    style: 'top-[35%] left-[-7%]'
-  },
+  // {
+  //   src: baseball_game,
+  //   alt: 'baseball_game',
+  //   tag: (
+  //     <>
+  //       JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.
+  //     </>
+  //   ),
+  //   style: 'top-[35%] left-[-7%]'
+  // },
   {
     src: jquery,
     alt: 'jquery',
@@ -44,7 +45,7 @@ const projects = [
         jquery로 만든 영화 기록 블로그입니다.
       </>
     ),
-    style: 'top-[0%] left-[3%]'
+    style: 'top-[25%] left-[-40vh]'
   },
   {
     src: login,
@@ -54,11 +55,11 @@ const projects = [
         js로 만든 블로그 사이트입니다.
       </>
     ),
-    style: 'top-[50%] left-[15%]'
+    style: 'top-[0%] left-[0vh] z-10'
   },
   {
-    src: mini_project,
-    alt: 'mini_project',
+    src: mini_game_login,
+    alt: 'mini_game_login',
     tag: (
       <>
         부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
@@ -66,11 +67,59 @@ const projects = [
         저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
       </>
     ),
-    style: 'top-[0%] left-[27%]'
+    style: 'top-[40%] left-[75vh]'
   },
   {
-    src: mini_project2,
-    alt: 'mini_project2',
+    src: mini_game_broken,
+    alt: 'mini_game_broken',
+    tag: (
+      <>
+        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
+        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
+        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+      </>
+    ),
+    style: 'top-[-10%] left-[125vh] z-10'
+  },
+  {
+    src: mini_game_dino,
+    alt: 'mini_game_dino',
+    tag: (
+      <>
+        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
+        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
+        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+      </>
+    ),
+    style: 'top-[40%] left-[175vh]'
+  },
+  {
+    src: mini_game_typing,
+    alt: 'mini_game_typing',
+    tag: (
+      <>
+        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
+        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
+        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+      </>
+    ),
+    style: 'top-[-10%] left-[225vh] z-10'
+  },
+  {
+    src: mini_game_mypage,
+    alt: 'mini_game_mypage',
+    tag: (
+      <>
+        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
+        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
+        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+      </>
+    ),
+    style: 'top-[40%] left-[275vh]'
+  },
+  {
+    src: mini_project,
+    alt: 'mini_project',
     tag: (
       <>
         부트캠프에서의 마지막 프로젝트입니다.<br />
@@ -80,7 +129,7 @@ const projects = [
         2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
       </>
     ),
-    style: 'top-[30%] left-[43%]'
+    style: 'top-[20%] left-[380vh]'
   },
 ];
 
@@ -333,62 +382,62 @@ function Imformation() {
       });
     }, sectionRef);
 
-    // 마지막 opacity, scale 애니메이션
+    //마지막 opacity, scale 애니메이션
     const totalBoxes = 10;
     const boxScaleTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=5000",
+        start: "bottom bottom-=8000",
         end: "bottom bottom",
         scrub: 1,
-        markers: true
+        // markers: true
       }
     });
 
     const boxOpacityTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=5000",
+        start: "bottom bottom-=8000",
         end: "bottom bottom",
         scrub: 1,
-        markers: true
+        // markers: true
       }
     });
 
     // 순차적 애니메이션 적용
-    for (let i = 0; i < totalBoxes; i++) {
-      const box = boxScaleRefs.current[i];
-      if (box) {
-        boxScaleTimeline.to(box, {
-          height: '100%',
-          duration: 1, // 각 박스 애니메이션 duration
-          ease: "power1.out"
-        }, i * 5); // 순차 offset
-      }
-    }
+    // for (let i = 0; i < totalBoxes; i++) {
+    //   const box = boxScaleRefs.current[i];
+    //   if (box) {
+    //     boxScaleTimeline.to(box, {
+    //       height: '100%',
+    //       duration: 1, // 각 박스 애니메이션 duration
+    //       ease: "power1.out"
+    //     }, i * 5); // 순차 offset
+    //   }
+    // }
 
-    for (let i = 0; i < totalBoxes; i++) {
-      const box = boxOpacityRefs.current[i];
-      if (box) {
-        boxOpacityTimeline.to(box, {
-          opacity: 1,
-          duration: 1, // 각 박스 애니메이션 duration
-          ease: "power1.out"
-        }, i * 2); // 순차 offset
-      }
-    }
+    // for (let i = 0; i < totalBoxes; i++) {
+    //   const box = boxOpacityRefs.current[i];
+    //   if (box) {
+    //     boxOpacityTimeline.to(box, {
+    //       opacity: 1,
+    //       duration: 1, // 각 박스 애니메이션 duration
+    //       ease: "power1.out"
+    //     }, i * 2); // 순차 offset
+    //   }
+    // }
 
-    // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
-    ScrollTrigger.create({
-      trigger: lastRef.current,
-      start: "bottom bottom-=5000",
-      end: "bottom bottom",
-      scrub: 1,
-      onLeaveBack: () => {
-        boxScaleTimeline.progress(0);
-        boxOpacityTimeline.progress(0);
-      },
-    });
+    // // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
+    // ScrollTrigger.create({
+    //   trigger: lastRef.current,
+    //   start: "bottom bottom-=5000",
+    //   end: "bottom bottom",
+    //   scrub: 1,
+    //   onLeaveBack: () => {
+    //     boxScaleTimeline.progress(0);
+    //     boxOpacityTimeline.progress(0);
+    //   },
+    // });
 
     return () => ctx.revert();
   }, [carouselItems.length]);
@@ -399,26 +448,35 @@ function Imformation() {
   const innerRef = useRef(null);
   useEffect(() => {
     const wrapper = wrapperRef.current;
-    const inner = innerRef.current;
-    if (!wrapper || !inner) return;
-    const scrollWidth = inner.scrollWidth;
-    const viewportWidth = window.innerWidth;
-    const tl = gsap.to(inner, {
-      x: () => -(scrollWidth - viewportWidth),
-      ease: "none",
-      scrollTrigger: {
-        trigger: wrapper,
-        start: "top top",
-        end: () => `+=${4384}px`,
-        scrub: true,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    return () => {
-      tl.kill();
-    };
+  const inner = innerRef.current;
+  if (!wrapper || !inner) return;
+
+  // inner 요소가 실제로 차지하는 가로 스크롤 너비
+  const scrollWidth = inner.scrollWidth;
+  // 현재 보이는 화면의 너비
+  const viewportWidth = window.innerWidth;
+  
+  // 실제로 가로로 움직여야 하는 총 거리
+  const horizontalScrollDistance = scrollWidth - viewportWidth;
+
+  const tl = gsap.to(inner, {
+    x: () => -horizontalScrollDistance, // x축 이동 거리도 동적으로 설정
+    ease: "none",
+    scrollTrigger: {
+      trigger: wrapper,
+      start: "top top",
+      // end 값을 가로 스크롤 거리만큼 동적으로 설정
+      end: () => `+=${horizontalScrollDistance}`,
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      markers: true 
+    },
+  });
+  return () => {
+    tl.kill();
+  };
   }, []);
 
   // developer ani (기존 로직 유지)
@@ -639,8 +697,8 @@ function Imformation() {
           style={{ mixBlendMode: 'difference' }}>
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span> */}
-        <div ref={wrapperRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[4384px] h-screen p-0">
-          <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 max-w-[1326px] w-[1326px] max-h-[962px] h-[962px] p-0 [transform:translate(0px,0px)]">
+        <div ref={wrapperRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
+          <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
             <div className={`relative flex w-fit h-full ]`}>
               <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
                 <span ref={developerRef} className='text-[80vh]'>
@@ -666,7 +724,7 @@ function Imformation() {
                   </span>
                 </span>
               </div>
-              <div ref={projectRef} className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[200vw]" style={{ mixBlendMode: 'difference' }}>
+              <div ref={projectRef} className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] pointer-events-none relative w-[300vw]" style={{ mixBlendMode: 'difference' }}>
                 {projects.map((item, index) => {
                   const isVideo = item.src.endsWith('.mp4');
                   return (
@@ -705,31 +763,37 @@ function Imformation() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
+          <div ref={lastRef} className='relative overflow-x-clip'>
 
-      {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-      <div ref={lastRef} className='relative overflow-x-clip'>
+            {/* trigger */}
+            <div className='absolute top-0 h-screen z-[99999]'></div>
 
-        {/* trigger */}
-        <div className='absolute top-0 h-screen z-[99999]'></div>
-
-        {/* w-full box */}
-        <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
-          {Array(10).fill(0).map((_, index) => (
-            <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
-              <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
-              <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
+            {/* w-full box */}
+            <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
+              {Array(10).fill(0).map((_, index) => (
+                <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
+                  <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
+                  <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        <div>
-          <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em]  mix-blend-difference text-justify w-[93.75vw]">
-            <h2>
-              Our 10 years of experience in collecting and evaluating health data has resulted in more than
-            </h2>
-          </span>
+            <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none '>
+              {Array(5).fill(0).map((_, index) => (
+                <div key={index} className='relative w-[20%] h-full bottom-0' >
+                  <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
+                  <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
+                </div>
+              ))}
+            </div>
+            <div className='pt-[77vh]'>
+              <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
+                <h2>
+                  Our 10 years of experience in collecting and evaluating health data has resulted in more than
+                </h2>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
