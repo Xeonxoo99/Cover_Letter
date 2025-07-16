@@ -387,7 +387,7 @@ function Imformation() {
     const boxScaleTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=8000",
+        start: "bottom bottom-=7800",
         end: "bottom bottom",
         scrub: 1,
         // markers: true
@@ -397,7 +397,7 @@ function Imformation() {
     const boxOpacityTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=8000",
+        start: "bottom bottom-=7800",
         end: "bottom bottom",
         scrub: 1,
         // markers: true
@@ -405,27 +405,27 @@ function Imformation() {
     });
 
     // 순차적 애니메이션 적용
-    // for (let i = 0; i < totalBoxes; i++) {
-    //   const box = boxScaleRefs.current[i];
-    //   if (box) {
-    //     boxScaleTimeline.to(box, {
-    //       height: '100%',
-    //       duration: 1, // 각 박스 애니메이션 duration
-    //       ease: "power1.out"
-    //     }, i * 5); // 순차 offset
-    //   }
-    // }
+    for (let i = 0; i < totalBoxes; i++) {
+      const box = boxScaleRefs.current[i];
+      if (box) {
+        boxScaleTimeline.to(box, {
+          height: '100%',
+          duration: 1, // 각 박스 애니메이션 duration
+          ease: "power1.out"
+        }, i * 5); // 순차 offset
+      }
+    }
 
-    // for (let i = 0; i < totalBoxes; i++) {
-    //   const box = boxOpacityRefs.current[i];
-    //   if (box) {
-    //     boxOpacityTimeline.to(box, {
-    //       opacity: 1,
-    //       duration: 1, // 각 박스 애니메이션 duration
-    //       ease: "power1.out"
-    //     }, i * 2); // 순차 offset
-    //   }
-    // }
+    for (let i = 0; i < totalBoxes; i++) {
+      const box = boxOpacityRefs.current[i];
+      if (box) {
+        boxOpacityTimeline.to(box, {
+          opacity: 1,
+          duration: 1, // 각 박스 애니메이션 duration
+          ease: "power1.out"
+        }, i * 2); // 순차 offset
+      }
+    }
 
     // // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
     // ScrollTrigger.create({
@@ -763,8 +763,10 @@ function Imformation() {
               </div>
             </div>
           </div>
-          {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-          <div ref={lastRef} className='relative overflow-x-clip'>
+
+        </div>
+                  {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
+          <div ref={lastRef} className='relative overflow-x-clip z-[99999]'>
 
             {/* trigger */}
             <div className='absolute top-0 h-screen z-[99999]'></div>
@@ -794,7 +796,6 @@ function Imformation() {
               </span>
             </div>
           </div>
-        </div>
       </div>
     </section>
   );
