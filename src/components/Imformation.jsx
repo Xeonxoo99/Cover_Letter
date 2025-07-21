@@ -315,7 +315,7 @@ function Imformation() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top bottom",
-          end: "20% top",
+          end: "10% top",
           scrub: true,
         }
       });
@@ -387,7 +387,7 @@ function Imformation() {
     const boxScaleTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=7800",
+        start: "bottom bottom-=7600",
         end: "bottom bottom",
         scrub: 1,
         // markers: true
@@ -397,7 +397,7 @@ function Imformation() {
     const boxOpacityTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: lastRef.current,
-        start: "bottom bottom-=7800",
+        start: "bottom bottom-=7600",
         end: "bottom bottom",
         scrub: 1,
         // markers: true
@@ -427,17 +427,18 @@ function Imformation() {
       }
     }
 
-    // // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
-    // ScrollTrigger.create({
-    //   trigger: lastRef.current,
-    //   start: "bottom bottom-=5000",
-    //   end: "bottom bottom",
-    //   scrub: 1,
-    //   onLeaveBack: () => {
-    //     boxScaleTimeline.progress(0);
-    //     boxOpacityTimeline.progress(0);
-    //   },
-    // });
+
+    // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
+    ScrollTrigger.create({
+      trigger: lastRef.current,
+      start: "bottom bottom-=5000",
+      end: "bottom bottom",
+      scrub: 1,
+      onLeaveBack: () => {
+        boxScaleTimeline.progress(0);
+        boxOpacityTimeline.progress(0);
+      },
+    });
 
     return () => ctx.revert();
   }, [carouselItems.length]);
@@ -448,35 +449,35 @@ function Imformation() {
   const innerRef = useRef(null);
   useEffect(() => {
     const wrapper = wrapperRef.current;
-  const inner = innerRef.current;
-  if (!wrapper || !inner) return;
+    const inner = innerRef.current;
+    if (!wrapper || !inner) return;
 
-  // inner 요소가 실제로 차지하는 가로 스크롤 너비
-  const scrollWidth = inner.scrollWidth;
-  // 현재 보이는 화면의 너비
-  const viewportWidth = window.innerWidth;
-  
-  // 실제로 가로로 움직여야 하는 총 거리
-  const horizontalScrollDistance = scrollWidth - viewportWidth;
+    // inner 요소가 실제로 차지하는 가로 스크롤 너비
+    const scrollWidth = inner.scrollWidth;
+    // 현재 보이는 화면의 너비
+    const viewportWidth = window.innerWidth;
 
-  const tl = gsap.to(inner, {
-    x: () => -horizontalScrollDistance, // x축 이동 거리도 동적으로 설정
-    ease: "none",
-    scrollTrigger: {
-      trigger: wrapper,
-      start: "top top",
-      // end 값을 가로 스크롤 거리만큼 동적으로 설정
-      end: () => `+=${horizontalScrollDistance}`,
-      scrub: true,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      markers: true 
-    },
-  });
-  return () => {
-    tl.kill();
-  };
+    // 실제로 가로로 움직여야 하는 총 거리
+    const horizontalScrollDistance = scrollWidth - viewportWidth;
+
+    const tl = gsap.to(inner, {
+      x: () => -horizontalScrollDistance, // x축 이동 거리도 동적으로 설정
+      ease: "none",
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top top",
+        // end 값을 가로 스크롤 거리만큼 동적으로 설정
+        end: () => `+=${horizontalScrollDistance}`,
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        markers: true
+      },
+    });
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   // developer ani (기존 로직 유지)
@@ -565,8 +566,8 @@ function Imformation() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top bottom-=2500', // 더 안정적인 trigger 조건
-          end: 'bottom bottom-=2500',
+          start: 'top bottom-=2800', // 더 안정적인 trigger 조건
+          end: 'bottom bottom-=2800',
           toggleActions: 'play none none none',
           // markers: true
         },
@@ -692,13 +693,13 @@ function Imformation() {
         </span>
       </div>
       {/* 소개 부분 */}
-      <div className='relative w-full z-[999] font-aeonik font-normal' >
+      <div ref={wrapperRef} className='relative w-full z-[999] font-aeonik font-normal' >
         {/* <span className="relative block text-[5.2083333333vw] text-[#b1b1b1] leading-[1em] px-[3.125vw] text-justify [text-align-last:justify] [text-indent:46.66667vw]"
           style={{ mixBlendMode: 'difference' }}>
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span> */}
-        <div ref={wrapperRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
-          <div ref={innerRef} className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
+        <div ref={innerRef}className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
+          <div  className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
             <div className={`relative flex w-fit h-full ]`}>
               <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
                 <span ref={developerRef} className='text-[80vh]'>
@@ -765,37 +766,38 @@ function Imformation() {
           </div>
 
         </div>
-                  {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-          <div ref={lastRef} className='relative overflow-x-clip z-[99999]'>
 
-            {/* trigger */}
-            <div className='absolute top-0 h-screen z-[99999]'></div>
+      </div>
+      {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
+      <div ref={lastRef} className='relative overflow-x-clip z-[99999]'>
 
-            {/* w-full box */}
-            <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
-              {Array(10).fill(0).map((_, index) => (
-                <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
-                  <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
-                  <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
-                </div>
-              ))}
+        {/* trigger */}
+        <div className='absolute top-0 h-screen z-[99999]'></div>
+
+        {/* w-full box */}
+        <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
+          {Array(10).fill(0).map((_, index) => (
+            <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
+              <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
+              <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
             </div>
-            <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none '>
-              {Array(5).fill(0).map((_, index) => (
-                <div key={index} className='relative w-[20%] h-full bottom-0' >
-                  <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
-                  <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
-                </div>
-              ))}
+          ))}
+        </div>
+        <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none '>
+          {Array(5).fill(0).map((_, index) => (
+            <div key={index} className='relative w-[20%] h-full bottom-0' >
+              <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
+              <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 1, height: '0%' }}></div>
             </div>
-            <div className='pt-[77vh]'>
-              <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
-                <h2>
-                  Our 10 years of experience in collecting and evaluating health data has resulted in more than
-                </h2>
-              </span>
-            </div>
-          </div>
+          ))}
+        </div>
+        <div className='pt-[77vh]'>
+          <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
+            <h2>
+              Our 10 years of experience in collecting and evaluating health data has resulted in more than
+            </h2>
+          </span>
+        </div>
       </div>
     </section>
   );
