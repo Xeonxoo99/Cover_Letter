@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // 배경 이미지
-import me from '../images/imformation/me.jpg'
+import me from '../images/imformation/me_color.jpeg'
 
 // 점멸하는 아이콘
 import tailwindcss from '../images/introduction/Tailwind.svg'
