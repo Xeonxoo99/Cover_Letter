@@ -380,65 +380,50 @@ function Imformation() {
           // console.warn(`Refs for grid index ${gridIndex} are not yet ready.`);
         }
       });
+      //마지막 opacity, scale 애니메이션
+    const lastSectionTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: lastRef.current,
+          start: "top bottom-=1000",
+          end: "bottom bottom",
+          scrub: 3,
+          onLeaveBack: () => {
+            gsap.set(boxScaleRefs.current, { height: '0%' });
+            gsap.set(boxOpacityRefs.current, { opacity: 0 });
+          },
+          invalidateOnRefresh: true,
+        }
+      });
+
+    const totalBoxesForLastAnim = 10;
+      const staggerOffset = 0.1;
+
+      for (let i = totalBoxesForLastAnim - 1; i >= 0; i--) {
+        const scaleBox = boxScaleRefs.current[i];
+        const opacityBox = boxOpacityRefs.current[i];
+        const startTime = (totalBoxesForLastAnim - 1 - i) * staggerOffset;
+
+        if (scaleBox) {
+          lastSectionTimeline.to(scaleBox, {
+            height: '100%',
+            duration: 0.5,
+            ease: "none"
+          }, startTime);
+        }
+
+        if (opacityBox) {
+          lastSectionTimeline.to(opacityBox, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "none"
+          }, startTime);
+        }
+      }
+
     }, sectionRef);
 
-    //마지막 opacity, scale 애니메이션
-    const totalBoxes = 10;
-    const boxScaleTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: lastRef.current,
-        start: "bottom bottom-=7600",
-        end: "bottom bottom",
-        scrub: 1,
-        // markers: true
-      }
-    });
+    
 
-    const boxOpacityTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: lastRef.current,
-        start: "bottom bottom-=7600",
-        end: "bottom bottom",
-        scrub: 1,
-        // markers: true
-      }
-    });
-
-    // 순차적 애니메이션 적용
-    for (let i = 0; i < totalBoxes; i++) {
-      const box = boxScaleRefs.current[i];
-      if (box) {
-        boxScaleTimeline.to(box, {
-          height: '100%',
-          duration: 1, // 각 박스 애니메이션 duration
-          ease: "power1.out"
-        }, i * 5); // 순차 offset
-      }
-    }
-
-    for (let i = 0; i < totalBoxes; i++) {
-      const box = boxOpacityRefs.current[i];
-      if (box) {
-        boxOpacityTimeline.to(box, {
-          opacity: 1,
-          duration: 1, // 각 박스 애니메이션 duration
-          ease: "power1.out"
-        }, i * 2); // 순차 offset
-      }
-    }
-
-
-    // 스크롤 다시 빠르게 위로 올렸을 떄 height 값이 0이 아닌 n 값으로 남아 있음 < 방지용
-    ScrollTrigger.create({
-      trigger: lastRef.current,
-      start: "bottom bottom-=5000",
-      end: "bottom bottom",
-      scrub: 1,
-      onLeaveBack: () => {
-        boxScaleTimeline.progress(0);
-        boxOpacityTimeline.progress(0);
-      },
-    });
 
     return () => ctx.revert();
   }, [carouselItems.length]);
