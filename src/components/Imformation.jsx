@@ -198,6 +198,9 @@ function Imformation() {
   const boxScaleRef = useRef(null);
   const boxScaleRefs = useRef([]);
   const boxOpacityRefs = useRef([]);
+  const boxColorRefs = useRef([]);
+  const bottomBarsRef = useRef([]);
+  const lastAni2Ref = useRef()
 
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
@@ -381,7 +384,7 @@ function Imformation() {
         }
       });
       //마지막 opacity, scale 애니메이션
-    const lastSectionTimeline = gsap.timeline({
+      const lastSectionTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: lastRef.current,
           start: "top bottom-=1000",
@@ -395,7 +398,7 @@ function Imformation() {
         }
       });
 
-    const totalBoxesForLastAnim = 10;
+      const totalBoxesForLastAnim = 10;
       const staggerOffset = 0.1;
 
       for (let i = totalBoxesForLastAnim - 1; i >= 0; i--) {
@@ -420,9 +423,46 @@ function Imformation() {
         }
       }
 
+      lastSectionTimeline.to(boxScaleRefs.current, {
+        backgroundColor: 'black',
+        duration: 0.1, // 0.1초 동안 부드럽게 색상이 변경됩니다.
+        ease: 'none',
+        // stagger 객체로 순차 애니메이션을 설정합니다.
+        stagger: {
+          each: 0.05,   // 각 박스의 색상이 0.05초 간격으로 변경됩니다.
+          from: "end"   // 배열의 끝(가장 아래 박스)부터 시작합니다.
+        }
+      }, "<");
+
+      // 5개 div의 높이를 조절하는 새로운 GSAP 타임라인
+      const bottomBarsTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: lastAni2Ref.current,
+          start: "top+=1000 top",
+          end: "bottom bottom",
+          // 스크롤에 따라 애니메이션을 부드럽게 연결
+          scrub: true,
+          // markers: true, // 디버깅 시 위치 확인용
+        }
+      });
+
+      const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
+
+      // 2. 5개의 div 각각에 정의된 duration을 적용합니다.
+      bottomBarsRef.current.forEach((bar, index) => {
+        if (bar) {
+          bottomBarsTimeline.to(bar, {
+            height: '100%',
+            // index에 해당하는 duration 값을 할당
+            duration: durations[index],
+            ease: "none"
+          }, 0); // 0을 지정하여 모든 애니메이션이 타임라인의 시작점에서 동시에 시작되도록 함
+        }
+      });
+
     }, sectionRef);
 
-    
+
 
 
     return () => ctx.revert();
@@ -683,8 +723,8 @@ function Imformation() {
           style={{ mixBlendMode: 'difference' }}>
           <h1>Hard-Working Dev<br />is a front-end developer crafting modern web interfaces for innovative brands like</h1>
         </span> */}
-        <div ref={innerRef}className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
-          <div  className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
+        <div ref={innerRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
+          <div className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
             <div className={`relative flex w-fit h-full ]`}>
               <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
                 <span ref={developerRef} className='text-[80vh]'>
@@ -763,25 +803,71 @@ function Imformation() {
         <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
           {Array(10).fill(0).map((_, index) => (
             <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
-              <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[#252525]' style={{ transformOrigin: 'bottom', height: '0%' }}></div>
-              <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #ffffff1a', opacity: 0 }}></div>
+              <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[]' style={{ transformOrigin: 'bottom', height: '0%', backgroundColor: '#252525' }}></div>
+              <div ref={el => boxOpacityRefs.current[index] = el} className='absolute w-full h-0 top-0' style={{ borderBottom: '1px dashed #b8b8b8', opacity: 0 }}></div>
             </div>
           ))}
         </div>
-        <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none '>
+        <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none z-[99999999]'>
           {Array(5).fill(0).map((_, index) => (
             <div key={index} className='relative w-[20%] h-full bottom-0' >
+              {/* 이 div는 배경 역할을 하므로 그대로 둡니다. */}
               <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
-              <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 1, height: '0%' }}></div>
+              {/* 애니메이션을 적용할 div에 ref를 연결합니다. */}
+              <div
+                ref={el => (bottomBarsRef.current[index] = el)}
+                className='absolute w-full left-0 bottom-0 bg-[#eeeeee]'
+                style={{ opacity: 1, height: '0%' }}
+              ></div>
             </div>
           ))}
         </div>
-        <div className='pt-[77vh]'>
-          <span className="relative block text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
-            <h2>
+        <div ref={lastAni2Ref} className='absolute pt-[300vh] z-[9999999999] bg-transparent'>
+          <span className="relative block pt-[100vh] text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
+            <h2 className=''>
               Our 10 years of experience in collecting and evaluating health data has resulted in more than
             </h2>
           </span>
+          <div className='relative flex w-screen h-screen justify-center items-center mt-[20vh]'>
+            <span className='sticky top-[0%] block text-[15.625vw] leading-[14rem] mix-blend-difference text-center uppercase'>
+              <span className='relative block'>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>K</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>I</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>M</span>
+                </span>
+              </span>
+              <span className='relative block'>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>y</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>e</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>o</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>n</span>
+                </span>
+              </span>
+              <span className='relative block'>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>s</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>o</span>
+                </span>
+                <span className='overflow-hidden inline-block'>
+                  <span className='inline-block'>o</span>
+                </span>
+              </span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
