@@ -48,8 +48,8 @@ function Header({ activeSection }) {
               onClick={() => handleScroll(item.id)}
             >
               <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+30px)] h-[calc(100%+14px)] bg-[#b8b8b8] rounded-[50px] transition-transform duration-300 ease-in-out z-0 
-                ${isActive ? 'scale-100' : 'scale-0'} group-hover:scale-100`}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+30px)] h-[calc(100%+14px)] bg-[#b8b8b8] rounded-[50px] 
+                transition-transform duration-300 ease-in-out z-0 ${isActive ? 'scale-100' : 'scale-0'} group-hover:scale-100`}
               ></div>
               <span className='relative z-10 text-[#b8b8b8] mix-blend-difference'>{item.name}</span>
             </div>

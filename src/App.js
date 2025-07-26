@@ -36,9 +36,10 @@ function App() {
     // 컴포넌트 언마운트 시 observer 정리
     return () => sections.forEach((section) => observer.unobserve(section));
   }, []); 
+
   return (
     <ScrollProgressProvider>
-      <Header />
+      <Header activeSection={activeSection} />
       <main>
         <div id="home">
         <Intro />
