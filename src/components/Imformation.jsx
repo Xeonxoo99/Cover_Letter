@@ -154,6 +154,14 @@ const fixedRevealOrder = [
   79, 81, 84, 85, 87, 92, 94, 95, 97, 99, 101, 106, 111, 112, 118, 126, 147, 123, 144, 191
 ];
 
+const TEXT_LINES = [
+  "kim yeon soo",
+  "junior front-end dev",
+  "010 3750 5001",
+  "wezel99 @ naver.com",
+  "1999 02 28"
+];
+
 function Imformation() {
   const { cardScrollProgress } = useScrollProgress();
   const totalBoxes = 200;
@@ -200,7 +208,9 @@ function Imformation() {
   const boxOpacityRefs = useRef([]);
   const boxColorRefs = useRef([]);
   const bottomBarsRef = useRef([]);
-  const lastAni2Ref = useRef()
+  const lastAni2Ref = useRef();
+  const textAnimationContainerRef = useRef(null);
+
 
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
@@ -600,7 +610,47 @@ function Imformation() {
     });
   }, [projects]);
 
+  useLayoutEffect(() => {
+    if (!textAnimationContainerRef.current) {
+      return;
+    }
+    const ctx = gsap.context(() => {
+      const masterTl = gsap.timeline({ repeat: -1 });
 
+      // 각 라인(문장)을 순회
+      TEXT_LINES.forEach((line, index) => {
+        // 현재 라인 컨테이너 안의 모든 .anim-char 클래스를 가진 요소를 배열로 가져옴
+        const chars = gsap.utils.toArray(`.anim-char`, textAnimationContainerRef.current.querySelector(`[data-line-index="${index}"]`));
+
+        if (chars.length === 0) return;
+
+        const lineTl = gsap.timeline();
+        lineTl
+          .fromTo(chars,
+            { y: '110%' },
+            {
+              y: '0%',
+              duration: 0.7,
+              stagger: 0.04,
+              ease: 'power2.out'
+            }
+          )
+          .to(chars,
+            {
+              delay: 2,
+              y: '-110%',
+              duration: 0.7,
+              stagger: 0.04,
+              ease: 'power2.in'
+            }
+          );
+
+        masterTl.add(lineTl);
+      });
+    }, textAnimationContainerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section ref={sectionRef} className="relative block overflow-x-clip">
@@ -822,53 +872,56 @@ function Imformation() {
             </div>
           ))}
         </div>
+
         <div ref={lastAni2Ref} className='absolute pt-[300vh] z-[9999999999] bg-transparent'>
           <span className="relative block pt-[100vh] text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
             <h2 className=''>
               Our 10 years of experience in collecting and evaluating health data has resulted in more than
             </h2>
           </span>
-          <div className='relative flex w-screen h-screen justify-center items-center mt-[20vh]'>
-            <span className='sticky top-[0%] block text-[15.625vw] leading-[14rem] mix-blend-difference text-center uppercase'>
+          <div ref={textAnimationContainerRef} className='relative flex w-screen h-screen justify-center items-center mt-[20vh]'>
+            <span className='sticky top-[0%] block text-[15.625vw] leading-[12vw] mix-blend-difference text-center uppercase'>
               <span className='relative block'>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>K</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>I</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>M</span>
-                </span>
-              </span>
-              <span className='relative block'>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>y</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>e</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>o</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>n</span>
-                </span>
-              </span>
-              <span className='relative block'>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>s</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>o</span>
-                </span>
-                <span className='overflow-hidden inline-block'>
-                  <span className='inline-block'>o</span>
-                </span>
+                {TEXT_LINES.map((line, lineIndex) => (
+                  <div
+                    key={lineIndex}
+                    // GSAP이 각 라인을 쉽게 찾을 수 있도록 data-attribute 추가
+                    data-line-index={lineIndex}
+                    className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap'
+                    aria-hidden={true}
+                  >
+                    <div
+          key={lineIndex}
+          data-line-index={lineIndex}
+          aria-hidden={true}
+          className='absolute uppercase mix-blend-difference'
+        ></div>
+                    {/* 1. 띄어쓰기 기준으로 단어 분리 */}
+                    {line.split(' ').map((word, wordIndex) => (
+                      // 2. 각 단어를 block 요소(div)로 감싸 줄바꿈 처리
+                      <div key={wordIndex}>
+                        {/* 3. 단어를 글자로 분리 */}
+                        {word.split('').map((char, charIndex) => (
+                          <span key={charIndex} className='inline-block overflow-hidden'>
+                            {/* 4. 애니메이션 대상이 될 글자에 공통 클래스(anim-char) 부여 */}
+                            <span
+            className={`anim-char inline-block ${
+              char === '@' ? 'text-[12vw] pb-[5vh]' : ''
+            }`}
+          >
+                              {char}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </span>
             </span>
           </div>
         </div>
+
       </div>
     </section>
   );
