@@ -25,8 +25,8 @@ function Header() {
       <nav className='flex gap-10 text-sm'>
         {['HOME', 'Portfolio', 'Information'].map((item, index) => (
           <div key={index} className='relative cursor-pointer group'>
-            <div className='absolute inset-0 w-[calc(100%+30px)] h-[calc(100%+14px)] bg-[#b8b8b8] rounded-[50px] scale-0 group-hover:scale-100 transition-transform duration-300 ease-in-out z-0'></div>
-            <span className='relative z-10 text-[#b8b8b8]'>{item}</span>
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+30px)] h-[calc(100%+14px)] bg-[#b8b8b8] rounded-[50px] scale-0 group-hover:scale-100 transition-transform duration-300 ease-in-out z-0'></div>
+            <span className='relative z-10 text-[#b8b8b8] mix-blend-difference'>{item}</span>
           </div>
         ))}
       </nav>
