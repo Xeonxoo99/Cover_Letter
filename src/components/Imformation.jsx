@@ -210,6 +210,8 @@ function Imformation() {
   const bottomBarsRef = useRef([]);
   const lastAni2Ref = useRef();
   const textAnimationContainerRef = useRef(null);
+    const containerRef = useRef(null);
+
 
 
   const individualCarouselItemRefs = useRef(
@@ -652,6 +654,63 @@ function Imformation() {
     return () => ctx.revert();
   }, []);
 
+const textElements = React.useMemo(() => {
+    const texts = [
+      ...Array(10).fill('Thank you for reading my portfolio.'),
+      ...Array(10).fill('Thank you for reading my portfolio.')
+    ];
+    return texts.map((text, index) => ({
+      id: index,
+      text: text,
+      // 화면 내부에 무작위로 위치시킵니다 (vw, vh 사용).
+      style: {
+        top: `${Math.random() * 90}vh`,
+        left: `${Math.random() * 90}vw`,
+      }
+    }));
+  }, []);
+
+  // 2. GSAP 애니메이션 설정
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+
+    // GSAP 컨텍스트를 사용하여 애니메이션을 안전하게 관리하고 정리합니다.
+    const ctx = gsap.context(() => {
+      // 클래스 이름으로 모든 텍스트 요소를 선택합니다.
+      const texts = gsap.utils.toArray('.thank-you-text', containerRef.current);
+      // 순서를 무작위로 섞어줍니다.
+      const shuffledTexts = gsap.utils.shuffle(texts);
+
+      // 무한 반복하는 마스터 타임라인을 생성합니다.
+      const masterTl = gsap.timeline({ repeat: -1, delay: 1 });
+
+      const groupSize = 5; // 한 번에 애니메이션 할 그룹 크기
+      const numGroups = Math.ceil(shuffledTexts.length / groupSize);
+      const animationDuration = 1; // 한 그룹의 애니메이션 시간 (나타나는 데 1.5초, 사라지는 데 1.5초)
+      const overlap = 1; // 다음 그룹 애니메이션이 시작될 때까지의 시간 간격
+
+      // 섞인 텍스트를 5개 그룹으로 나누어 애니메이션을 적용합니다.
+      for (let i = 0; i < numGroups; i++) {
+        const group = shuffledTexts.slice(i * groupSize, (i + 1) * groupSize);
+
+        if (group.length > 0) {
+          // to() 애니메이션에 yoyo와 repeat를 사용하여 opacity를 0 -> 1 -> 0 으로 만듭니다.
+          masterTl.to(group, {
+            opacity: 1,
+            duration: animationDuration / 2,
+            stagger: 0.15, // 그룹 내 텍스트들이 순차적으로 나타나게 함
+            ease: 'power1.inOut',
+            yoyo: true,  // 애니메이션을 반대로 재생 (1 -> 0)
+            repeat: 1,   // 1번 반복 (나타났다 사라짐)
+          }, i * overlap); // 각 그룹의 애니메이션 시작 시간을 조절하여 겹치게 만듦
+        }
+      }
+    }, containerRef);
+
+    // 컴포넌트가 언마운트될 때 GSAP 애니메이션과 ScrollTrigger를 모두 정리합니다.
+    return () => ctx.revert();
+  }, []);
+  
   return (
     <section ref={sectionRef} className="relative block overflow-x-clip">
       <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
@@ -844,13 +903,13 @@ function Imformation() {
 
       </div>
       {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-      <div ref={lastRef} className='relative overflow-x-clip z-[99999]'>
+      <div ref={lastRef} className='relative overflow-x-clip z-[9999]'>
 
         {/* trigger */}
-        <div className='absolute top-0 h-screen z-[99999]'></div>
+        <div className='absolute top-0 h-screen'></div>
 
         {/* w-full box */}
-        <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none z-[9999999]'>
+        <div className='fixed w-screen h-screen top-0 left-0 pointer-events-none mix-blend-difference'>
           {Array(10).fill(0).map((_, index) => (
             <div key={index} className='relative flex w-full h-[10%] justify-end' style={{ transformOrigin: 'left' }} >
               <div ref={el => boxScaleRefs.current[index] = el} className='absolute w-full bg-[]' style={{ transformOrigin: 'bottom', height: '0%', backgroundColor: '#252525' }}></div>
@@ -858,7 +917,7 @@ function Imformation() {
             </div>
           ))}
         </div>
-        <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none z-[99999999]'>
+        <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none'>
           {Array(5).fill(0).map((_, index) => (
             <div key={index} className='relative w-[20%] h-full bottom-0' >
               {/* 이 div는 배경 역할을 하므로 그대로 둡니다. */}
@@ -873,14 +932,14 @@ function Imformation() {
           ))}
         </div>
 
-        <div ref={lastAni2Ref} className='absolute pt-[300vh] z-[9999999999] bg-transparent'>
+        <div ref={lastAni2Ref} className='absolute pt-[300vh] z-[99999] isolation mix-blend-difference bg-transparent'>
           <span className="relative block pt-[100vh] text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
             <h2 className=''>
               Our 10 years of experience in collecting and evaluating health data has resulted in more than
             </h2>
           </span>
           <div ref={textAnimationContainerRef} className='relative flex w-screen h-screen justify-center items-center mt-[20vh]'>
-            <span className='sticky top-[0%] block text-[15.625vw] leading-[12vw] mix-blend-difference text-center uppercase'>
+            <span className='sticky top-[0%] block text-[15.625vw] leading-[12vw] text-center uppercase z-20 text-[#ffffff]'>
               <span className='relative block'>
                 {TEXT_LINES.map((line, lineIndex) => (
                   <div
@@ -891,24 +950,23 @@ function Imformation() {
                     aria-hidden={true}
                   >
                     <div
-          key={lineIndex}
-          data-line-index={lineIndex}
-          aria-hidden={true}
-          className='absolute uppercase mix-blend-difference'
-        ></div>
+                      key={lineIndex}
+                      data-line-index={lineIndex}
+                      aria-hidden={true}
+                      className='absolute uppercase '
+                    ></div>
                     {/* 1. 띄어쓰기 기준으로 단어 분리 */}
                     {line.split(' ').map((word, wordIndex) => (
                       // 2. 각 단어를 block 요소(div)로 감싸 줄바꿈 처리
                       <div key={wordIndex}>
                         {/* 3. 단어를 글자로 분리 */}
                         {word.split('').map((char, charIndex) => (
-                          <span key={charIndex} className='inline-block overflow-hidden'>
+                          <span key={charIndex} className='inline-block overflow-hidden z-20'>
                             {/* 4. 애니메이션 대상이 될 글자에 공통 클래스(anim-char) 부여 */}
                             <span
-            className={`anim-char inline-block ${
-              char === '@' ? 'text-[12vw] pb-[5vh]' : ''
-            }`}
-          >
+                              className={`anim-char inline-block ${char === '@' ? 'text-[12vw] pb-[5vh]' : ''
+                                }`}
+                            >
                               {char}
                             </span>
                           </span>
@@ -919,6 +977,18 @@ function Imformation() {
                 ))}
               </span>
             </span>
+            <div ref={containerRef} className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      {textElements.map(el => (
+        <span
+          key={el.id}
+          className="thank-you-text absolute z-20 text-[20px] mix-blend-difference text-[#ffffff] whitespace-nowrap"
+          // 초기 opacity를 0으로 설정하고, 생성된 위치값을 적용합니다.
+          style={{ ...el.style, opacity: 0 }}
+        >
+          {el.text}
+        </span>
+      ))}
+    </div>
           </div>
         </div>
 
