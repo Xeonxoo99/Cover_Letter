@@ -47,7 +47,7 @@ function Introduction() {
   });
 
   // 전체 섹션의 opacity를 제어
-  const opacity = useTransform(opacityProfress, [0, 0.99, 1], [1, 1, 0]);
+  const opacity = useTransform(opacityProfressfi, [0, 0.99, 1], [1, 1, 0]);
 
   // Macbook의 위치를 제어
   // 1. 기존 useTransform은 그대로
