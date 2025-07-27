@@ -28,6 +28,7 @@ function Introduction() {
   const finalNumber = 3;
 
   const sectionRef = useRef(null);
+  const opacityRef = useRef(null);
   const startRef = useRef(null);
   const endRef = useRef(null);
 
@@ -40,8 +41,13 @@ function Introduction() {
     offset: ['start start', 'end end'],
   });
 
+  const { scrollYProgress:opacityProfress } = useScroll({
+    target: opacityRef,
+    offset: ['start start', 'end end'],
+  });
+
   // 전체 섹션의 opacity를 제어
-  const opacity = useTransform(scrollYProgress, [0, 0.99, 1], [1, 1, 0]);
+  const opacity = useTransform(opacityProfress, [0, 0.99, 1], [1, 1, 0]);
 
   // Macbook의 위치를 제어
   // 1. 기존 useTransform은 그대로
@@ -208,7 +214,7 @@ function Introduction() {
           </div>
         </div>
 
-        <div className='relative block h-[200vh] -mb-[115vh] uppercase font-aeonik font-semibold'>
+        <div ref={opacityRef} className='relative block h-[200vh] -mb-[115vh] uppercase font-aeonik font-semibold'>
           <div className='sticky top-0 mt-[3vw] flex w-full h-[100vh] items-center justify-between'>
             {/* finished */}
             <div className='flex flex-col w-[50%] justify-start'>
