@@ -35,7 +35,7 @@ function PortfolioCard({ item }) {
     return (
         <div
             ref={ref}
-            className="relative w-full h-[calc(200vh-6.25vw)] mb-[calc(-100vh+4.16667vw)] pointer-events-none"
+            className="relative w-full h-[calc(200vh-6.25vw)] mb-[calc(-100vh+4.16667vw)]"
             style={{ willChange: 'transform' }}
         >
             <div className="relative w-full h-[400vh]">

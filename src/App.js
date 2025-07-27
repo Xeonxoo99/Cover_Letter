@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'; 
 import Header from './components/header'
-import Intro from './components/Intro'
 import Introduction from './components/Introduction'
 import Portfolio from './components/Portfolio'
 import Imformation from './components/Imformation'
@@ -42,7 +41,6 @@ function App() {
       <Header activeSection={activeSection} />
       <main>
         <div id="home">
-        <Intro />
         <Introduction />
         </div>
         <div id="portfolio">

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Section5() {
+function Loading() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function Section5() {
   )
 }
 
-export default Section5
+export default Loading;
