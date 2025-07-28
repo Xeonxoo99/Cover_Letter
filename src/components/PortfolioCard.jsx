@@ -73,7 +73,7 @@ function PortfolioCard({ item }) {
                         {/* 중단 텍스트 */}
                         <div className="relative flex w-full h-full items-center justify-center">
                             <div className="absolute flex flex-col w-full justify-center">
-                                <div className="relative text-[14vw] w-full h-[.9em] mb-[.02em]">
+                                <div className="relative text-[14vw] w-full h-[1em] mb-[.02em]">
                                     <div className="relative flex overflow-hidden w-full h-full">
                                         {[1, 2].map((i) => (
                                             <motion.div
