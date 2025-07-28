@@ -20,7 +20,7 @@ function Header({ activeSection }) {
   return (
     <header
       className='fixed left-1/2 transform -translate-x-1/2 w-[93.75vw] h-[3.125vw] flex items-center justify-between font-aeonik'
-      style={{ zIndex: 9999999999999, mixBlendMode: 'difference' }}
+      style={{ zIndex: 9999999, mixBlendMode: 'difference' }}
     >
       {/* 좌측 SVG 이름 */}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306.113 29.355" className="w-[16vw] h-[20vw]">

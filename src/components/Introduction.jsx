@@ -51,8 +51,8 @@ function Introduction() {
 
   // Macbook의 위치를 제어
   // 1. 기존 useTransform은 그대로
-  const x_linear = useTransform(scrollYProgress, [0.05, 0.5], [0, delta.x]);
-  const y_linear = useTransform(scrollYProgress, [0.05, 0.5], [0, delta.y]);
+  const x_linear = useTransform(scrollYProgress, [0.05, 0.38], [0, delta.x]);
+  const y_linear = useTransform(scrollYProgress, [0.05, 0.38], [0, delta.y]);
 
   // 2. useSpring으로 새로운 motion value를 생성
   const springConfig = { damping: 30, stiffness: 200 };

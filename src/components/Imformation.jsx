@@ -210,7 +210,7 @@ function Imformation() {
   const bottomBarsRef = useRef([]);
   const lastAni2Ref = useRef();
   const textAnimationContainerRef = useRef(null);
-    const containerRef = useRef(null);
+  const containerRef = useRef(null);
 
 
 
@@ -654,7 +654,7 @@ function Imformation() {
     return () => ctx.revert();
   }, []);
 
-const textElements = React.useMemo(() => {
+  const textElements = React.useMemo(() => {
     const texts = [
       ...Array(10).fill('Thank you for reading my portfolio.'),
       ...Array(10).fill('Thank you for reading my portfolio.')
@@ -710,7 +710,7 @@ const textElements = React.useMemo(() => {
     // 컴포넌트가 언마운트될 때 GSAP 애니메이션과 ScrollTrigger를 모두 정리합니다.
     return () => ctx.revert();
   }, []);
-  
+
   return (
     <section ref={sectionRef} className="relative block overflow-x-clip">
       <div className="relative flex flex-wrap w-full items-center pointer-events-none text-[16px]">
@@ -978,17 +978,17 @@ const textElements = React.useMemo(() => {
               </span>
             </span>
             <div ref={containerRef} className="absolute top-0 left-0 w-full h-full pointer-events-none">
-      {textElements.map(el => (
-        <span
-          key={el.id}
-          className="thank-you-text absolute z-20 text-[20px] mix-blend-difference text-[#ffffff] whitespace-nowrap"
-          // 초기 opacity를 0으로 설정하고, 생성된 위치값을 적용합니다.
-          style={{ ...el.style, opacity: 0 }}
-        >
-          {el.text}
-        </span>
-      ))}
-    </div>
+              {textElements.map(el => (
+                <span
+                  key={el.id}
+                  className="thank-you-text absolute z-20 text-[20px] mix-blend-difference text-[#ffffff] whitespace-nowrap"
+                  // 초기 opacity를 0으로 설정하고, 생성된 위치값을 적용합니다.
+                  style={{ ...el.style, opacity: 0 }}
+                >
+                  {el.text}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
