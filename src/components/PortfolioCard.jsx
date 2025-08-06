@@ -3,10 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useScrollProgress } from '../contexts/ScrollProgressContext';
 
 function PortfolioCard({ item }) {
-
     const ref = useRef(null);
-
-    // useScrollProgress 훅을 사용하여 Context에서 updateScrollProgress 함수를 가져옵니다.
     const { updateScrollProgress } = useScrollProgress();
 
     const { scrollYProgress } = useScroll({
@@ -14,18 +11,20 @@ function PortfolioCard({ item }) {
         offset: ['start start', 'end start'],
     });
 
-    // scrollYProgress 값이 변할 때마다 Context를 업데이트합니다.
     useEffect(() => {
-        // scrollYProgress의 변화를 감지하고, 해당 카드 ID와 함께 Context에 업데이트합니다.
-        // item.id를 사용하여 각 카드를 고유하게 식별합니다.
         const unsubscribe = scrollYProgress.onChange((latestProgress) => {
             updateScrollProgress(item.id, latestProgress);
-            //   console.log(`[PortfolioCard - ID: ${item.id}] Latest Scroll Progress: ${latestProgress}`);
-
         });
-        return () => unsubscribe(); // 컴포넌트 언마운트 시 구독 해제
+        return () => unsubscribe();
     }, [scrollYProgress, item.id, updateScrollProgress]);
 
+    // --- 카드 클릭 시 링크 이동을 위한 핸들러 ---
+    // window.open을 사용하여 새 탭에서 링크를 엽니다.
+    const handleCardClick = () => {
+        if (item.buttonLink) {
+            window.open(item.buttonLink, '_blank', 'noopener,noreferrer');
+        }
+    };
 
     const y = useTransform(scrollYProgress, [0, 1], [0, -70]);
     const rotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
@@ -33,10 +32,12 @@ function PortfolioCard({ item }) {
     const opacity = useTransform(scrollYProgress, [0, 0.99, 1], [1, 1, 0]);
 
     return (
+        // [수정사항 2-1] 최상위 div에 onClick 핸들러와 cursor-pointer 스타일을 추가합니다.
         <div
             ref={ref}
-            className="relative w-full h-[calc(200vh-6.25vw)] mb-[calc(-100vh+4.16667vw)]"
+            className="relative w-full h-[calc(200vh-6.25vw)] mb-[calc(-100vh+4.16667vw)] cursor-pointer"
             style={{ willChange: 'transform' }}
+            onClick={handleCardClick}
         >
             <div className="relative w-full h-[400vh]">
                 <div className="sticky flex flex-col top-0 w-full h-screen items-center justify-center">
@@ -57,17 +58,9 @@ function PortfolioCard({ item }) {
 
                         {/* 상단 */}
                         <div className="absolute top-4 w-full z-10 flex flex-shrink-0 items-center justify-center">
-                            <span className="absolute text-[1.5625vw] top-[1.04167vw] left-[calc(14px+1.04167vw)]">
-                                {item.year}
-                            </span>
-                            <img
-                                src={item.logo}
-                                alt="logo"
-                                className={`${item.id === 3 ? 'w-24 mt-3' : 'w-32 mt-6'}`}
-                            />
-                            <span className="absolute text-[1.5625vw] top-[1.04167vw] right-[calc(14px+1.04167vw)]">
-                                {item.count}
-                            </span>
+                            <span className="absolute text-[1.5625vw] top-[1.04167vw] left-[calc(14px+1.04167vw)]">{item.year}</span>
+                            <img src={item.logo} alt="logo" className={`${item.id === 3 ? 'w-24 mt-3' : 'w-32 mt-6'}`} />
+                            <span className="absolute text-[1.5625vw] top-[1.04167vw] right-[calc(14px+1.04167vw)]">{item.count}</span>
                         </div>
 
                         {/* 중단 텍스트 */}
@@ -87,12 +80,8 @@ function PortfolioCard({ item }) {
                                                 }}
                                                 className="inline-flex flex-row flex-nowrap items-center"
                                             >
-                                                <span className="relative inline-block uppercase whitespace-nowrap mr-[.26em] mb-[.15em]">
-                                                    {item.text}
-                                                </span>
-                                                <span className="relative inline-block uppercase whitespace-nowrap mr-[.26em] mb-[.15em]">
-                                                    {item.text}
-                                                </span>
+                                                <span className="relative inline-block uppercase whitespace-nowrap mr-[.26em] mb-[.15em]">{item.text}</span>
+                                                <span className="relative inline-block uppercase whitespace-nowrap mr-[.26em] mb-[.15em]">{item.text}</span>
                                             </motion.div>
                                         ))}
                                     </div>
@@ -109,9 +98,13 @@ function PortfolioCard({ item }) {
                                 <span className="text-[1.5625vw] px-[1vw] text-center uppercase leading-4">{item.text}</span>
                             </div>
                             <div className="relative w-full flex justify-center">
+                                {/* [수정사항 1 & 2-2] a 태그 수정 */}
                                 <a
                                     href={item.buttonLink}
+                                    target="_blank" // 1. 새 창에서 열기
+                                    rel="noopener noreferrer"
                                     className="relative text-[1.5625vw] flex flex-grow-0 justify-center mt-[1vw] mb-[1vw] py-[8px] px-[24px]"
+                                    onClick={(e) => e.stopPropagation()} // 2. 이벤트 버블링 방지
                                 >
                                     <div className="absolute top-0 w-full h-full rounded-[100px] bg-[rgb(215,30,40)]" />
                                     <span className="relative block">VISIT NOW</span>
