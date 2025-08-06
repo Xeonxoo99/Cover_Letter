@@ -74,9 +74,7 @@ const projects = [
     alt: 'mini_game_broken',
     tag: (
       <>
-        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
-        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
-        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+        화면에 있는 벽돌을 공으로 맞춰 부수는 게임입니다.
       </>
     ),
     style: 'top-[-10%] left-[125vh] z-10'
@@ -86,9 +84,7 @@ const projects = [
     alt: 'mini_game_dino',
     tag: (
       <>
-        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
-        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
-        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+        점프 키를 입력하여 장애물을 피하는 게임입니다.
       </>
     ),
     style: 'top-[40%] left-[175vh]'
@@ -98,9 +94,7 @@ const projects = [
     alt: 'mini_game_typing',
     tag: (
       <>
-        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
-        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
-        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+        화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
       </>
     ),
     style: 'top-[-10%] left-[225vh] z-10'
@@ -162,6 +156,25 @@ const TEXT_LINES = [
   "1999 02 28"
 ];
 
+function AnimatedBar({ scrollProgress, heightRange }) {
+  // scrollProgress(0~1) 값의 변화에 따라 heightRange에 지정된 높이 값으로 변환합니다.
+  const height = useTransform(
+    scrollProgress,
+    [0, 0.8, 0.9, 1], // 입력값 (스크롤 진행률)
+    heightRange       // 출력값 (요청하신 높이 배열)
+  );
+
+  return (
+    <motion.div
+      className='absolute w-full left-0 bottom-0 bg-[#eeeeee]'
+      style={{
+        height, // useTransform으로 생성된 motion 값을 스타일에 적용
+        opacity: 1,
+      }}
+    />
+  );
+}
+
 function Imformation() {
   const { cardScrollProgress } = useScrollProgress();
   const totalBoxes = 200;
@@ -207,7 +220,7 @@ function Imformation() {
   const boxScaleRefs = useRef([]);
   const boxOpacityRefs = useRef([]);
   const boxColorRefs = useRef([]);
-  const bottomBarsRef = useRef([]);
+  // const bottomBarsRef = useRef([]);
   const lastAni2Ref = useRef();
   const textAnimationContainerRef = useRef(null);
   const containerRef = useRef(null);
@@ -217,6 +230,19 @@ function Imformation() {
   const individualCarouselItemRefs = useRef(
     Array(9).fill(null).map(() => Array(carouselItems.length).fill(null))
   );
+
+  const heightRanges = [
+    ['0%', '89%', '83%', '100%'],
+    ['0%', '95%', '85%', '100%'],
+    ['0%', '91%', '82%', '100%'],
+    ['0%', '97%', '87%', '100%'],
+    ['0%', '92%', '84%', '100%']
+  ];
+
+  const { scrollYProgress: barAnimationProgress } = useScroll({
+    target: lastAni2Ref,
+    offset: ["start end", "end end"] // 요소가 화면에 보이기 시작할 때부터 사라질 때까지
+  });
 
   const addIndividualCarouselRef = (el, gridIndex, itemIndex) => {
     if (el && individualCarouselItemRefs.current[gridIndex] && individualCarouselItemRefs.current[gridIndex][itemIndex] !== el) {
@@ -428,7 +454,7 @@ function Imformation() {
 
         if (opacityBox) {
           lastSectionTimeline.to(opacityBox, {
-            opacity: 1,
+            opacity: 0.1,
             duration: 0.5,
             ease: "none"
           }, startTime);
@@ -447,30 +473,30 @@ function Imformation() {
       }, "<");
 
       // 5개 div의 높이를 조절하는 새로운 GSAP 타임라인
-      const bottomBarsTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: lastAni2Ref.current,
-          start: "top+=1000 top",
-          end: "bottom bottom",
-          // 스크롤에 따라 애니메이션을 부드럽게 연결
-          scrub: true,
-          // markers: true, // 디버깅 시 위치 확인용
-        }
-      });
+      // const bottomBarsTimeline = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: lastAni2Ref.current,
+      //     start: "top+=1000 top",
+      //     end: "bottom bottom",
+      //     // 스크롤에 따라 애니메이션을 부드럽게 연결
+      //     scrub: true,
+      //     // markers: true, // 디버깅 시 위치 확인용
+      //   }
+      // });
 
-      const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
+      // const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
 
-      // 2. 5개의 div 각각에 정의된 duration을 적용합니다.
-      bottomBarsRef.current.forEach((bar, index) => {
-        if (bar) {
-          bottomBarsTimeline.to(bar, {
-            height: '100%',
-            // index에 해당하는 duration 값을 할당
-            duration: durations[index],
-            ease: "none"
-          }, 0); // 0을 지정하여 모든 애니메이션이 타임라인의 시작점에서 동시에 시작되도록 함
-        }
-      });
+      // // 2. 5개의 div 각각에 정의된 duration을 적용합니다.
+      // bottomBarsRef.current.forEach((bar, index) => {
+      //   if (bar) {
+      //     bottomBarsTimeline.to(bar, {
+      //       height: '100%',
+      //       // index에 해당하는 duration 값을 할당
+      //       duration: durations[index],
+      //       ease: "none"
+      //     }, 0); // 0을 지정하여 모든 애니메이션이 타임라인의 시작점에서 동시에 시작되도록 함
+      //   }
+      // });
 
     }, sectionRef);
 
@@ -918,16 +944,14 @@ function Imformation() {
           ))}
         </div>
         <div className='fixed flex w-screen h-screen top-0 left-0 items-end mix-blend-difference pointer-events-none'>
-          {Array(5).fill(0).map((_, index) => (
+          {heightRanges.map((range, index) => (
             <div key={index} className='relative w-[20%] h-full bottom-0' >
-              {/* 이 div는 배경 역할을 하므로 그대로 둡니다. */}
               <div className='absolute w-full left-0 bottom-0 bg-[#b8b8b8]' style={{ opacity: 0, height: '90%' }}></div>
-              {/* 애니메이션을 적용할 div에 ref를 연결합니다. */}
-              <div
-                ref={el => (bottomBarsRef.current[index] = el)}
-                className='absolute w-full left-0 bottom-0 bg-[#eeeeee]'
-                style={{ opacity: 1, height: '0%' }}
-              ></div>
+              {/* AnimatedBar에 scrollProgress와 heightRange를 props로 전달 */}
+              <AnimatedBar
+                scrollProgress={barAnimationProgress}
+                heightRange={range}
+              />
             </div>
           ))}
         </div>
@@ -953,7 +977,7 @@ function Imformation() {
                       key={lineIndex}
                       data-line-index={lineIndex}
                       aria-hidden={true}
-                      className='absolute uppercase '
+                      className='absolute uppercase'
                     ></div>
                     {/* 1. 띄어쓰기 기준으로 단어 분리 */}
                     {line.split(' ').map((word, wordIndex) => (
@@ -964,7 +988,7 @@ function Imformation() {
                           <span key={charIndex} className='inline-block overflow-hidden z-20'>
                             {/* 4. 애니메이션 대상이 될 글자에 공통 클래스(anim-char) 부여 */}
                             <span
-                              className={`anim-char inline-block ${char === '@' ? 'text-[12vw] pb-[5vh]' : ''
+                              className={`anim-char inline-block ${char === '@' ? 'text-[12vw] pb-[5vh]' : 'pb-[3vh]'
                                 }`}
                             >
                               {char}

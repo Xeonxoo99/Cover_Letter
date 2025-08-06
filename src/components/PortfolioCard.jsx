@@ -18,8 +18,7 @@ function PortfolioCard({ item }) {
         return () => unsubscribe();
     }, [scrollYProgress, item.id, updateScrollProgress]);
 
-    // --- 카드 클릭 시 링크 이동을 위한 핸들러 ---
-    // window.open을 사용하여 새 탭에서 링크를 엽니다.
+    // window.open을 사용하여 새 탭에서 링크로 열기
     const handleCardClick = () => {
         if (item.buttonLink) {
             window.open(item.buttonLink, '_blank', 'noopener,noreferrer');
@@ -32,7 +31,6 @@ function PortfolioCard({ item }) {
     const opacity = useTransform(scrollYProgress, [0, 0.99, 1], [1, 1, 0]);
 
     return (
-        // [수정사항 2-1] 최상위 div에 onClick 핸들러와 cursor-pointer 스타일을 추가합니다.
         <div
             ref={ref}
             className="relative w-full h-[calc(200vh-6.25vw)] mb-[calc(-100vh+4.16667vw)] cursor-pointer"
@@ -98,7 +96,6 @@ function PortfolioCard({ item }) {
                                 <span className="text-[1.5625vw] px-[1vw] text-center uppercase leading-4">{item.text}</span>
                             </div>
                             <div className="relative w-full flex justify-center">
-                                {/* [수정사항 1 & 2-2] a 태그 수정 */}
                                 <a
                                     href={item.buttonLink}
                                     target="_blank" // 1. 새 창에서 열기
