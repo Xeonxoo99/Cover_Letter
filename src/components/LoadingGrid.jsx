@@ -99,7 +99,7 @@ const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
         return (
           <div
             key={i}
-            className={`flex items-center justify-center border-r border-b border-gray-900 text-white font-mono text-xs md:text-sm
+            className={`flex items-center justify-center text-white font-mono text-xs md:text-sm
               ${isVisible ? 'visible bg-black' : 'invisible bg-transparent'}`
             }
           >

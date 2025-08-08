@@ -55,8 +55,9 @@ function App({ isLoaded, progress }) {
           <div id="imformation">
             <Imformation />
           </div>
-          <div ref={footerTriggerRef} className="h-[30vh]" />
+          
         </main>
+        <div ref={footerTriggerRef} className="h-[100vh]" />
         <Footer y={footerY} />
       </>
 

@@ -927,7 +927,7 @@ function Imformation() {
 
       </div>
       {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-      <div ref={lastRef} className='relative overflow-hidden z-[9999]'>
+      <div ref={lastRef} className='relative overflow-x-clip z-[9999]'>
 
         {/* trigger */}
         <div className='absolute top-0 h-screen'></div>
