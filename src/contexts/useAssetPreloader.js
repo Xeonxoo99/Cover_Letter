@@ -1,18 +1,49 @@
 import { useState, useEffect } from 'react';
 
+import html5 from '../images/introduction/HTML5.svg';
+import css3 from '../images/introduction/CSS3.svg';
+import jquery from '../images/introduction/jQuery.svg';
+import js from '../images/introduction/JS.svg';
+import react from '../images/introduction/React.svg';
+import tailwindcss from '../images/introduction/Tailwind.svg';
+import gsap from '../images/introduction/GSAP.svg';
+import nextjs from '../images/introduction/nextjs.svg';
+import threejs from '../images/introduction/Threejs.svg';
+import login from '../images/imformation/login.mp4';
+import mini_game_login from '../images/imformation/mini_game_login.mp4'
+import mini_game_broken from '../images/imformation/mini_game_broken.mp4'
+import mini_game_dino from '../images/imformation/mini_game_dino.mp4'
+import mini_game_typing from '../images/imformation/mini_game_typing.mp4'
+import mini_game_mypage from '../images/imformation/mini_game_mypage.mp4'
+import mini_project from '../images/imformation/mini_project.mp4'
+import riot from '../images/portfolio/riot.avif';
+import riotLogo from '../images/portfolio/riot.svg';
+import riotCenter from '../images/portfolio/riotcenter.gif';
+import subway from '../images/portfolio/main_video.mp4';
+import subwayLogo from '../images/portfolio/subway_logo.svg';
+import subwayCenter from '../images/portfolio/searchBetter_menu.png';
+import demon from '../images/portfolio/introVideo.mp4';
+import demonLogo from '../images/portfolio/demon_logo.png';
+import demonCenter from '../images/portfolio/demon_center.png';
+
+export const assetsToPreload = [
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, login, mini_game_login, mini_game_broken, mini_game_dino, mini_game_typing, mini_game_mypage,
+    mini_project, riot, riotLogo, riotCenter, subway, subwayLogo, subwayCenter, demon, demonLogo, demonCenter
+];
+
 function useAssetPreloader(assetUrls) {
     const [progress, setProgress] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        const assets = Array.isArray(assetUrls) ? assetUrls : [assetUrls];
-        const assetCount = assets.length;
-        if (assetCount === 0) {
-            setIsLoaded(true);
+        // assetUrls가 배열이 아니거나 비어있으면 즉시 종료
+        if (!Array.isArray(assetUrls) || assetUrls.length === 0) {
             setProgress(100);
+            setIsLoaded(true);
             return;
         }
 
+        const assetCount = assetUrls.length;
         let loadedCount = 0;
 
         const updateProgress = () => {
@@ -21,20 +52,29 @@ function useAssetPreloader(assetUrls) {
             setProgress(currentProgress);
 
             if (loadedCount === assetCount) {
-                // 모든 에셋 로드가 완료되면 isLoaded를 true로 설정
-                // 약간의 딜레이를 주어 100%가 잠시 보이도록 함
                 setTimeout(() => {
                     setIsLoaded(true);
-                }, 500);
+                }, 250); // 딜레이를 약간 줄여도 좋습니다.
             }
         };
 
-        assets.forEach((url) => {
-            const img = new Image();
-            img.onload = updateProgress;
-            // 에러 발생 시에도 카운트를 올려 로딩이 멈추지 않도록 처리
-            img.onerror = updateProgress;
-            img.src = url;
+        assetUrls.forEach((url) => {
+            const fileExtension = url.split('.').pop().toLowerCase();
+
+            // 파일 확장자에 따라 다른 태그로 로드합니다.
+            if (['mp4', 'webm'].includes(fileExtension)) {
+                // 비디오 태그 생성
+                const video = document.createElement('video');
+                video.oncanplaythrough = updateProgress; // 'canplaythrough' 이벤트 사용
+                video.onerror = updateProgress;
+                video.src = url;
+            } else {
+                // 이미지 태그 생성
+                const img = new Image();
+                img.onload = updateProgress;
+                img.onerror = updateProgress;
+                img.src = url;
+            }
         });
 
     }, [assetUrls]);
