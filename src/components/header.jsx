@@ -23,10 +23,10 @@ function Header({ activeSection }) {
       style={{ zIndex: 9999999, mixBlendMode: 'difference' }}
     >
       {/* 좌측 SVG 이름 */}
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306.113 29.355" className="w-[16vw] h-[20vw]">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306.113 29.355" className="w-[300px] h-[50px]">
         <text
           x="0"
-          y="24"
+          y="1vw"
           fontFamily="aeonik, sans-serif"
           fontSize="32"
           fontWeight="bold"

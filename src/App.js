@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { useScroll, useTransform } from 'framer-motion'; 
 import Loading from './components/Loading';
 import Header from './components/header'
 import Introduction from './components/Introduction'
 import Portfolio from './components/Portfolio'
 import Imformation from './components/Imformation'
+import Footer from './components/Footer';
 import { ScrollProgressProvider } from './contexts/ScrollProgressContext';
 import useAssetPreloader from './contexts/useAssetPreloader';
 
@@ -45,6 +47,12 @@ function App() {
 
   const { progress, isLoaded } = useAssetPreloader(assetsToPreload);
 
+const footerTriggerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: footerTriggerRef,
+    offset: ["start end", "end end"]
+  });
+    const footerY = useTransform(scrollYProgress, [0.99, 1], ["100%", "0%"]);
 
 React.useEffect(() => {
     // 5. 로딩이 완료된 후에만 스크롤 옵저버를 실행
@@ -87,7 +95,10 @@ React.useEffect(() => {
             <div id="imformation">
               <Imformation />
             </div>
+            <div ref={footerTriggerRef} className="h-[30vh]" />
+
           </main>
+          <Footer y={footerY} />
         </>
       )}
     </ScrollProgressProvider>

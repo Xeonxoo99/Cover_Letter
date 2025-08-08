@@ -151,8 +151,6 @@ const fixedRevealOrder = [
 const TEXT_LINES = [
   "kim yeon soo",
   "junior front-end dev",
-  "010 3750 5001",
-  "wezel99 @ naver.com",
   "1999 02 28"
 ];
 
@@ -425,7 +423,7 @@ function Imformation() {
       const lastSectionTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: lastRef.current,
-          start: "top bottom-=1000",
+          start: "top bottom",
           end: "bottom bottom",
           scrub: 3,
           onLeaveBack: () => {
@@ -437,7 +435,7 @@ function Imformation() {
       });
 
       const totalBoxesForLastAnim = 10;
-      const staggerOffset = 0.1;
+      const staggerOffset = 0.2;
 
       for (let i = totalBoxesForLastAnim - 1; i >= 0; i--) {
         const scaleBox = boxScaleRefs.current[i];
@@ -521,7 +519,7 @@ function Imformation() {
     const viewportWidth = window.innerWidth;
 
     // 실제로 가로로 움직여야 하는 총 거리
-    const horizontalScrollDistance = scrollWidth - viewportWidth;
+    const horizontalScrollDistance = scrollWidth - viewportWidth + 500;
 
     const tl = gsap.to(inner, {
       x: () => -horizontalScrollDistance, // x축 이동 거리도 동적으로 설정
@@ -591,19 +589,19 @@ function Imformation() {
   }, []);
 
   // hover 시 동영상 재생
-  const handleMouseEnter = (e) => {
-    const video = e.currentTarget.querySelector('video');
-    if (video) {
-      video.play();
-    }
-  };
+  // const handleMouseEnter = (e) => {
+  //   const video = e.currentTarget.querySelector('video');
+  //   if (video) {
+  //     video.play();
+  //   }
+  // };
 
-  const handleMouseLeave = (e) => {
-    const video = e.currentTarget.querySelector('video');
-    if (video) {
-      video.pause();
-    }
-  };
+  // const handleMouseLeave = (e) => {
+  //   const video = e.currentTarget.querySelector('video');
+  //   if (video) {
+  //     video.pause();
+  //   }
+  // };
 
   // 이미지, 비디오 보이게 하는 애니메이션
   const mediaRefs = useRef([]);
@@ -892,8 +890,8 @@ function Imformation() {
                     <div
                       key={index}
                       className={`absolute ${item.style}`}
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
+                      // onMouseEnter={handleMouseEnter}
+                      // onMouseLeave={handleMouseLeave}
                     >
                       <div className="relative flex justify-center overflow-x-clip">
                         {isVideo ? (
@@ -901,7 +899,7 @@ function Imformation() {
                             ref={(el) => (mediaRefs.current[index] = el)}
                             src={item.src}
                             className="object-cover"
-
+                            autoPlay
                             muted
                             playsInline
                           />
@@ -929,7 +927,7 @@ function Imformation() {
 
       </div>
       {/* 애니메이션 / 마지막 소개 섹션 about-measurements */}
-      <div ref={lastRef} className='relative overflow-x-clip z-[9999]'>
+      <div ref={lastRef} className='relative overflow-hidden z-[9999]'>
 
         {/* trigger */}
         <div className='absolute top-0 h-screen'></div>
