@@ -1,3 +1,5 @@
+https://smartdevicetec.com/
+
 # 250807
 1. footer 추가 / 완료
 2. 영상 나타나는 애니메이션 수정 / 진행 중

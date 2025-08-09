@@ -156,7 +156,7 @@ function AnimatedBar({ scrollProgress, heightRange }) {
   // scrollProgress(0~1) 값의 변화에 따라 heightRange에 지정된 높이 값으로 변환합니다.
   const height = useTransform(
     scrollProgress,
-    [0, 0.8, 0.9, 1], // 입력값 (스크롤 진행률)
+    [0, 0.5, 0.7,0.9, 1], // 입력값 (스크롤 진행률)
     heightRange       // 출력값 (요청하신 높이 배열)
   );
 
@@ -228,11 +228,11 @@ function Imformation() {
   );
 
   const heightRanges = [
-    ['0%', '89%', '83%', '100%'],
-    ['0%', '95%', '85%', '100%'],
-    ['0%', '91%', '82%', '100%'],
-    ['0%', '97%', '87%', '100%'],
-    ['0%', '92%', '84%', '100%']
+    ['0%', '76%', '98.7%','90%', '100%'],
+    ['0%', '55%', '98.5%','92%', '100%'],
+    ['0%', '88%', '97.8%','90%', '100%'],
+    ['0%', '66%', '99%','90.6%', '100%'],
+    ['0%', '40%', '97%','93%', '100%']
   ];
 
   const { scrollYProgress: barAnimationProgress } = useScroll({

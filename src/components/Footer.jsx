@@ -5,7 +5,7 @@ import github from '../images/imformation/github.svg';
 const Footer = ({ y }) => {
   return (
     <motion.div 
-      className="fixed bottom-0 left-0 w-full h-[20vh] z-[10000] bg-white/20 backdrop-blur-lg flex items-center justify-between px-10 text-black"
+      className="fixed bottom-0 left-0 w-full h-[10vh] z-[10000] bg-white/20 backdrop-blur-lg flex items-center justify-between px-10 text-black"
       style={{ y }}
     >
       {/* 왼쪽: 연락처 정보 */}
