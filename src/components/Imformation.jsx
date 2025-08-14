@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useScrollProgress } from '../contexts/ScrollProgressContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ProjectItem from './ProjectItem';
 
 // 배경 이미지
 import me from '../images/imformation/me_color.jpeg'
@@ -45,7 +46,7 @@ const projects = [
         jquery로 만든 영화 기록 블로그입니다.
       </>
     ),
-    style: 'top-[25%] left-[-40vh]'
+    style: 'top-[25%] left-[-7vh]'
   },
   {
     src: login,
@@ -55,7 +56,7 @@ const projects = [
         js로 만든 블로그 사이트입니다.
       </>
     ),
-    style: 'top-[0%] left-[0vh] z-10'
+    style: 'top-[0%] left-[60vh] z-10'
   },
   {
     src: mini_game_login,
@@ -67,7 +68,7 @@ const projects = [
         저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
       </>
     ),
-    style: 'top-[40%] left-[75vh]'
+    style: 'top-[50%] left-[80vh]'
   },
   {
     src: mini_game_broken,
@@ -77,7 +78,7 @@ const projects = [
         화면에 있는 벽돌을 공으로 맞춰 부수는 게임입니다.
       </>
     ),
-    style: 'top-[-10%] left-[125vh] z-10'
+    style: 'top-[0%] left-[150vh] z-10'
   },
   {
     src: mini_game_dino,
@@ -87,7 +88,7 @@ const projects = [
         점프 키를 입력하여 장애물을 피하는 게임입니다.
       </>
     ),
-    style: 'top-[40%] left-[175vh]'
+    style: 'top-[45%] left-[165vh]'
   },
   {
     src: mini_game_typing,
@@ -97,7 +98,7 @@ const projects = [
         화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
       </>
     ),
-    style: 'top-[-10%] left-[225vh] z-10'
+    style: 'top-[10%] left-[235vh] z-10'
   },
   {
     src: mini_game_mypage,
@@ -107,7 +108,7 @@ const projects = [
         본인의 정보를 알 수 있는 상세페이지입니다.
       </>
     ),
-    style: 'top-[40%] left-[275vh]'
+    style: 'top-[60%] left-[275vh]'
   },
   {
     src: mini_project,
@@ -121,7 +122,7 @@ const projects = [
         2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
       </>
     ),
-    style: 'top-[20%] left-[380vh]'
+    style: 'top-[20%] left-[350vh]'
   },
 ];
 
@@ -517,7 +518,7 @@ function Imformation() {
     const viewportWidth = window.innerWidth;
 
     // 실제로 가로로 움직여야 하는 총 거리
-    const horizontalScrollDistance = scrollWidth - viewportWidth + 500;
+    const horizontalScrollDistance = scrollWidth - viewportWidth - 500;
 
     const tl = gsap.to(inner, {
       x: () => -horizontalScrollDistance, // x축 이동 거리도 동적으로 설정
@@ -602,37 +603,37 @@ function Imformation() {
   // };
 
   // 이미지, 비디오 보이게 하는 애니메이션
-  const mediaRefs = useRef([]);
+  // const mediaRefs = useRef([]);
 
-  useEffect(() => {
-    mediaRefs.current.forEach((el, index) => {
-      if (!el) return;
+  // useEffect(() => {
+  //   mediaRefs.current.forEach((el, index) => {
+  //     if (!el) return;
 
-      // console.log(projects[index].src) 로 확인 후 아래 조건 수정
-      const isVideo = typeof projects[index].src === 'string' && projects[index].src.includes('.mp4');
+  //     // console.log(projects[index].src) 로 확인 후 아래 조건 수정
+  //     const isVideo = typeof projects[index].src === 'string' && projects[index].src.includes('.mp4');
 
-      gsap.set(el, { width: 0, height: 0 });
+  //     gsap.set(el, { width: 0, height: 0 });
 
-      // 개선된 animateProps
-      let animateProps = {
-        width: isVideo ? '45%' : '45%',
-        height: isVideo ? '45%' : '45%',
-      };
+  //     // 개선된 animateProps
+  //     let animateProps = {
+  //       width: isVideo ? '45%' : '45%',
+  //       height: isVideo ? '45%' : '45%',
+  //     };
 
-      gsap.to(el, {
-        ...animateProps,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top bottom-=2800', // 더 안정적인 trigger 조건
-          end: 'bottom bottom-=2800',
-          toggleActions: 'play none none none',
-          // markers: true
-        },
-      });
-    });
-  }, [projects]);
+  //     gsap.to(el, {
+  //       ...animateProps,
+  //       duration: 1,
+  //       ease: 'power2.out',
+  //       scrollTrigger: {
+  //         trigger: el,
+  //         start: 'top bottom-=2800', // 더 안정적인 trigger 조건
+  //         end: 'bottom bottom-=2800',
+  //         toggleActions: 'play none none none',
+  //         // markers: true
+  //       },
+  //     });
+  //   });
+  // }, [projects]);
 
   useLayoutEffect(() => {
     if (!textAnimationContainerRef.current) {
@@ -882,41 +883,9 @@ function Imformation() {
                 </span>
               </div>
               <div ref={projectRef} className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] relative w-[300vw]" style={{ mixBlendMode: 'difference' }}>
-                {projects.map((item, index) => {
-                  const isVideo = item.src.endsWith('.mp4');
-                  return (
-                    <div
-                      key={index}
-                      className={`absolute ${item.style}`}
-                      // onMouseEnter={handleMouseEnter}
-                      // onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="relative flex justify-center overflow-x-clip">
-                        {isVideo ? (
-                          <video
-                            ref={(el) => (mediaRefs.current[index] = el)}
-                            src={item.src}
-                            className="object-cover"
-                            autoPlay
-                            muted
-                            playsInline
-                          />
-                        ) : (
-                          <img
-                            ref={(el) => (mediaRefs.current[index] = el)}
-                            src={item.src}
-                            alt={item.alt}
-                            draggable={false}
-                            className="object-cover"
-                          />
-                        )}
-                      </div>
-                      <div className="text-sm text-[#ffffff] text-center">
-                        <span>{item.tag}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                {projects.map((item, index) => (
+  <ProjectItem key={index} item={item} />
+))}
               </div>
             </div>
           </div>
