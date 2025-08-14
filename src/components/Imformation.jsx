@@ -532,7 +532,7 @@ function Imformation() {
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
-        markers: true
+        // markers: true
       },
     });
     return () => {

@@ -45,7 +45,7 @@ function App({ isLoaded, progress }) {
     <ScrollProgressProvider>
       <>
         <Header activeSection={activeSection} />
-        <main>
+        <main className='overflow-x-clip'>
           <div id="home">
             <Introduction />
           </div>
