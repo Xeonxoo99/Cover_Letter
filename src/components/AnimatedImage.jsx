@@ -18,8 +18,8 @@ function AnimatedImage({ src, alt, scrollYProgress, index }) {
     <motion.img
       src={src}
       alt={alt}
-      className='w-40 h-40 object-contain'
-      style={{ filter }} // 여기서 계산된 filter 값을 사용합니다.
+      className='object-contain w-40 max-md:w-28 max-sm:w-20'
+      style={{ filter }}
     />
   );
 }
