@@ -129,8 +129,8 @@ function Introduction() {
   const macbookStyle = isMobile 
     ? { 
         position: 'absolute',
-        width: '25vw',
-        height: '25vw',
+        width: '50vw',
+        height: '50vw',
         zIndex: 10,
         top: macbookPosition.top,
         left: macbookPosition.left
@@ -182,23 +182,23 @@ function Introduction() {
           </div>
         </div>
 
-        <div className='relative w-full flex justify-between max-lg:flex-col'>
-          <div className='w-[45vw]'>
+        <div className='relative w-full flex justify-between max-lg:flex-col-reverse'>
+          <div className='relative w-[45vw] max-lg:w-full'>
             <div className='text-lg leading-[1em] text-left'>
-              <span className='block w-[23vw] font-medium font-Arial uppercase'>
+              <span className='block w-[23vw] font-medium font-Arial uppercase max-lg:w-[50vw]'>
                 I focus on problem-solving by calmly analyzing issues and learning from mistakes. I embrace failures as growth opportunities and set small goals to build confidence and maintain steady progress.
               </span>
             </div>
             <div className='relative flex'>
-              <div ref={endRef} className='relative w-[25vw] h-[30vw] pt-3'>
+              <div ref={endRef} className='relative w-[25vw] h-[30vw] pt-3 max-lg:w-[50vw] max-lg:h-[50vw]'>
                 {/* 끝나는 지점 */}
               </div>
-              <span className='w-[20vw] mt-2 ml-3 text-lg font-pretendard text-left'>
+              <span className='w-[20vw] mt-2 ml-3 text-lg font-pretendard text-left max-lg:w-[50vw] max-lg:text-base'>
                 저는 문제 상황이 발생했을 때 침착하게 분석하고, 그 과정을 통해 실수를 배우는 기회로 삼아 문제를 해결하는 데 집중합니다. <br /> 실패를 두려워하지 않고 오히려 성장의 발판으로 받아들이며, <br /> 자신감을 쌓기 위해 작은 목표부터 차근차근 설정하고 꾸준히 나아가는 태도를 중요하게 생각합니다.
               </span>
             </div>
           </div>
-          <div className='relative w-[45vw]'>
+          <div className='relative w-[45vw] max-lg:w-full pb-24'>
             <div className='border-t-[1px] border-b-[1px] border-[#000000]'>
               {historyItems.map((item, index) => (
                 <div
