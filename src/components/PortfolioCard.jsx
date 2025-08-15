@@ -40,7 +40,7 @@ function PortfolioCard({ item }) {
             <div className="relative w-full h-[400vh]">
                 <div className="sticky flex flex-col top-0 w-full h-screen items-center justify-center">
                     <motion.div
-                        className="relative overflow-hidden justify-between text-[#ffffff] w-[calc(100%-6.25vw)] h-[calc(100vh-6.25vw)] rounded-[30px] opacity-100"
+                        className="relative overflow-hidden justify-between text-[#ffffff] w-[calc(100%-6.25vw)] h-[calc(100vh-6.25vw)] rounded-[30px] opacity-100 max-lg:h-[calc(100vh-20vw)]"
                         style={{ y, rotate, scale, opacity }}
                     >
                         {/* 배경 */}
@@ -56,9 +56,9 @@ function PortfolioCard({ item }) {
 
                         {/* 상단 */}
                         <div className="absolute top-4 w-full z-10 flex flex-shrink-0 items-center justify-center">
-                            <span className="absolute text-[1.5625vw] top-[1.04167vw] left-[calc(14px+1.04167vw)]">{item.year}</span>
+                            <span className="absolute text-[24px] lg:text-[1.5625vw] top-[1.04167vw] left-[calc(14px+1.04167vw)]">{item.year}</span>
                             <img src={item.logo} alt="logo" className={`${item.id === 3 ? 'w-24 mt-3' : 'w-32 mt-6'}`} />
-                            <span className="absolute text-[1.5625vw] top-[1.04167vw] right-[calc(14px+1.04167vw)]">{item.count}</span>
+                            <span className="absolute text-[20px] lg:text-[1.5625vw]text-[1.5625vw] top-[1.04167vw] right-[calc(14px+1.04167vw)]">{item.count}</span>
                         </div>
 
                         {/* 중단 텍스트 */}
@@ -91,9 +91,9 @@ function PortfolioCard({ item }) {
                         </div>
 
                         {/* 하단 */}
-                        <div className="absolute bottom-0 w-full flex flex-shrink-0 justify-center items-center">
+                        <div className="absolute bottom-0 w-full flex flex-shrink-0 justify-center items-center max-lg:flex-col pb-10 gap-4">
                             <div className="relative w-full h-full flex justify-center items-end">
-                                <span className="text-[1.5625vw] px-[1vw] text-center uppercase leading-4">{item.text}</span>
+                                <span className="text-[1.5625vw] px-[1vw] text-center uppercase leading-4 max-lg:text-[20px]">{item.text}</span>
                             </div>
                             <div className="relative w-full flex justify-center">
                                 <a
@@ -101,14 +101,14 @@ function PortfolioCard({ item }) {
                                     target="_blank" // 1. 새 창에서 열기
                                     rel="noopener noreferrer"
                                     className="relative text-[1.5625vw] flex flex-grow-0 justify-center mt-[1vw] mb-[1vw] py-[8px] px-[24px]"
-                                    onClick={(e) => e.stopPropagation()} // 2. 이벤트 버블링 방지
+                                    onClick={(e) => e.stopPropagation()}
                                 >
                                     <div className="absolute top-0 w-full h-full rounded-[100px] bg-[rgb(215,30,40)]" />
-                                    <span className="relative block">VISIT NOW</span>
+                                    <span className="relative block max-lg:text-[20px]">VISIT NOW</span>
                                 </a>
                             </div>
                             <div className="relative flex w-full h-full items-end justify-center">
-                                <span className="text-[1.5625vw] px-[1vw] text-center uppercase">Portfolio</span>
+                                <span className="text-[1.5625vw] px-[1vw] text-center uppercase max-lg:text-[20px]">Portfolio</span>
                             </div>
                         </div>
                     </motion.div>
