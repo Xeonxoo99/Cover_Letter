@@ -9,9 +9,11 @@ const Footer = ({ y }) => {
       style={{ y }}
     >
       {/* 왼쪽: 연락처 정보 */}
-      <div className='flex items-center gap-x-6 font-semibold'>
-        <a href='https://github.com/Xeonxoo99' target="_blank" rel="noopener noreferrer" className="inline-blcok w-[60px] h-[60px] max-lg:w-[40px] max-lg:h-[40px] max-md:w-[30px] max-md:h-[30px]  rounded-full bg-black hover:bg-[#b8b8b8] transition-opacity">
-          <img src={github} alt="github" className="w-[60px] h-[60px] object-cover pb-[1.4px] max-lg:w-[40px] max-lg:h-[40px] max-md:w-[30px] max-md:h-[30px]" />
+      <div className='flex items-center gap-x-2 font-semibold'>
+     
+        <a href='https://github.com/Xeonxoo99' target="_blank" rel="noopener noreferrer" className="inline-blcok size-[40px] max-lg:w-[40px] max-lg:h-[40px] max-md:w-[30px] max-md:h-[30px]  rounded-full   transition-opacity ">
+          {/* <img src={github} alt="github" className="size-[40px] object-cover pb-[1.4px] max-lg:w-[40px] max-lg:h-[40px] max-md:w-[30px] max-md:h-[30px]" /> */}
+          <img src='/github.svg' alt='' />
         </a>
         
         {/* 연락처 정보 */}
@@ -21,7 +23,7 @@ const Footer = ({ y }) => {
         </div>
         
         {/* 구분선 */}
-        <div className="w-px h-8 bg-black/30"></div>
+        <div className="w-px h-8 mx-4 bg-black/30"></div>
         
         <span className="text-3xl max-lg:text-2xl max-md:text-xl">ISTP</span>
       </div>
