@@ -858,8 +858,8 @@ function Imformation() {
         <div ref={innerRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
           <div className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
             <div className={`relative flex w-fit h-full`}>
-              <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
-                <span ref={developerRef} className='text-[80vh]'>
+              <div className='relative flex flex-col -ml-[30vw] overflow-x-clip max-sm:-ml-[35vw]'>
+                <span ref={developerRef} className='text-[80vh] max-sm:text-[50vh]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
@@ -870,7 +870,7 @@ function Imformation() {
                     </span>
                   </span>
                 </span>
-                <span ref={developer2Ref} className='absolute text-[80vh] ml-[34rem]'>
+                <span ref={developer2Ref} className='absolute text-[80vh] ml-[34rem] max-sm:text-[50vh] max-sm:ml-[20rem]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
