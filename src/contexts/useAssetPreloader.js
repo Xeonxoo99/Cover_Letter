@@ -9,26 +9,16 @@ import tailwindcss from '../images/introduction/Tailwind.svg';
 import gsap from '../images/introduction/GSAP.svg';
 import nextjs from '../images/introduction/nextjs.svg';
 import threejs from '../images/introduction/Threejs.svg';
-import login from '../images/imformation/login.mp4';
-import mini_game_login from '../images/imformation/mini_game_login.mp4'
-import mini_game_broken from '../images/imformation/mini_game_broken.mp4'
-import mini_game_dino from '../images/imformation/mini_game_dino.mp4'
-import mini_game_typing from '../images/imformation/mini_game_typing.mp4'
-import mini_game_mypage from '../images/imformation/mini_game_mypage.mp4'
-import mini_project from '../images/imformation/mini_project.mp4'
 import riot from '../images/portfolio/riot.avif';
 import riotLogo from '../images/portfolio/riot.svg';
 import riotCenter from '../images/portfolio/riotcenter.gif';
-import subway from '../images/portfolio/main_video.mp4';
 import subwayLogo from '../images/portfolio/subway_logo.svg';
 import subwayCenter from '../images/portfolio/searchBetter_menu.png';
-import demon from '../images/portfolio/introVideo.mp4';
 import demonLogo from '../images/portfolio/demon_logo.png';
 import demonCenter from '../images/portfolio/demon_center.png';
 
 export const assetsToPreload = [
-    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, login, mini_game_login, mini_game_broken, mini_game_dino, mini_game_typing, mini_game_mypage,
-    mini_project, riot, riotLogo, riotCenter, subway, subwayLogo, subwayCenter, demon, demonLogo, demonCenter
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter
 ];
 
 function useAssetPreloader(assetUrls) {

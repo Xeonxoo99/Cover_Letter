@@ -5,11 +5,9 @@ import riot from '../images/portfolio/riot.avif';
 import riotLogo from '../images/portfolio/riot.svg';
 import riotCenter from '../images/portfolio/riotcenter.gif';
 
-import subway from '../images/portfolio/main_video.mp4';
 import subwayLogo from '../images/portfolio/subway_logo.svg';
 import subwayCenter from '../images/portfolio/searchBetter_menu.png';
 
-import demon from '../images/portfolio/introVideo.mp4';
 import demonLogo from '../images/portfolio/demon_logo.png';
 import demonCenter from '../images/portfolio/demon_center.png';
 
@@ -32,7 +30,7 @@ const portfolioData = [
     logo: subwayLogo,
     center: subwayCenter,
     img: null,
-    video: subway,
+    video: '/video/main_video.mp4',
     text: 'My take on subway',
     buttonLink: 'https://subway-hyvxgv11r-xeonxoo99s-projects.vercel.app/',
   },
@@ -43,7 +41,7 @@ const portfolioData = [
     logo: demonLogo,
     center: demonCenter,
     img: null,
-    video: demon,
+    video: '/video/introVideo.mp4',
     text: 'My Demon Slayer Website',
     buttonLink: 'https://demon-slayer-six.vercel.app/',
   },

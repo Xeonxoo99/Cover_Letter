@@ -17,13 +17,6 @@ import threejs from '../images/introduction/Threejs.svg'
 // 프로젝트들
 // import baseball_game from '../images/imformation/baseball_game.png'
 import jquery from '../images/imformation/jquery.png'
-import login from '../images/imformation/login.mp4'
-import mini_game_login from '../images/imformation/mini_game_login.mp4'
-import mini_game_broken from '../images/imformation/mini_game_broken.mp4'
-import mini_game_dino from '../images/imformation/mini_game_dino.mp4'
-import mini_game_typing from '../images/imformation/mini_game_typing.mp4'
-import mini_game_mypage from '../images/imformation/mini_game_mypage.mp4'
-import mini_project from '../images/imformation/mini_project.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +42,7 @@ const projects = [
     style: 'top-[25%] left-[-7vh]'
   },
   {
-    src: login,
+    src: '/video/login.mp4',
     alt: 'login',
     tag: (
       <>
@@ -59,7 +52,7 @@ const projects = [
     style: 'top-[0%] left-[60vh] z-10'
   },
   {
-    src: mini_game_login,
+    src: '/video/mini_game_login.mp4',
     alt: 'mini_game_login',
     tag: (
       <>
@@ -71,7 +64,7 @@ const projects = [
     style: 'top-[50%] left-[80vh]'
   },
   {
-    src: mini_game_broken,
+    src: '/video/mini_game_broken.mp4',
     alt: 'mini_game_broken',
     tag: (
       <>
@@ -81,7 +74,7 @@ const projects = [
     style: 'top-[0%] left-[150vh] z-10'
   },
   {
-    src: mini_game_dino,
+    src: '/video/mini_game_dino.mp4',
     alt: 'mini_game_dino',
     tag: (
       <>
@@ -91,7 +84,7 @@ const projects = [
     style: 'top-[45%] left-[165vh]'
   },
   {
-    src: mini_game_typing,
+    src: '/video/mini_game_typing.mp4',
     alt: 'mini_game_typing',
     tag: (
       <>
@@ -101,7 +94,7 @@ const projects = [
     style: 'top-[10%] left-[235vh] z-10'
   },
   {
-    src: mini_game_mypage,
+    src: '/video/mini_game_mypage.mp4',
     alt: 'mini_game_mypage',
     tag: (
       <>
@@ -111,7 +104,7 @@ const projects = [
     style: 'top-[60%] left-[275vh]'
   },
   {
-    src: mini_project,
+    src: '/video/mini_project.mp4',
     alt: 'mini_project',
     tag: (
       <>
