@@ -36,86 +36,80 @@ const projects = [
     alt: 'jquery',
     tag: (
       <>
-        jquery로 만든 영화 기록 블로그입니다.
+        영화 기록 블로그 (HTML,CSS,jQuery)
       </>
     ),
-    style: 'top-[25%] left-[-7vh]'
+    style: 'top-[25%] left-[-5vh] w-[300px]'
   },
   {
     src: '/video/login.mp4',
     alt: 'login',
     tag: (
       <>
-        js로 만든 블로그 사이트입니다.
+        블로그 사이트 (html,css,js)
       </>
     ),
-    style: 'top-[0%] left-[60vh] z-10'
+    style: 'top-[0%] left-[60vh] z-10 w-[400px]'
   },
   {
     src: '/video/mini_game_login.mp4',
     alt: 'mini_game_login',
     tag: (
       <>
-        부트캠프에서 4명이 1조로 작은 프로젝트를 만들었습니다.<br />
-        JS로 타이핑, 공룡점프, 벽돌깨기 게임을 각각 만들었습니다.<br />
-        저는 타이핑게임을 맡았으며, 화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+        게임로그인화면 (html,css,js)
       </>
     ),
-    style: 'top-[50%] left-[80vh]'
+    style: 'top-[50%] left-[40vh] w-[200px]'
   },
   {
     src: '/video/mini_game_broken.mp4',
     alt: 'mini_game_broken',
     tag: (
       <>
-        화면에 있는 벽돌을 공으로 맞춰 부수는 게임입니다.
+        벽돌깨기게임 (html,css,js)
       </>
     ),
-    style: 'top-[0%] left-[150vh] z-10'
+    style: 'top-[10%] left-[136vh] z-10  w-[240px]'
   },
   {
     src: '/video/mini_game_dino.mp4',
     alt: 'mini_game_dino',
     tag: (
       <>
-        점프 키를 입력하여 장애물을 피하는 게임입니다.
+        장애물피하기 (html,css,js)
       </>
     ),
-    style: 'top-[45%] left-[165vh]'
+    style: 'top-[60%] left-[100vh]  w-[420px]'
   },
   {
     src: '/video/mini_game_typing.mp4',
     alt: 'mini_game_typing',
     tag: (
       <>
-        화면에 나오는 영문을 제한시간 내에 동일하게 입력해야하는 게임입니다.
+        타이핑게임 (html,css,js)
       </>
     ),
-    style: 'top-[10%] left-[235vh] z-10'
+    style: 'top-[30%] left-[175vh] z-10  w-[340px]'
   },
   {
     src: '/video/mini_game_mypage.mp4',
     alt: 'mini_game_mypage',
     tag: (
       <>
-        본인의 정보를 알 수 있는 상세페이지입니다.
+        마이페이지 (html,css,js)
       </>
     ),
-    style: 'top-[60%] left-[275vh]'
+    style: 'top-[0%] left-[235vh] w-[300px]'
   },
   {
     src: '/video/mini_project.mp4',
     alt: 'mini_project',
     tag: (
       <>
-        부트캠프에서의 마지막 프로젝트입니다.<br />
-        백엔드 3명, 프론트엔드 2명, 디자이너 1명으로 이루어져있으며,<br />
-        Next.js, TypeScript, Axios, Tailwind CSS를 사용하였습니다.<br />
-        회원가입, 로그인, 좋아요, 게시판, 실시간 알림, 실시간 채팅등의 기능이 있습니다.<br />
-        2023년도에 개발하여, 현재는 벡엔드 관련 이슈로 인해 접속이 어려워, 남아있는 피드백 관련 영상으로 대체합니다.
+        RIZZPICK (Next.js + Typescript)
       </>
     ),
-    style: 'top-[20%] left-[350vh]'
+    style: 'top-[60%] left-[260vh]  w-[300px]'
   },
 ];
 
@@ -672,8 +666,7 @@ function Imformation() {
 
   const textElements = React.useMemo(() => {
     const texts = [
-      ...Array(10).fill('Thank you for reading my portfolio.'),
-      ...Array(10).fill('Thank you for reading my portfolio.')
+      ...Array(6).fill('THANK U'),
     ];
     return texts.map((text, index) => ({
       id: index,
@@ -851,8 +844,8 @@ function Imformation() {
         <div ref={innerRef} className="block z-[999] m-0 absolute overflow-visible box-border w-[7384px] h-screen p-0">
           <div className="block absolute translate-none rotate-0 scale-100 inset-t-0 inset-l-0 m-0 w-[1326px] max-h-[962px] h-[962px] p-0">
             <div className={`relative flex w-fit h-full`}>
-              <div className='relative flex flex-col -ml-[30vw] overflow-x-clip'>
-                <span ref={developerRef} className='text-[80vh]'>
+              <div className='relative flex flex-col -ml-[30vw] overflow-x-clip max-sm:-ml-[35vw]'>
+                <span ref={developerRef} className='text-[80vh] max-sm:text-[50vh]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] ml-[0.67em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
@@ -863,7 +856,7 @@ function Imformation() {
                     </span>
                   </span>
                 </span>
-                <span ref={developer2Ref} className='absolute text-[80vh] ml-[34rem]'>
+                <span ref={developer2Ref} className='absolute text-[80vh] ml-[34rem] max-sm:text-[50vh] max-sm:ml-[20rem]'>
                   <span className="flex items-center text-[#ffffff] flex-shrink-0 h-screen leading-[1.2em] -ml-[0.067em] pl-[3.125vw] relative whitespace-nowrap">
                     <span>
                       <span>
@@ -877,8 +870,8 @@ function Imformation() {
               </div>
               <div ref={projectRef} className="translate-none rotate-0 scale-100 h-screen z-auto -mr-[20vw] min-w-[2000px] relative w-[300vw]" style={{ mixBlendMode: 'difference' }}>
                 {projects.map((item, index) => (
-  <ProjectItem key={index} item={item} />
-))}
+                  <ProjectItem key={index} item={item} />
+                ))}
               </div>
             </div>
           </div>
