@@ -20,7 +20,7 @@ import demonCenter from '../images/portfolio/demon_center.png';
 
 export const assetsToPreload = [
     html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'/video/main_video.mp4',
-    '/video/introVideo.mp4'
+    '/video/introvideo.mp4'
 ];
 
 function useAssetPreloader(assetUrls) {

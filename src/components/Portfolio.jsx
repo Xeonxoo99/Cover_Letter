@@ -41,7 +41,7 @@ const portfolioData = [
     logo: demonLogo,
     center: demonCenter,
     img: null,
-    video: '/video/introVideo.mp4',
+    video: '/video/introvideo.mp4',
     text: 'My Demon Slayer Website',
     buttonLink: 'https://demon-slayer-six.vercel.app/',
   },

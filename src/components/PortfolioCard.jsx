@@ -46,7 +46,6 @@ function PortfolioCard({ item }) {
                         {/* 배경 */}
                         <div className="absolute w-full h-full">
                             {item.video ? (
-                                // 비디오 경로를 public 폴더 기준으로 수정합니다.
                                 <video autoPlay muted loop className="w-full h-[120%] object-cover">
                                     <source src={item.video} type="video/mp4" />
                                 </video>
