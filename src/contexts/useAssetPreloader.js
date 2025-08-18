@@ -19,8 +19,8 @@ import demonLogo from '../images/portfolio/demon_logo.png';
 import demonCenter from '../images/portfolio/demon_center.png';
 
 export const assetsToPreload = [
-    // 비디오 파일을 import하는 대신 public 폴더 경로로 직접 추가합니다.
-    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'/video/main_video.mp4',
+    '/video/introVideo.mp4'
 ];
 
 function useAssetPreloader(assetUrls) {
