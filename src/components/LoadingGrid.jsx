@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
-  // --- 5초 타이머와 가짜 진행률을 위한 상태들을 다시 추가합니다. ---
   const [isReadyToVanish, setIsReadyToVanish] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(false); // 실제 로딩 완료 여부
   const [minTimeElapsed, setMinTimeElapsed] = useState(false); // 5초 경과 여부
@@ -11,7 +10,7 @@ const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
   const [visibleIndices, setVisibleIndices] = useState(() => Array.from({ length: 100 }, (_, i) => i));
   const [showEven, setShowEven] = useState(true);
 
-  // --- 5초 타이머와 가짜 진행률 관련 로직을 다시 추가합니다. ---
+  // 5초 타이머와 가짜 진행률 관련 로직을 다시 추가
 
   // 1. 컴포넌트 마운트 시 5초 타이머를 설정하는 로직
   useEffect(() => {
@@ -54,7 +53,7 @@ const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
 
   // 'Loading...' 텍스트 점멸 효과
   useEffect(() => {
-    // isReadyToVanish가 true가 되면(사라지기 시작하면) 점멸을 멈춥니다.
+    // isReadyToVanish가 true가 되면(사라지기 시작하면) 점멸을 멈춤
     if (isReadyToVanish) return;
     const blinkInterval = setInterval(() => {
       setShowEven(prev => !prev);
@@ -64,7 +63,7 @@ const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
 
   // 소멸 애니메이션 로직
   useEffect(() => {
-    // isReadyToVanish가 true가 될 때까지 실행되지 않습니다.
+    // isReadyToVanish가 true가 될 때까지 실행되지 않음
     if (!isReadyToVanish) return;
     const randomVanishOrder = Array.from({ length: 100 }, (_, i) => i)
                                   .sort(() => 0.5 - Math.random());
@@ -103,11 +102,11 @@ const LoadingGrid = ({ onAnimationComplete, isLoaded, progress }) => {
               ${isVisible ? 'visible bg-black' : 'invisible bg-transparent'}`
             }
           >
-            {/* 사라지기 시작하면(isReadyToVanish=true) 내부 텍스트를 표시하지 않습니다. */}
+            {/* 사라지기 시작하면(isReadyToVanish=true) 내부 텍스트를 표시하지 않음 */}
             {!isReadyToVanish && (
               isEvenColumn ? (
                 <span className="opacity-100">
-                  {/* 가짜 진행률 displayProgress를 표시합니다. */}
+                  {/* 가짜 진행률 displayProgress를 표시 */}
                   {`${Math.round(displayProgress)}%`}
                 </span>
               ) : (

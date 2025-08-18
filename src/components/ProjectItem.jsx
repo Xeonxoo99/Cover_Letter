@@ -4,13 +4,13 @@ import { motion, useInView } from 'framer-motion';
 const ProjectItem = ({ item }) => {
   const ref = useRef(null);
   
-  // 요소가 뷰포트에 30% 보이면 inView는 true가 됩니다. (애니메이션은 한 번만 실행)
+  // 요소가 뷰포트에 30% 보이면 inView는 true
   const isInView = useInView(ref, { once: false, amount: 0.3 });
   
   const isVideo = item.src.endsWith('.mp4');
 
   return (
-    // item.style로 전달된 절대 위치값을 적용하고, 이 요소를 감지 대상으로 설정합니다.
+    // item.style로 전달된 절대 위치값을 적용하고, 이 요소를 감지 대상으로 설정
     <div ref={ref} className={`absolute  ${item.style}`}>
       <motion.div
         // 초기 상태: 아래에서 100% 가려진 상태

@@ -1,4 +1,3 @@
-// src/contexts/useAssetPreloader.js
 import { useState, useEffect } from 'react';
 
 import html5 from '../images/introduction/HTML5.svg';
@@ -46,14 +45,14 @@ function useAssetPreloader(assetUrls) {
             if (loadedCount === assetCount) {
                 setTimeout(() => {
                     setIsLoaded(true);
-                }, 250); // 딜레이를 약간 줄여도 좋습니다.
+                }, 250);
             }
         };
 
         assetUrls.forEach((url) => {
             const fileExtension = url.split('.').pop().toLowerCase();
 
-            // 파일 확장자에 따라 다른 태그로 로드합니다.
+            // 파일 확장자에 따라 다른 태그로 로드
             if (['mp4', 'webm'].includes(fileExtension)) {
                 // 비디오 태그 생성
                 const video = document.createElement('video');

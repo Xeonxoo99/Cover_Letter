@@ -47,7 +47,6 @@ const portfolioData = [
   },
 ];
 
-// forwardRef로 감싸기
 const Portfolio = forwardRef((props, ref) => {
 
   return (
