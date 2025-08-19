@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef  } from 'react';
 
 import html5 from '../images/introduction/HTML5.svg';
 import css3 from '../images/introduction/CSS3.svg';
@@ -26,9 +26,9 @@ export const assetsToPreload = [
 function useAssetPreloader(assetUrls) {
     const [progress, setProgress] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
+    const elementsRef = useRef([]); // 생성된 요소를 추적하기 위한 ref
 
     useEffect(() => {
-        // assetUrls가 배열이 아니거나 비어있으면 즉시 종료
         if (!Array.isArray(assetUrls) || assetUrls.length === 0) {
             setProgress(100);
             setIsLoaded(true);
@@ -50,26 +50,41 @@ function useAssetPreloader(assetUrls) {
             }
         };
 
-        assetUrls.forEach((url) => {
-            const fileExtension = url.split('.').pop().toLowerCase();
+        const handleError = (url) => {
+            console.error(`에셋 로딩 실패: ${url}`); // 에러 로그 출력 (변경 O)
+            updateProgress(); // 로딩이 멈추지 않도록 처리
+        };
 
-            // 파일 확장자에 따라 다른 태그로 로드
+        assetUrls.forEach((url) => {
+            const fileExtension = typeof url === 'string' ? url.split('.').pop().toLowerCase() : '';
+
             if (['mp4', 'webm'].includes(fileExtension)) {
-                // 비디오 태그 생성
                 const video = document.createElement('video');
-                video.oncanplaythrough = updateProgress;
-                video.onerror = updateProgress;
+                video.onloadeddata = updateProgress; // oncanplaythrough -> onloadeddata (변경 O)
+                video.onerror = () => handleError(url);
                 video.src = url;
+                elementsRef.current.push(video); // ref에 추가 (변경 O)
             } else {
-                // 이미지 태그 생성
                 const img = new Image();
                 img.onload = updateProgress;
-                img.onerror = updateProgress;
+                img.onerror = () => handleError(url);
                 img.src = url;
+                elementsRef.current.push(img); // ref에 추가 (변경 O)
             }
         });
 
-    }, [assetUrls]);
+        // Cleanup 함수 (변경 O)
+        return () => {
+            elementsRef.current.forEach(element => {
+                // 이벤트 핸들러 및 src 제거하여 메모리 정리
+                element.onload = null;
+                element.onerror = null;
+                element.onloadeddata = null;
+                element.src = '';
+            });
+            elementsRef.current = [];
+        };
+    }, [assetUrls]); // 의존성 배열은 그대로 유지
 
     return { progress, isLoaded };
 }
