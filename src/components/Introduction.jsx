@@ -29,6 +29,8 @@ const historyItems = [
   { title: 'SBS Academy', year: '2024~', status: 'In Progress' },
 ];
 
+const extendedImages = Array(100).fill(images).flat();
+
 // 텍스트 애니메이션 지연 시간 데이터
 const textAnimationDelays = [0.5, 1, 1.5];
 
@@ -168,17 +170,15 @@ function Introduction() {
           <div ref={startRef} className='relative w-[25vw] h-[30vw] pt-3'></div>
         </div>
 
-        <div className='relative w-full'>
-          <div className='relative py-52 left-1/2 transform -translate-x-1/2 w-screen h-16 flex items-center justify-around max-md:py-32'>
-            {images.map(({ src, alt }, index) => (
-              <AnimatedImage
-                key={index}
-                src={src}
-                alt={alt}
-                index={index}
-                scrollYProgress={scrollYProgress}
-              />
-            ))}
+        <div className='relative w-full py-20 overflow-hidden max-md:py-16'>
+          <div className='marquee-container'>
+            <div className='marquee-content'>
+              {extendedImages.map(({ src, alt }, index) => (
+                <div key={index} className='marquee-item'>
+                  <img src={src} alt={alt} className='w-24 lg:w-48' />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

@@ -34,7 +34,31 @@ code {
     monospace;
 }
 
-section {}
+.marquee-container {
+  display: flex;
+  width: fit-content;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  animation: marquee 1000s linear infinite;
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  margin: 0 4vw;
+}
+
+/* 애니메이션 정의 */
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 
 @font-face {
   font-family: 'MyCustomFont';
