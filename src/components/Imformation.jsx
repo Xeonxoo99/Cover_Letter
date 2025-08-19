@@ -867,8 +867,8 @@ function Imformation() {
 
         <div ref={lastAni2Ref} className='absolute pt-[300vh] z-[99999] isolation mix-blend-difference bg-transparent'>
           <span className="relative block pt-[100vh] text-[5.2083333333vw] left-[3.125vw] leading-[1em] mix-blend-difference text-justify w-[93.75vw]">
-            <h2 className=''>
-              Our 10 years of experience in collecting and evaluating health data has resulted in more than
+            <h2 className='text-[white]'>
+              Hard-Working Dev is a front-end developer crafting modern web interfaces for innovative brands like
             </h2>
           </span>
           <div ref={textAnimationContainerRef} className='relative flex w-screen h-screen justify-center items-center mt-[20vh]'>
