@@ -16,13 +16,7 @@ import threejs from '../images/introduction/Threejs.svg'
 
 // 프로젝트들
 import jquery from '../images/imformation/jquery.png'
-import loginVideo from '../images/video/login.mp4';
-import miniGameLoginVideo from '../images/video/mini_game_login.mp4';
-import miniGameBrokenVideo from '../images/video/mini_game_broken.mp4';
-import miniGameDinoVideo from '../images/video/mini_game_dino.mp4';
-import miniGameTypingVideo from '../images/video/mini_game_typing.mp4';
-import miniGameMypageVideo from '../images/video/mini_game_mypage.mp4';
-import miniProjectVideo from '../images/video/mini_project.mp4';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
@@ -33,43 +27,43 @@ const projects = [
     style: 'top-[25%] left-[-5vh] w-[300px]'
   },
   {
-    src: loginVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/login.mp4', // 변경 O
     alt: 'login',
     tag: (<>블로그 사이트 (html,css,js)</>),
     style: 'top-[0%] left-[60vh] z-10 w-[400px]'
   },
   {
-    src: miniGameLoginVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_login.mp4', // 변경 O
     alt: 'mini_game_login',
     tag: (<>게임로그인화면 (html,css,js)</>),
     style: 'top-[50%] left-[40vh] w-[200px]'
   },
   {
-    src: miniGameBrokenVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_broken.mp4', // 변경 O
     alt: 'mini_game_broken',
     tag: (<>벽돌깨기게임 (html,css,js)</>),
     style: 'top-[10%] left-[136vh] z-10 w-[240px]'
   },
   {
-    src: miniGameDinoVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_dino.mp4', // 변경 O
     alt: 'mini_game_dino',
     tag: (<>장애물피하기 (html,css,js)</>),
     style: 'top-[60%] left-[100vh] w-[420px]'
   },
   {
-    src: miniGameTypingVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_typing.mp4', // 변경 O
     alt: 'mini_game_typing',
     tag: (<>타이핑게임 (html,css,js)</>),
     style: 'top-[30%] left-[175vh] z-10 w-[340px]'
   },
   {
-    src: miniGameMypageVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_mypage.mp4', // 변경 O
     alt: 'mini_game_mypage',
     tag: (<>마이페이지 (html,css,js)</>),
     style: 'top-[0%] left-[235vh] w-[300px]'
   },
   {
-    src: miniProjectVideo, // 변경 O
+    src: 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_project.mp4', // 변경 O
     alt: 'mini_project',
     tag: (<>RIZZPICK (Next.js + Typescript)</>),
     style: 'top-[60%] left-[260vh] w-[300px]'
