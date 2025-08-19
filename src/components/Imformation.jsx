@@ -366,7 +366,7 @@ function Imformation() {
       const lastSectionTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: lastRef.current,
-          start: "top bottom-=3000",
+          start: "top bottom-=5000",
           end: "bottom bottom",
           scrub: 3,
           markers:true,
