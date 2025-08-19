@@ -16,89 +16,63 @@ import threejs from '../images/introduction/Threejs.svg'
 
 // 프로젝트들
 import jquery from '../images/imformation/jquery.png'
-
+import loginVideo from '../images/video/login.mp4';
+import miniGameLoginVideo from '../images/video/mini_game_login.mp4';
+import miniGameBrokenVideo from '../images/video/mini_game_broken.mp4';
+import miniGameDinoVideo from '../images/video/mini_game_dino.mp4';
+import miniGameTypingVideo from '../images/video/mini_game_typing.mp4';
+import miniGameMypageVideo from '../images/video/mini_game_mypage.mp4';
+import miniProjectVideo from '../images/video/mini_project.mp4';
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    src: jquery,
+    src: jquery, // 이미지 변수
     alt: 'jquery',
-    tag: (
-      <>
-        영화 기록 블로그 (HTML,CSS,jQuery)
-      </>
-    ),
+    tag: (<>영화 기록 블로그 (HTML,CSS,jQuery)</>),
     style: 'top-[25%] left-[-5vh] w-[300px]'
   },
   {
-    src: '/video/login.mp4',
+    src: loginVideo, // 변경 O
     alt: 'login',
-    tag: (
-      <>
-        블로그 사이트 (html,css,js)
-      </>
-    ),
+    tag: (<>블로그 사이트 (html,css,js)</>),
     style: 'top-[0%] left-[60vh] z-10 w-[400px]'
   },
   {
-    src: '/video/mini_game_login.mp4',
+    src: miniGameLoginVideo, // 변경 O
     alt: 'mini_game_login',
-    tag: (
-      <>
-        게임로그인화면 (html,css,js)
-      </>
-    ),
+    tag: (<>게임로그인화면 (html,css,js)</>),
     style: 'top-[50%] left-[40vh] w-[200px]'
   },
   {
-    src: '/video/mini_game_broken.mp4',
+    src: miniGameBrokenVideo, // 변경 O
     alt: 'mini_game_broken',
-    tag: (
-      <>
-        벽돌깨기게임 (html,css,js)
-      </>
-    ),
-    style: 'top-[10%] left-[136vh] z-10  w-[240px]'
+    tag: (<>벽돌깨기게임 (html,css,js)</>),
+    style: 'top-[10%] left-[136vh] z-10 w-[240px]'
   },
   {
-    src: '/video/mini_game_dino.mp4',
+    src: miniGameDinoVideo, // 변경 O
     alt: 'mini_game_dino',
-    tag: (
-      <>
-        장애물피하기 (html,css,js)
-      </>
-    ),
-    style: 'top-[60%] left-[100vh]  w-[420px]'
+    tag: (<>장애물피하기 (html,css,js)</>),
+    style: 'top-[60%] left-[100vh] w-[420px]'
   },
   {
-    src: '/video/mini_game_typing.mp4',
+    src: miniGameTypingVideo, // 변경 O
     alt: 'mini_game_typing',
-    tag: (
-      <>
-        타이핑게임 (html,css,js)
-      </>
-    ),
-    style: 'top-[30%] left-[175vh] z-10  w-[340px]'
+    tag: (<>타이핑게임 (html,css,js)</>),
+    style: 'top-[30%] left-[175vh] z-10 w-[340px]'
   },
   {
-    src: '/video/mini_game_mypage.mp4',
+    src: miniGameMypageVideo, // 변경 O
     alt: 'mini_game_mypage',
-    tag: (
-      <>
-        마이페이지 (html,css,js)
-      </>
-    ),
+    tag: (<>마이페이지 (html,css,js)</>),
     style: 'top-[0%] left-[235vh] w-[300px]'
   },
   {
-    src: '/video/mini_project.mp4',
+    src: miniProjectVideo, // 변경 O
     alt: 'mini_project',
-    tag: (
-      <>
-        RIZZPICK (Next.js + Typescript)
-      </>
-    ),
-    style: 'top-[60%] left-[260vh]  w-[300px]'
+    tag: (<>RIZZPICK (Next.js + Typescript)</>),
+    style: 'top-[60%] left-[260vh] w-[300px]'
   },
 ];
 
@@ -133,7 +107,7 @@ function AnimatedBar({ scrollProgress, heightRange }) {
   // scrollProgress(0~1) 값의 변화에 따라 heightRange에 지정된 높이 값으로 변환
   const height = useTransform(
     scrollProgress,
-    [0, 0.5, 0.7,0.9, 1], // 입력값 (스크롤 진행률)
+    [0, 0.5, 0.7, 0.9, 1], // 입력값 (스크롤 진행률)
     heightRange       // 출력값 (요청하신 높이 배열)
   );
 
@@ -205,11 +179,11 @@ function Imformation() {
   );
 
   const heightRanges = [
-    ['0%', '76%', '98.7%','90%', '100%'],
-    ['0%', '55%', '98.5%','92%', '100%'],
-    ['0%', '88%', '97.8%','90%', '100%'],
-    ['0%', '66%', '99%','90.6%', '100%'],
-    ['0%', '40%', '97%','93%', '100%']
+    ['0%', '76%', '98.7%', '90%', '100%'],
+    ['0%', '55%', '98.5%', '92%', '100%'],
+    ['0%', '88%', '97.8%', '90%', '100%'],
+    ['0%', '66%', '99%', '90.6%', '100%'],
+    ['0%', '40%', '97%', '93%', '100%']
   ];
 
   const { scrollYProgress: barAnimationProgress } = useScroll({

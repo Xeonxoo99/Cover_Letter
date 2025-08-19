@@ -17,10 +17,18 @@ import subwayCenter from '../images/portfolio/searchBetter_menu.png';
 import demonLogo from '../images/portfolio/demon_logo.png';
 import demonCenter from '../images/portfolio/demon_center.png';
 
+import mainVideo from '../images/video/main_video.mp4';
+import introVideo from '../images/video/introvideo.mp4';
+import loginVideo from '../images/video/login.mp4';
+import miniGameBrokenVideo from '../images/video/mini_game_broken.mp4';
+import miniGameDinoVideo from '../images/video/mini_game_dino.mp4';
+import miniGameLoginVideo from '../images/video/mini_game_login.mp4';
+import miniGameMypageVideo from '../images/video/mini_game_mypage.mp4';
+import miniGameTypingVideo from '../images/video/mini_game_typing.mp4';
+import miniProjectVideo from '../images/video/mini_project.mp4';
+
 export const assetsToPreload = [
-    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'/video/main_video.mp4',
-    '/video/introvideo.mp4','/video/login.mp4','/video/mini_game_broken.mp4','/video/mini_game_dino.mp4','/video/mini_game_login.mp4','/video/mini_game_mypage.mp4',
-    '/video/mini_game_typing.mp4','/video/mini_project.mp4'
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,mainVideo, introVideo, loginVideo, miniGameBrokenVideo, miniGameDinoVideo, miniGameLoginVideo, miniGameMypageVideo, miniGameTypingVideo, miniProjectVideo
 ];
 
 function useAssetPreloader(assetUrls) {

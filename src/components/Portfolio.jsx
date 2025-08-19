@@ -11,6 +11,9 @@ import subwayCenter from '../images/portfolio/searchBetter_menu.png';
 import demonLogo from '../images/portfolio/demon_logo.png';
 import demonCenter from '../images/portfolio/demon_center.png';
 
+import mainVideo from '../images/video/main_video.mp4';
+import introVideo from '../images/video/introvideo.mp4';
+
 const portfolioData = [
   {
     id: 1,
@@ -30,7 +33,7 @@ const portfolioData = [
     logo: subwayLogo,
     center: subwayCenter,
     img: null,
-    video: '/video/main_video.mp4',
+    video: mainVideo,
     text: 'My take on subway',
     buttonLink: 'https://subway-hyvxgv11r-xeonxoo99s-projects.vercel.app/',
   },
@@ -41,7 +44,7 @@ const portfolioData = [
     logo: demonLogo,
     center: demonCenter,
     img: null,
-    video: '/video/introvideo.mp4',
+    video: introVideo,
     text: 'My Demon Slayer Website',
     buttonLink: 'https://demon-slayer-six.vercel.app/',
   },
