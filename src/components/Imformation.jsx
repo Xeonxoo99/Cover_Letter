@@ -185,6 +185,22 @@ function Imformation() {
     offset: ["start end", "end end"] // 요소가 화면에 보이기 시작할 때부터 사라질 때까지
   });
 
+  useEffect(() => {
+    const handleLoad = () => {
+      console.log("All resources loaded, refreshing ScrollTrigger.");
+      ScrollTrigger.refresh();
+    };
+
+    // 'load' 이벤트는 전체 페이지와 모든 종속 리소스(스타일시트, 이미지 등)가
+    // 완전히 로드되었을 때 발생합니다.
+    window.addEventListener('load', handleLoad);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
+  }, []);
+
   const addIndividualCarouselRef = (el, gridIndex, itemIndex) => {
     if (el && individualCarouselItemRefs.current[gridIndex] && individualCarouselItemRefs.current[gridIndex][itemIndex] !== el) {
       individualCarouselItemRefs.current[gridIndex][itemIndex] = el;
@@ -192,6 +208,84 @@ function Imformation() {
   };
 
   useLayoutEffect(() => {
+    //마지막 opacity, scale 애니메이션
+      const lastSectionTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: lastRef.current,
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: 3,
+          onLeaveBack: () => {
+            gsap.set(boxScaleRefs.current, { height: '0%' });
+            gsap.set(boxOpacityRefs.current, { opacity: 0 });
+          },
+          invalidateOnRefresh: true,
+        }
+      });
+
+      const totalBoxesForLastAnim = 10;
+      const staggerOffset = 0.2;
+
+      for (let i = totalBoxesForLastAnim - 1; i >= 0; i--) {
+        const scaleBox = boxScaleRefs.current[i];
+        const opacityBox = boxOpacityRefs.current[i];
+        const startTime = (totalBoxesForLastAnim - 1 - i) * staggerOffset;
+
+        if (scaleBox) {
+          lastSectionTimeline.to(scaleBox, {
+            height: '100%',
+            duration: 0.5,
+            ease: "none"
+          }, startTime);
+        }
+
+        if (opacityBox) {
+          lastSectionTimeline.to(opacityBox, {
+            opacity: 0.1,
+            duration: 0.5,
+            ease: "none"
+          }, startTime);
+        }
+      }
+
+      lastSectionTimeline.to(boxScaleRefs.current, {
+        backgroundColor: 'black',
+        duration: 0.1, // 0.1초 동안 부드럽게 색상이 변경
+        ease: 'none',
+        // stagger 객체로 순차 애니메이션을 설정
+        stagger: {
+          each: 0.05,   // 각 박스의 색상이 0.05초 간격으로 변경
+          from: "end"   // 배열의 끝(가장 아래 박스)부터 시작
+        }
+      }, "<");
+
+      // 5개 div의 높이를 조절하는 새로운 GSAP 타임라인
+      // const bottomBarsTimeline = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: lastAni2Ref.current,
+      //     start: "top+=1000 top",
+      //     end: "bottom bottom",
+      //     // 스크롤에 따라 애니메이션을 부드럽게 연결
+      //     scrub: true,
+      //     // markers: true, // 디버깅 시 위치 확인용
+      //   }
+      // });
+
+      // const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
+
+      // // 2. 5개의 div 각각에 정의된 duration을 적용
+      // bottomBarsRef.current.forEach((bar, index) => {
+      //   if (bar) {
+      //     bottomBarsTimeline.to(bar, {
+      //       height: '100%',
+      //       // index에 해당하는 duration 값을 할당
+      //       duration: durations[index],
+      //       ease: "none"
+      //     }, 0); // 0을 지정하여 모든 애니메이션이 타임라인의 시작점에서 동시에 시작되도록 함
+      //   }
+      // });
+
+    }, sectionRef);
     const ctx = gsap.context(() => {
 
       // grid display none으로 변경
@@ -362,84 +456,7 @@ function Imformation() {
           // console.warn(`Refs for grid index ${gridIndex} are not yet ready.`);
         }
       });
-      //마지막 opacity, scale 애니메이션
-      const lastSectionTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: lastRef.current,
-          start: "top bottom",
-          end: "bottom bottom",
-          scrub: 3,
-          onLeaveBack: () => {
-            gsap.set(boxScaleRefs.current, { height: '0%' });
-            gsap.set(boxOpacityRefs.current, { opacity: 0 });
-          },
-          invalidateOnRefresh: true,
-        }
-      });
-
-      const totalBoxesForLastAnim = 10;
-      const staggerOffset = 0.2;
-
-      for (let i = totalBoxesForLastAnim - 1; i >= 0; i--) {
-        const scaleBox = boxScaleRefs.current[i];
-        const opacityBox = boxOpacityRefs.current[i];
-        const startTime = (totalBoxesForLastAnim - 1 - i) * staggerOffset;
-
-        if (scaleBox) {
-          lastSectionTimeline.to(scaleBox, {
-            height: '100%',
-            duration: 0.5,
-            ease: "none"
-          }, startTime);
-        }
-
-        if (opacityBox) {
-          lastSectionTimeline.to(opacityBox, {
-            opacity: 0.1,
-            duration: 0.5,
-            ease: "none"
-          }, startTime);
-        }
-      }
-
-      lastSectionTimeline.to(boxScaleRefs.current, {
-        backgroundColor: 'black',
-        duration: 0.1, // 0.1초 동안 부드럽게 색상이 변경
-        ease: 'none',
-        // stagger 객체로 순차 애니메이션을 설정
-        stagger: {
-          each: 0.05,   // 각 박스의 색상이 0.05초 간격으로 변경
-          from: "end"   // 배열의 끝(가장 아래 박스)부터 시작
-        }
-      }, "<");
-
-      // 5개 div의 높이를 조절하는 새로운 GSAP 타임라인
-      // const bottomBarsTimeline = gsap.timeline({
-      //   scrollTrigger: {
-      //     trigger: lastAni2Ref.current,
-      //     start: "top+=1000 top",
-      //     end: "bottom bottom",
-      //     // 스크롤에 따라 애니메이션을 부드럽게 연결
-      //     scrub: true,
-      //     // markers: true, // 디버깅 시 위치 확인용
-      //   }
-      // });
-
-      // const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
-
-      // // 2. 5개의 div 각각에 정의된 duration을 적용
-      // bottomBarsRef.current.forEach((bar, index) => {
-      //   if (bar) {
-      //     bottomBarsTimeline.to(bar, {
-      //       height: '100%',
-      //       // index에 해당하는 duration 값을 할당
-      //       duration: durations[index],
-      //       ease: "none"
-      //     }, 0); // 0을 지정하여 모든 애니메이션이 타임라인의 시작점에서 동시에 시작되도록 함
-      //   }
-      // });
-
-    }, sectionRef);
+      
 
 
 
@@ -579,6 +596,7 @@ function Imformation() {
   //   });
   // }, [projects]);
 
+  
   useLayoutEffect(() => {
     if (!textAnimationContainerRef.current) {
       return;

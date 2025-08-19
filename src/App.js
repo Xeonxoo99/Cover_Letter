@@ -46,7 +46,6 @@ function App({ isLoaded, progress }) {
     <ScrollProgressProvider>
       <>
         <Header activeSection={activeSection} />
-        <TestPage/>
         <main className='overflow-x-clip'>
           <div id="home">
             <Introduction />
@@ -57,7 +56,6 @@ function App({ isLoaded, progress }) {
           <div id="imformation">
             <Imformation />
           </div>
-          
         </main>
         <div ref={footerTriggerRef} className="h-[100vh] pt-[500vh]" />
         <Footer y={footerY} />
