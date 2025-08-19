@@ -7,6 +7,7 @@ import Portfolio from './components/Portfolio'
 import Imformation from './components/Imformation'
 import Footer from './components/Footer';
 import { ScrollProgressProvider } from './contexts/ScrollProgressContext';
+import TestPage from './components/TestPage';
 
 // App 컴포넌트가 isLoaded와 progress를 props로 받도록 수정합니다.
 function App({ isLoaded, progress }) {
@@ -45,6 +46,7 @@ function App({ isLoaded, progress }) {
     <ScrollProgressProvider>
       <>
         <Header activeSection={activeSection} />
+        <TestPage/>
         <main className='overflow-x-clip'>
           <div id="home">
             <Introduction />
