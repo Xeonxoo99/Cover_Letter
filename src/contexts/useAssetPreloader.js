@@ -19,7 +19,8 @@ import demonCenter from '../images/portfolio/demon_center.png';
 
 export const assetsToPreload = [
     html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'/video/main_video.mp4',
-    '/video/introvideo.mp4'
+    '/video/introvideo.mp4','/video/login.mp4','/video/mini_game_broken.mp4','/video/mini_game_dino.mp4','/video/mini_game_login.mp4','/video/mini_game_mypage.mp4',
+    '/video/mini_game_typing.mp4','/video/mini_project.mp4'
 ];
 
 function useAssetPreloader(assetUrls) {
@@ -56,7 +57,7 @@ function useAssetPreloader(assetUrls) {
             if (['mp4', 'webm'].includes(fileExtension)) {
                 // 비디오 태그 생성
                 const video = document.createElement('video');
-                video.oncanplaythrough = updateProgress; // 'canplaythrough' 이벤트 사용
+                video.oncanplaythrough = updateProgress;
                 video.onerror = updateProgress;
                 video.src = url;
             } else {

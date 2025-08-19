@@ -15,22 +15,11 @@ import git from '../images/introduction/git.svg'
 import threejs from '../images/introduction/Threejs.svg'
 
 // 프로젝트들
-// import baseball_game from '../images/imformation/baseball_game.png'
 import jquery from '../images/imformation/jquery.png'
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  // {
-  //   src: baseball_game,
-  //   alt: 'baseball_game',
-  //   tag: (
-  //     <>
-  //       JS로 console 및 prompt로 할 수 있는 게임을 만들었습니다.
-  //     </>
-  //   ),
-  //   style: 'top-[35%] left-[-7%]'
-  // },
   {
     src: jquery,
     alt: 'jquery',
@@ -141,7 +130,7 @@ const TEXT_LINES = [
 ];
 
 function AnimatedBar({ scrollProgress, heightRange }) {
-  // scrollProgress(0~1) 값의 변화에 따라 heightRange에 지정된 높이 값으로 변환합니다.
+  // scrollProgress(0~1) 값의 변화에 따라 heightRange에 지정된 높이 값으로 변환
   const height = useTransform(
     scrollProgress,
     [0, 0.5, 0.7,0.9, 1], // 입력값 (스크롤 진행률)
@@ -447,12 +436,12 @@ function Imformation() {
 
       lastSectionTimeline.to(boxScaleRefs.current, {
         backgroundColor: 'black',
-        duration: 0.1, // 0.1초 동안 부드럽게 색상이 변경됩니다.
+        duration: 0.1, // 0.1초 동안 부드럽게 색상이 변경
         ease: 'none',
-        // stagger 객체로 순차 애니메이션을 설정합니다.
+        // stagger 객체로 순차 애니메이션을 설정
         stagger: {
-          each: 0.05,   // 각 박스의 색상이 0.05초 간격으로 변경됩니다.
-          from: "end"   // 배열의 끝(가장 아래 박스)부터 시작합니다.
+          each: 0.05,   // 각 박스의 색상이 0.05초 간격으로 변경
+          from: "end"   // 배열의 끝(가장 아래 박스)부터 시작
         }
       }, "<");
 
@@ -470,7 +459,7 @@ function Imformation() {
 
       // const durations = [1.5, 1.1, 1.4, 1.2, 1.3];
 
-      // // 2. 5개의 div 각각에 정의된 duration을 적용합니다.
+      // // 2. 5개의 div 각각에 정의된 duration을 적용
       // bottomBarsRef.current.forEach((bar, index) => {
       //   if (bar) {
       //     bottomBarsTimeline.to(bar, {
@@ -683,14 +672,14 @@ function Imformation() {
   useLayoutEffect(() => {
     if (!containerRef.current) return;
 
-    // GSAP 컨텍스트를 사용하여 애니메이션을 안전하게 관리하고 정리합니다.
+    // GSAP 컨텍스트를 사용하여 애니메이션을 안전하게 관리하고 정리
     const ctx = gsap.context(() => {
-      // 클래스 이름으로 모든 텍스트 요소를 선택합니다.
+      // 클래스 이름으로 모든 텍스트 요소를 선택
       const texts = gsap.utils.toArray('.thank-you-text', containerRef.current);
-      // 순서를 무작위로 섞어줍니다.
+      // 순서를 무작위로 섞음
       const shuffledTexts = gsap.utils.shuffle(texts);
 
-      // 무한 반복하는 마스터 타임라인을 생성합니다.
+      // 무한 반복하는 마스터 타임라인을 생성
       const masterTl = gsap.timeline({ repeat: -1, delay: 1 });
 
       const groupSize = 5; // 한 번에 애니메이션 할 그룹 크기
@@ -698,12 +687,12 @@ function Imformation() {
       const animationDuration = 1; // 한 그룹의 애니메이션 시간 (나타나는 데 1.5초, 사라지는 데 1.5초)
       const overlap = 1; // 다음 그룹 애니메이션이 시작될 때까지의 시간 간격
 
-      // 섞인 텍스트를 5개 그룹으로 나누어 애니메이션을 적용합니다.
+      // 섞인 텍스트를 5개 그룹으로 나누어 애니메이션을 적용
       for (let i = 0; i < numGroups; i++) {
         const group = shuffledTexts.slice(i * groupSize, (i + 1) * groupSize);
 
         if (group.length > 0) {
-          // to() 애니메이션에 yoyo와 repeat를 사용하여 opacity를 0 -> 1 -> 0 으로 만듭니다.
+          // to() 애니메이션에 yoyo와 repeat를 사용하여 opacity를 0 -> 1 -> 0 으로 만듦
           masterTl.to(group, {
             opacity: 1,
             duration: animationDuration / 2,
@@ -716,7 +705,7 @@ function Imformation() {
       }
     }, containerRef);
 
-    // 컴포넌트가 언마운트될 때 GSAP 애니메이션과 ScrollTrigger를 모두 정리합니다.
+    // 컴포넌트가 언마운트될 때 GSAP 애니메이션과 ScrollTrigger를 모두 정리
     return () => ctx.revert();
   }, []);
 
@@ -789,7 +778,7 @@ function Imformation() {
                   key={gridIndex}
                   className={`relative flex w-full h-full items-center justify-center`}
                 >
-                  {/* 중앙(index 4)은 빈칸으로 두거나, 필요시 특정 placeholder를 넣을 수 있습니다. */}
+                  {/* 중앙(index 4)은 빈칸으로 두거나, 필요시 특정 placeholder를 넣을 수 있음 */}
                   {gridIndex === 4 ? (
                     <div className="w-full h-full"></div>
                   ) : (
@@ -802,7 +791,7 @@ function Imformation() {
                           src={item.src}
                           alt={item.alt}
                           className={`${itemClasses} w-20 h-20 object-contain`}
-                          // Ref를 addIndividualCarouselRef로 전달합니다.
+                          // Ref를 addIndividualCarouselRef로 전달
                           ref={el => addIndividualCarouselRef(el, gridIndex, itemIndex)}
                           style={{ opacity: itemIndex === 0 ? 1 : 0 }} // 초기 첫 아이템만 보이게
                         />
@@ -810,7 +799,7 @@ function Imformation() {
                         <div
                           key={`${gridIndex}-${itemIndex}-text`}
                           className={`${itemClasses} flex text-center items-center justify-center text-white text-4xl font-bold`}
-                          // Ref를 addIndividualCarouselRef로 전달합니다.
+                          // Ref를 addIndividualCarouselRef로 전달
                           ref={el => addIndividualCarouselRef(el, gridIndex, itemIndex)}
                           style={{ opacity: itemIndex === 0 ? 1 : 0 }} // 초기 첫 아이템만 보이게
                         >
@@ -957,7 +946,7 @@ function Imformation() {
                 <span
                   key={el.id}
                   className="thank-you-text absolute z-20 text-[20px] mix-blend-difference text-[#ffffff] whitespace-nowrap"
-                  // 초기 opacity를 0으로 설정하고, 생성된 위치값을 적용합니다.
+                  // 초기 opacity를 0으로 설정하고, 생성된 위치값을 적용
                   style={{ ...el.style, opacity: 0 }}
                 >
                   {el.text}
