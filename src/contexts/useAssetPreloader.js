@@ -28,7 +28,7 @@ import miniGameTypingVideo from '../images/video/mini_game_typing.mp4';
 import miniProjectVideo from '../images/video/mini_project.mp4';
 
 export const assetsToPreload = [
-    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,mainVideo, introVideo, loginVideo, miniGameBrokenVideo, miniGameDinoVideo, miniGameLoginVideo, miniGameMypageVideo, miniGameTypingVideo, miniProjectVideo
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/main_video.mp4', 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/introvideo.mp4, loginVideo, miniGameBrokenVideo, miniGameDinoVideo, miniGameLoginVideo, miniGameMypageVideo, miniGameTypingVideo, miniProjectVideo
 ];
 
 function useAssetPreloader(assetUrls) {
