@@ -73,9 +73,9 @@ function Introduction() {
   });
 
   const opacity = useTransform(opacityProgress, [0, 0.99, 1], [1, 1, 0]);
-
-  const x_linear = useTransform(scrollYProgress, [0.05, 0.38], [0, delta.x]);
-  const y_linear = useTransform(scrollYProgress, [0.05, 0.38], [0, delta.y]);
+  const scale_transform = useTransform(scrollYProgress, [0.05, 0.38], [1.3, 1]);
+  const x_linear = useTransform(scrollYProgress, [0.05, 0.38], [-450, delta.x - 250]);
+  const y_linear = useTransform(scrollYProgress, [0.05, 0.38], [-350, delta.y - 100]);
   const springConfig = { damping: 30, stiffness: 200 };
   const x = useSpring(x_linear, springConfig);
   const y = useSpring(y_linear, springConfig);
@@ -87,7 +87,7 @@ function Introduction() {
       const startRect = startRef.current.getBoundingClientRect();
       const endRect = endRef.current.getBoundingClientRect();
       const sectionRect = sectionElement.getBoundingClientRect();
-      
+
       const newStartTop = startRect.top - sectionRect.top;
       const newStartLeft = startRect.left - sectionRect.left;
 
@@ -126,27 +126,29 @@ function Introduction() {
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
-  
+
   // isMobile 값에 따라 스타일을 동적으로 적용
-  const macbookStyle = isMobile 
-    ? { 
-        position: 'absolute',
-        width: '50vw',
-        height: '50vw',
-        zIndex: 10,
-        top: macbookPosition.top,
-        left: macbookPosition.left
-      }
+  // isMobile 값에 따라 스타일을 동적으로 적용
+  const macbookStyle = isMobile
+    ? {
+      position: 'absolute',
+      width: '50vw',
+      height: '50vw',
+      zIndex: 10,
+      top: macbookPosition.top,
+      left: macbookPosition.left
+    }
     : {
-        x,
-        y,
-        position: 'absolute',
-        width: '25vw',
-        height: '25vw',
-        zIndex: 10,
-        top: macbookPosition.startTop,
-        left: macbookPosition.startLeft
-      };
+      x,
+      y,
+      scale: scale_transform, // scale 스타일 적용
+      position: 'absolute',
+      width: '50vw',
+      height: '50vw',
+      zIndex: 10,
+      top: macbookPosition.startTop,
+      left: macbookPosition.startLeft
+    };
 
   return (
     <section ref={sectionRef} className='relative w-full pt-[6vw] px-[3.125vw] pb-[8vw] font-aeonik'>

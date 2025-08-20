@@ -27,21 +27,20 @@ export default function MacbookScene({ playAnimation }) {
     return (
         <>
             <Suspense fallback={null}>
-                <Stage environment="city" intensity={0.1} adjustCamera={1.3}>
+                <Stage environment="city" intensity={0.1} adjustCamera={2}>
                     <Model 
                         scale={0.1} 
                         playAnimation={playAnimation} 
-                        // ✅ rotation 속성 추가 [x, y, z]
                         rotation={[0, rotationY, 0]} 
                     />
                 </Stage>
             </Suspense>
             <OrbitControls 
                 enableZoom={false} 
-                autoRotate={false} 
+                autoRotate={true} 
                 enablePan={false}
                 minPolarAngle={Math.PI / 4}
-                maxPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2.5}
             />
         </>
     );
