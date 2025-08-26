@@ -26,10 +26,10 @@ import miniGameTypingVideo from '../images/video/mini_game_typing.mp4';
 import miniProjectVideo from '../images/video/mini_project.mp4';
 
 export const assetsToPreload = [
-    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/main_video.mp4', 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/introvideo.mp4',
-    'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/main_video.mp4','https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/login.mp4','https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_broken.mp4',
-    'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_dino.mp4','https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_login.mp4', 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_mypage.mp4',
-    'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_game_typing.mp4', 'https://yp0quddyfl0odgf8.public.blob.vercel-storage.com/mini_project.mp4'
+    html5, css3, jquery, js, react, tailwindcss, gsap, nextjs, threejs, riot, riotLogo, riotCenter, subwayLogo, subwayCenter, demonLogo, demonCenter,'https://alvm1224.dothome.co.kr/kys/main_video.mp4', 'https://alvm1224.dothome.co.kr/kys/introvideo.mp4',
+    'https://alvm1224.dothome.co.kr/kys/main_video.mp4','https://alvm1224.dothome.co.kr/kys/login.mp4','https://alvm1224.dothome.co.kr/kys/mini_game_broken.mp4',
+    'https://alvm1224.dothome.co.kr/kys/mini_game_dino.mp4','https://alvm1224.dothome.co.kr/kys/mini_game_login.mp4', 'https://alvm1224.dothome.co.kr/kys/mini_game_mypage.mp4',
+    'https://alvm1224.dothome.co.kr/kys/mini_game_typing.mp4', 'https://alvm1224.dothome.co.kr/kys/mini_project.mp4'
 ];
 
 function useAssetPreloader(assetUrls) {

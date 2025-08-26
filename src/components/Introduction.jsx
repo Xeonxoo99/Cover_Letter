@@ -12,7 +12,7 @@ import js from '../images/introduction/JS.svg';
 import react from '../images/introduction/React.svg';
 import nextjs from '../images/introduction/nextjs.svg';
 
-// 이미지 데이터
+// 이미지 데이터.
 const images = [
   { src: html5, alt: 'HTML5' },
   { src: css3, alt: 'CSS3' },
