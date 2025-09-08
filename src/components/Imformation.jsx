@@ -369,7 +369,7 @@ function Imformation() {
           start: "top bottom-=6000",
           end: "bottom bottom",
           scrub: 3,
-          markers:true,
+          // markers:true,
           onLeaveBack: () => {
             gsap.set(boxScaleRefs.current, { height: '0%' });
             gsap.set(boxOpacityRefs.current, { opacity: 0 });
